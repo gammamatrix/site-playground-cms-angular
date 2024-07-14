@@ -175,7 +175,7 @@ export interface Page {
   introduction: string;
   content: string | null;
   summary: string | null;
-  route: unknown;
+  route: string;
   locale: string;
   icon: string;
   image: string;
@@ -184,7 +184,7 @@ export interface Page {
   assets: string[] | null;
   meta: string[] | null;
   notes: string[] | null;
-  params: Record<string, unknown>;
+  params: Record<string, string>;
   options: string[] | null;
   sources: string[] | null;
   // relations
@@ -212,7 +212,7 @@ export interface PageResponse {
 
 export interface PageRevision {
   // columns
-  id: string;
+  readonly id: string;
   created_by_id: string | null;
   modified_by_id: string | null;
   owned_by_id: string | null;
@@ -291,7 +291,7 @@ export interface PageRevision {
   introduction: string;
   content: string | null;
   summary: string | null;
-  route: unknown;
+  route: string;
   locale: string;
   icon: string;
   image: string;
@@ -300,7 +300,7 @@ export interface PageRevision {
   assets: string[] | null;
   meta: string[] | null;
   notes: string[] | null;
-  params: Record<string, unknown>;
+  params: Record<string, string>;
   options: string[] | null;
   sources: string[] | null;
   // relations
@@ -325,9 +325,8 @@ export interface PageRevisionResponse {
   meta: ResponseShowMeta;
 }
 
-export interface Snippet {
+export interface SnippetEditModel {
   // columns
-  id: unknown;
   created_by_id: string | null;
   modified_by_id: string | null;
   owned_by_id: string | null;
@@ -401,7 +400,102 @@ export interface Snippet {
   introduction: string;
   content: string | null;
   summary: string | null;
-  locale: unknown;
+  locale: string;
+  icon: string;
+  image: string;
+  avatar: string;
+  ui: string[] | null;
+  assets: string[];
+  meta: string[];
+  notes: string[] | null;
+  options: string[];
+  sources: string[];
+  // relations
+  revisions: SnippetRevisions;
+  children: Snippets;
+  creator: User;
+  modifier: User;
+  owner: User;
+  parent: Snippet;
+}
+
+export interface Snippet {
+  // columns
+  readonly id: string;
+  created_by_id: string | null;
+  modified_by_id: string | null;
+  owned_by_id: string | null;
+  parent_id: string | null;
+  snippet_type: string | null;
+  created_at: string | null;
+  updated_at: string | null;
+  deleted_at: string | null;
+  start_at: string | null;
+  planned_start_at: string | null;
+  end_at: string | null;
+  planned_end_at: string | null;
+  canceled_at: string | null;
+  closed_at: string | null;
+  embargo_at: string | null;
+  fixed_at: string | null;
+  postponed_at: string | null;
+  published_at: string | null;
+  released_at: string | null;
+  resumed_at: string | null;
+  resolved_at: string | null;
+  suspended_at: string | null;
+  gids: number;
+  po: number;
+  pg: number;
+  pw: number;
+  only_admin: boolean;
+  only_user: boolean;
+  only_guest: boolean;
+  allow_public: boolean;
+  status: number;
+  rank: number;
+  revision: number;
+  size: number;
+  matrix: string;
+  x: number | null;
+  y: number | null;
+  z: number | null;
+  r: number | null;
+  theta: number | null;
+  rho: number | null;
+  phi: number | null;
+  elevation: number | null;
+  latitude: number | null;
+  longitude: number | null;
+  active: boolean;
+  canceled: boolean;
+  closed: boolean;
+  completed: boolean;
+  duplicate: boolean;
+  fixed: boolean;
+  flagged: boolean;
+  internal: boolean;
+  locked: boolean;
+  pending: boolean;
+  planned: boolean;
+  problem: boolean;
+  published: boolean;
+  released: boolean;
+  retired: boolean;
+  resolved: boolean;
+  sitemap: boolean;
+  suspended: boolean;
+  unknown: boolean;
+  label: string;
+  title: string;
+  byline: string;
+  slug: string | null;
+  url: string;
+  description: string;
+  introduction: string;
+  content: string | null;
+  summary: string | null;
+  locale: string;
   icon: string;
   image: string;
   avatar: string;
@@ -435,7 +529,7 @@ export interface SnippetResponse {
 
 export interface SnippetRevision {
   // columns
-  id: unknown;
+  readonly id: string;
   created_by_id: string | null;
   modified_by_id: string | null;
   owned_by_id: string | null;
@@ -510,7 +604,7 @@ export interface SnippetRevision {
   introduction: string;
   content: string | null;
   summary: string | null;
-  locale: unknown;
+  locale: string;
   icon: string;
   image: string;
   avatar: string;
@@ -551,6 +645,7 @@ export interface User {
   created_at: string | null;
   updated_at: string | null;
 }
+
 export type Users = User[];
 
 export interface UsersResponse {
