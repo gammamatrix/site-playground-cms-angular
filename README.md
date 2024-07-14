@@ -123,18 +123,18 @@ npm run prettier
 | [PageRevisionsResponse](src/app/types.ts#L317) | Pages, Responses, Revisions |
 | [PageRevisionResponse](src/app/types.ts#L323) | Pages, Responses, Revisions |
 | [SnippetEditModel](src/app/types.ts#L328) | Snippets |
-| [Snippet](src/app/types.ts#422) | Snippets |
-| [Snippets](src/app/types.ts#517) | Snippets |
-| [SnippetsResponse](src/app/types.ts#519) | Snippets, Responses |
-| [SnippetResponse](src/app/types.ts#525) | Snippets, Responses |
-| [SnippetRevision](src/app/types.ts#530) | Snippets, Revisions |
-| [SnippetRevisions](src/app/types.ts#626) | Snippets, Revisions |
-| [SnippetRevisionsResponse](src/app/types.ts#628) | Snippets, Responses, Revisions |
-| [SnippetRevisionResponse](src/app/types.ts#634) | Snippets, Responses, Revisions |
-| [User](src/app/types.ts#639) | Users |
-| [Users](src/app/types.ts#649) | Users |
-| [UsersResponse](src/app/types.ts#651) | Users, Responses |
-| [UserResponse](src/app/types.ts#657) | Users, Responses |
+| [Snippet](src/app/types.ts#L422) | Snippets |
+| [Snippets](src/app/types.ts#L517) | Snippets |
+| [SnippetsResponse](src/app/types.ts#L519) | Snippets, Responses |
+| [SnippetResponse](src/app/types.ts#L525) | Snippets, Responses |
+| [SnippetRevision](src/app/types.ts#L530) | Snippets, Revisions |
+| [SnippetRevisions](src/app/types.ts#L626) | Snippets, Revisions |
+| [SnippetRevisionsResponse](src/app/types.ts#L628) | Snippets, Responses, Revisions |
+| [SnippetRevisionResponse](src/app/types.ts#L634) | Snippets, Responses, Revisions |
+| [User](src/app/types.ts#L639) | Users |
+| [Users](src/app/types.ts#L649) | Users |
+| [UsersResponse](src/app/types.ts#L651) | Users, Responses |
+| [UserResponse](src/app/types.ts#L657) | Users, Responses |
 
 
 ## Continuous Integration

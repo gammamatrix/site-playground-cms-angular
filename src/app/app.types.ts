@@ -506,12 +506,12 @@ export interface Snippet {
   options: string[];
   sources: string[];
   // relations
-  revisions: SnippetRevisions;
-  children: Snippets;
-  creator: User;
-  modifier: User;
-  owner: User;
-  parent: Snippet;
+  revisions?: SnippetRevisions;
+  children?: Snippets;
+  // creator: User;
+  // modifier: User;
+  // owner: User;
+  // parent: Snippet;
 }
 
 export type Snippets = Snippet[];
@@ -657,4 +657,11 @@ export interface UsersResponse {
 export interface UserResponse {
   data: User;
   meta: ResponseShowMeta;
+}
+
+export interface IndexParams {
+  perPage: 10;
+  page: 1;
+  offset: 0;
+  filters: [];
 }

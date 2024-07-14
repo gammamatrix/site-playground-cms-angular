@@ -18,6 +18,10 @@ import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
 import { RouterModule } from '@angular/router';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { SnippetsComponent } from './components/snippets/snippets.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
   declarations: [
@@ -26,6 +30,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
     FooterComponent,
     PagesComponent,
     DashboardComponent,
+    SnippetsComponent,
   ],
   imports: [
     BrowserModule,
@@ -41,6 +46,9 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
     MatCardModule,
     MatMenuModule,
     RouterModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
