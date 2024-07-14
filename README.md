@@ -78,11 +78,11 @@ set up theme
 Import to src/app/app.component.spec.ts
 
 ```ts
-import { NavigationComponent } from "./components/navigation/navigation.component";
-import { MatSidenavModule } from "@angular/material/sidenav";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { MatToolbarModule } from "@angular/material/toolbar";
-import { MatListModule } from "@angular/material/list";
+import { NavigationComponent } from './components/navigation/navigation.component';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatListModule } from '@angular/material/list';
 ```
 
 ```ts

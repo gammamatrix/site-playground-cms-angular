@@ -42,6 +42,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
     MatMenuModule,
     RouterModule,
   ],
+  exports: [MatIconModule],
   providers: [],
   bootstrap: [AppComponent],
 })
