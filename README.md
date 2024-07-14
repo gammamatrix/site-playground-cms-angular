@@ -1,6 +1,6 @@
 # Site: Playground Cms UI with Angular
 
-[![Playground CI Workflow](https://github.com/gammamatrix/site-playground-cms-angular/actions/workflows/playwright.yml/badge.svg?branch=develop)](.github/workflows/ci.yml)
+[![Playground CI Workflow](https://github.com/gammamatrix/site-playground-cms-angular/actions/workflows/playwright.yml/badge.svg?branch=develop)](.github/workflows/playwright.yml)
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.0.
 
@@ -16,9 +16,8 @@ nvm list
 
 ```sh
 npx -p @angular/cli@16.2.0 ng new site-playground-cms-angular
-npx -p @angular/cli@16.2.0 ng new site-playground-cms-angular-scss
+npx -p @angular/cli@16.2.0 ng new site-playground-cms-angular
 ```
-
 
 ## Development server
 
@@ -41,7 +40,7 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 To execute the end-to-end tests via a Playwright, run:
 
 ```sh
-npm run e2e
+ng e2e
 ```
 
 See test reports with:
@@ -54,7 +53,7 @@ npm run report
 
 ### installation
 
-ng new site-playground-cms-angular-scss
+ng new site-playground-cms-angular
 
 npm init playwright@latest
 
@@ -66,6 +65,10 @@ npm install prettier --save-dev
 
 npx prettier --write .
 
+ng add @angular-eslint/schematics
+
+npm install prettier-eslint eslint-config-prettier eslint-plugin-prettier --save-dev
+
 ### layout
 
 set up theme
@@ -73,12 +76,13 @@ set up theme
 ### tests
 
 Import to src/app/app.component.spec.ts
+
 ```ts
-import { NavigationComponent } from './components/navigation/navigation.component';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatListModule } from '@angular/material/list';
+import { NavigationComponent } from "./components/navigation/navigation.component";
+import { MatSidenavModule } from "@angular/material/sidenav";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { MatToolbarModule } from "@angular/material/toolbar";
+import { MatListModule } from "@angular/material/list";
 ```
 
 ```ts
@@ -93,11 +97,8 @@ describe('AppComponent', () => {
 
 ### Components
 
-
 ng generate @angular/material:dashboard components/dashboard
 ng generate @angular/material:dashboard components/pages
 
-
 ng generate @angular/material:navigation components/navigation
 ng generate component components/footer
-
