@@ -135,3 +135,12 @@ npm run prettier
 | [Users](src/app/types.ts#649) | Users |
 | [UsersResponse](src/app/types.ts#651) | Users, Responses |
 | [UserResponse](src/app/types.ts#657) | Users, Responses |
+
+
+## Continuous Integration
+
+### Slack Integration
+
+The [GitHub CI Workflow: ci.yml](.github/workflows/ci.yml) sends the status and results of the build to Slack:
+
+<img src="resources/docs/site-playground-cms-angular-ci-slack-integration.png" alt="Screenshot of the Slack report for the GitHub CI Workflow">
