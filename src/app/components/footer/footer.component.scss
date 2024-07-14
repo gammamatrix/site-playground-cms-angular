@@ -1,0 +1,13 @@
+footer div {
+  // margin-left: 0px;
+  mat-toolbar {
+    a {
+      margin: 0.25em;
+    }
+  }
+}
+@media (min-width: 600px) {
+  footer div {
+    margin-left: 200px;
+  }
+}

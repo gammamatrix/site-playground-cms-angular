@@ -1,0 +1,660 @@
+export interface ResponseShowMeta {
+  id: string | null;
+  timestamp: string | null;
+  session_user_id: number | null;
+  rules: object;
+  validated: object;
+}
+
+export interface ResponseIndexMeta {
+  timestamp: string | null;
+  session_user_id: number | null;
+  rules: object;
+  validated: object;
+}
+
+export interface ResponseIndexLinks {
+  first: string | null;
+  last: string | null;
+  next: string | null;
+  prev: string | null;
+}
+
+export interface PageEditModel {
+  page_type: string | null;
+  // dates
+  start_at: string | null;
+  planned_start_at: string | null;
+  end_at: string | null;
+  planned_end_at: string | null;
+  canceled_at: string | null;
+  closed_at: string | null;
+  embargo_at: string | null;
+  fixed_at: string | null;
+  postponed_at: string | null;
+  published_at: string | null;
+  released_at: string | null;
+  resumed_at: string | null;
+  resolved_at: string | null;
+  suspended_at: string | null;
+  // permissions
+  gids: number;
+  po: number;
+  pg: number;
+  pw: number;
+  only_admin: boolean;
+  only_user: boolean;
+  only_guest: boolean;
+  allow_public: boolean;
+  // status
+  status: number;
+  rank: number;
+  size: number;
+  // matrix
+  matrix: string;
+  x: number | null;
+  y: number | null;
+  z: number | null;
+  r: number | null;
+  theta: number | null;
+  rho: number | null;
+  phi: number | null;
+  elevation: number | null;
+  latitude: number | null;
+  longitude: number | null;
+  // flags
+  active: boolean;
+  canceled: boolean;
+  closed: boolean;
+  completed: boolean;
+  duplicate: boolean;
+  fixed: boolean;
+  flagged: boolean;
+  is_external: boolean;
+  is_redirect: boolean;
+  locked: boolean;
+  pending: boolean;
+  planned: boolean;
+  problem: boolean;
+  published: boolean;
+  released: boolean;
+  retired: boolean;
+  resolved: boolean;
+  sitemap: boolean;
+  suspended: boolean;
+  unknown: boolean;
+  redirect_delay: number;
+  status_code: number;
+  label: string;
+  title: string;
+  byline: string;
+  slug: string | null;
+  url: string;
+  description: string;
+  introduction: string;
+  content: string | null;
+  summary: string | null;
+}
+
+export interface Page {
+  readonly id: string;
+  created_by_id: string | null;
+  modified_by_id: string | null;
+  owned_by_id: string | null;
+  parent_id: string | null;
+  page_type: string | null;
+  created_at: string | null;
+  updated_at: string | null;
+  deleted_at: string | null;
+  start_at: string | null;
+  planned_start_at: string | null;
+  end_at: string | null;
+  planned_end_at: string | null;
+  canceled_at: string | null;
+  closed_at: string | null;
+  embargo_at: string | null;
+  fixed_at: string | null;
+  postponed_at: string | null;
+  published_at: string | null;
+  released_at: string | null;
+  resumed_at: string | null;
+  resolved_at: string | null;
+  suspended_at: string | null;
+  gids: number;
+  po: number;
+  pg: number;
+  pw: number;
+  only_admin: boolean;
+  only_user: boolean;
+  only_guest: boolean;
+  allow_public: boolean;
+  status: number;
+  rank: number;
+  revision: number;
+  size: number;
+  matrix: string;
+  x: number | null;
+  y: number | null;
+  z: number | null;
+  r: number | null;
+  theta: number | null;
+  rho: number | null;
+  phi: number | null;
+  elevation: number | null;
+  latitude: number | null;
+  longitude: number | null;
+  active: boolean;
+  canceled: boolean;
+  closed: boolean;
+  completed: boolean;
+  duplicate: boolean;
+  fixed: boolean;
+  flagged: boolean;
+  internal: boolean;
+  is_external: boolean;
+  is_redirect: boolean;
+  locked: boolean;
+  pending: boolean;
+  planned: boolean;
+  problem: boolean;
+  published: boolean;
+  released: boolean;
+  retired: boolean;
+  resolved: boolean;
+  sitemap: boolean;
+  suspended: boolean;
+  unknown: boolean;
+  redirect_delay: number;
+  status_code: number;
+  label: string;
+  title: string;
+  byline: string;
+  slug: string | null;
+  url: string;
+  description: string;
+  introduction: string;
+  content: string | null;
+  summary: string | null;
+  route: string;
+  locale: string;
+  icon: string;
+  image: string;
+  avatar: string;
+  ui: string[] | null;
+  assets: string[] | null;
+  meta: string[] | null;
+  notes: string[] | null;
+  params: Record<string, string>;
+  options: string[] | null;
+  sources: string[] | null;
+  // relations
+  revisions: PageRevisions;
+  children: Pages;
+  creator: User;
+  modifier: User;
+  owner: User;
+  parent: Page;
+}
+
+export type Pages = Page[];
+
+export interface PagesResponse {
+  data: Pages;
+  links: ResponseIndexLinks;
+  meta: ResponseIndexMeta;
+}
+
+export interface PageResponse {
+  errors: null | Array<string[]>;
+  data: Page;
+  meta: ResponseShowMeta;
+}
+
+export interface PageRevision {
+  // columns
+  readonly id: string;
+  created_by_id: string | null;
+  modified_by_id: string | null;
+  owned_by_id: string | null;
+  parent_id: string | null;
+  page_id: string | null;
+  page_type: string | null;
+  created_at: string | null;
+  updated_at: string | null;
+  deleted_at: string | null;
+  start_at: string | null;
+  planned_start_at: string | null;
+  end_at: string | null;
+  planned_end_at: string | null;
+  canceled_at: string | null;
+  closed_at: string | null;
+  embargo_at: string | null;
+  fixed_at: string | null;
+  postponed_at: string | null;
+  published_at: string | null;
+  released_at: string | null;
+  resumed_at: string | null;
+  resolved_at: string | null;
+  suspended_at: string | null;
+  gids: number;
+  po: number;
+  pg: number;
+  pw: number;
+  only_admin: boolean;
+  only_user: boolean;
+  only_guest: boolean;
+  allow_public: boolean;
+  status: number;
+  rank: number;
+  revision: number;
+  size: number;
+  matrix: string;
+  x: number | null;
+  y: number | null;
+  z: number | null;
+  r: number | null;
+  theta: number | null;
+  rho: number | null;
+  phi: number | null;
+  elevation: number | null;
+  latitude: number | null;
+  longitude: number | null;
+  active: boolean;
+  canceled: boolean;
+  closed: boolean;
+  completed: boolean;
+  duplicate: boolean;
+  fixed: boolean;
+  flagged: boolean;
+  internal: boolean;
+  is_external: boolean;
+  is_redirect: boolean;
+  locked: boolean;
+  pending: boolean;
+  planned: boolean;
+  problem: boolean;
+  published: boolean;
+  released: boolean;
+  retired: boolean;
+  resolved: boolean;
+  sitemap: boolean;
+  suspended: boolean;
+  unknown: boolean;
+  redirect_delay: number;
+  status_code: number;
+  label: string;
+  title: string;
+  byline: string;
+  slug: string | null;
+  url: string;
+  description: string;
+  introduction: string;
+  content: string | null;
+  summary: string | null;
+  route: string;
+  locale: string;
+  icon: string;
+  image: string;
+  avatar: string;
+  ui: string[] | null;
+  assets: string[] | null;
+  meta: string[] | null;
+  notes: string[] | null;
+  params: Record<string, string>;
+  options: string[] | null;
+  sources: string[] | null;
+  // relations
+  parent: Page;
+  page: Page;
+  children: PageRevisions;
+  creator: User;
+  modifier: User;
+  owner: User;
+}
+
+export type PageRevisions = PageRevision[];
+
+export interface PageRevisionsResponse {
+  data: PageRevisions;
+  links: ResponseIndexLinks;
+  meta: ResponseIndexMeta;
+}
+
+export interface PageRevisionResponse {
+  data: PageRevision;
+  meta: ResponseShowMeta;
+}
+
+export interface SnippetEditModel {
+  // columns
+  created_by_id: string | null;
+  modified_by_id: string | null;
+  owned_by_id: string | null;
+  parent_id: string | null;
+  snippet_type: string | null;
+  created_at: string | null;
+  updated_at: string | null;
+  deleted_at: string | null;
+  start_at: string | null;
+  planned_start_at: string | null;
+  end_at: string | null;
+  planned_end_at: string | null;
+  canceled_at: string | null;
+  closed_at: string | null;
+  embargo_at: string | null;
+  fixed_at: string | null;
+  postponed_at: string | null;
+  published_at: string | null;
+  released_at: string | null;
+  resumed_at: string | null;
+  resolved_at: string | null;
+  suspended_at: string | null;
+  gids: number;
+  po: number;
+  pg: number;
+  pw: number;
+  only_admin: boolean;
+  only_user: boolean;
+  only_guest: boolean;
+  allow_public: boolean;
+  status: number;
+  rank: number;
+  revision: number;
+  size: number;
+  matrix: string;
+  x: number | null;
+  y: number | null;
+  z: number | null;
+  r: number | null;
+  theta: number | null;
+  rho: number | null;
+  phi: number | null;
+  elevation: number | null;
+  latitude: number | null;
+  longitude: number | null;
+  active: boolean;
+  canceled: boolean;
+  closed: boolean;
+  completed: boolean;
+  duplicate: boolean;
+  fixed: boolean;
+  flagged: boolean;
+  internal: boolean;
+  locked: boolean;
+  pending: boolean;
+  planned: boolean;
+  problem: boolean;
+  published: boolean;
+  released: boolean;
+  retired: boolean;
+  resolved: boolean;
+  sitemap: boolean;
+  suspended: boolean;
+  unknown: boolean;
+  label: string;
+  title: string;
+  byline: string;
+  slug: string | null;
+  url: string;
+  description: string;
+  introduction: string;
+  content: string | null;
+  summary: string | null;
+  locale: string;
+  icon: string;
+  image: string;
+  avatar: string;
+  ui: string[] | null;
+  assets: string[];
+  meta: string[];
+  notes: string[] | null;
+  options: string[];
+  sources: string[];
+  // relations
+  revisions: SnippetRevisions;
+  children: Snippets;
+  creator: User;
+  modifier: User;
+  owner: User;
+  parent: Snippet;
+}
+
+export interface Snippet {
+  // columns
+  readonly id: string;
+  created_by_id: string | null;
+  modified_by_id: string | null;
+  owned_by_id: string | null;
+  parent_id: string | null;
+  snippet_type: string | null;
+  created_at: string | null;
+  updated_at: string | null;
+  deleted_at: string | null;
+  start_at: string | null;
+  planned_start_at: string | null;
+  end_at: string | null;
+  planned_end_at: string | null;
+  canceled_at: string | null;
+  closed_at: string | null;
+  embargo_at: string | null;
+  fixed_at: string | null;
+  postponed_at: string | null;
+  published_at: string | null;
+  released_at: string | null;
+  resumed_at: string | null;
+  resolved_at: string | null;
+  suspended_at: string | null;
+  gids: number;
+  po: number;
+  pg: number;
+  pw: number;
+  only_admin: boolean;
+  only_user: boolean;
+  only_guest: boolean;
+  allow_public: boolean;
+  status: number;
+  rank: number;
+  revision: number;
+  size: number;
+  matrix: string;
+  x: number | null;
+  y: number | null;
+  z: number | null;
+  r: number | null;
+  theta: number | null;
+  rho: number | null;
+  phi: number | null;
+  elevation: number | null;
+  latitude: number | null;
+  longitude: number | null;
+  active: boolean;
+  canceled: boolean;
+  closed: boolean;
+  completed: boolean;
+  duplicate: boolean;
+  fixed: boolean;
+  flagged: boolean;
+  internal: boolean;
+  locked: boolean;
+  pending: boolean;
+  planned: boolean;
+  problem: boolean;
+  published: boolean;
+  released: boolean;
+  retired: boolean;
+  resolved: boolean;
+  sitemap: boolean;
+  suspended: boolean;
+  unknown: boolean;
+  label: string;
+  title: string;
+  byline: string;
+  slug: string | null;
+  url: string;
+  description: string;
+  introduction: string;
+  content: string | null;
+  summary: string | null;
+  locale: string;
+  icon: string;
+  image: string;
+  avatar: string;
+  ui: string[] | null;
+  assets: string[];
+  meta: string[];
+  notes: string[] | null;
+  options: string[];
+  sources: string[];
+  // relations
+  revisions: SnippetRevisions;
+  children: Snippets;
+  creator: User;
+  modifier: User;
+  owner: User;
+  parent: Snippet;
+}
+
+export type Snippets = Snippet[];
+
+export interface SnippetsResponse {
+  data: Snippets;
+  links: ResponseIndexLinks;
+  meta: ResponseIndexMeta;
+}
+
+export interface SnippetResponse {
+  data: Snippet;
+  meta: ResponseShowMeta;
+}
+
+export interface SnippetRevision {
+  // columns
+  readonly id: string;
+  created_by_id: string | null;
+  modified_by_id: string | null;
+  owned_by_id: string | null;
+  parent_id: string | null;
+  snippet_id: string | null;
+  snippet_type: string | null;
+  created_at: string | null;
+  updated_at: string | null;
+  deleted_at: string | null;
+  start_at: string | null;
+  planned_start_at: string | null;
+  end_at: string | null;
+  planned_end_at: string | null;
+  canceled_at: string | null;
+  closed_at: string | null;
+  embargo_at: string | null;
+  fixed_at: string | null;
+  postponed_at: string | null;
+  published_at: string | null;
+  released_at: string | null;
+  resumed_at: string | null;
+  resolved_at: string | null;
+  suspended_at: string | null;
+  gids: number;
+  po: number;
+  pg: number;
+  pw: number;
+  only_admin: boolean;
+  only_user: boolean;
+  only_guest: boolean;
+  allow_public: boolean;
+  status: number;
+  rank: number;
+  revision: number;
+  size: number;
+  matrix: string;
+  x: number | null;
+  y: number | null;
+  z: number | null;
+  r: number | null;
+  theta: number | null;
+  rho: number | null;
+  phi: number | null;
+  elevation: number | null;
+  latitude: number | null;
+  longitude: number | null;
+  active: boolean;
+  canceled: boolean;
+  closed: boolean;
+  completed: boolean;
+  duplicate: boolean;
+  fixed: boolean;
+  flagged: boolean;
+  internal: boolean;
+  locked: boolean;
+  pending: boolean;
+  planned: boolean;
+  problem: boolean;
+  published: boolean;
+  released: boolean;
+  retired: boolean;
+  resolved: boolean;
+  sitemap: boolean;
+  suspended: boolean;
+  unknown: boolean;
+  label: string;
+  title: string;
+  byline: string;
+  slug: string | null;
+  url: string;
+  description: string;
+  introduction: string;
+  content: string | null;
+  summary: string | null;
+  locale: string;
+  icon: string;
+  image: string;
+  avatar: string;
+  ui: string[] | null;
+  assets: string[];
+  meta: string[];
+  notes: string[] | null;
+  options: string[];
+  sources: string[];
+  // relations
+  parent: Snippet;
+  snippet: Snippet;
+  children: SnippetRevisions;
+  creator: User;
+  modifier: User;
+  owner: User;
+}
+
+export type SnippetRevisions = SnippetRevision[];
+
+export interface SnippetRevisionsResponse {
+  data: SnippetRevisions;
+  links: ResponseIndexLinks;
+  meta: ResponseIndexMeta;
+}
+
+export interface SnippetRevisionResponse {
+  data: SnippetRevision;
+  meta: ResponseShowMeta;
+}
+
+export interface User {
+  id: number;
+  name: string;
+  email: string;
+  email_verified_at: string | null;
+  remember_token?: string | null;
+  created_at: string | null;
+  updated_at: string | null;
+}
+
+export type Users = User[];
+
+export interface UsersResponse {
+  data: Users;
+  links: ResponseIndexLinks;
+  meta: ResponseIndexMeta;
+}
+
+export interface UserResponse {
+  data: User;
+  meta: ResponseShowMeta;
+}
