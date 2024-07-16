@@ -312,20 +312,25 @@ This package utilizes [@angular/material](https://material.angular.io/)
 ng generate environments
 ```
 
+```sh
 ng generate @angular/material:navigation components/navigation
+```
 
-
+```sh
 ng generate component components/footer
-
-
-ng generate @angular/material:table components/snippets
-ng generate @angular/material:table components/pages
-
+```
 
 ```sh
 ng generate @angular/material:dashboard components/dashboard
 ```
 
+```sh
+ng generate @angular/material:table components/snippets
+```
+
+```sh
+ng generate @angular/material:table components/pages
+```
 
 </details>
 
