@@ -2,6 +2,17 @@
 
 [![Playground CI Workflow](https://github.com/gammamatrix/site-playground-cms-angular/actions/workflows/ci.yml/badge.svg?branch=develop)](.github/workflows/ci.yml)
 
+
+<section>
+
+<details>
+<summary>Toggle Package Information</summary>
+
+## Package Information
+
+
+### Library Versions
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.0 and Node v20.
 
 ```sh
@@ -20,7 +31,19 @@ This package was created, with the following command, to lock in v16 of Angular:
 npx -p @angular/cli@16.2.0 ng new site-playground-cms-angular
 ```
 
-## Development server
+</details>
+
+</section>
+
+
+<section>
+
+<details>
+<summary>Toggle Package Development Information</summary>
+
+## Development
+
+### `ng serve`
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
@@ -28,13 +51,15 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The appli
 ng serve
 ```
 
-## Build
+### `ng build`
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
 ```sh
 ng build
 ```
+
+### `npm run watch`
 
 Also supported:
 
@@ -43,7 +68,21 @@ npm run watch
 ```
 
 
-## Running unit tests
+</details>
+
+</section>
+
+
+<section>
+
+<details open>
+<summary>Toggle Testing Information</summary>
+
+## Testing
+
+### Running unit tests
+
+#### `ng test`
 
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
@@ -58,7 +97,9 @@ Live Karma and Jasmine Test Report:
 
 <img src="resources/docs/site-playground-cms-angular-ng-test-karma.png" alt="Screenshot of the Karma and Jasmine Test Report">
 
-## Running end-to-end tests
+### Running end-to-end tests with Playwright
+
+#### `ng e2e`
 
 To execute the end-to-end tests via a Playwright, run:
 
@@ -70,15 +111,63 @@ Results of test:
 
 <img src="resources/docs/site-playground-cms-angular-ng-e2e.png" alt="Screenshot of the test command: ng e2e with results">
 
-Playwright Report:
+### Playwright Reports
 
-<img src="resources/docs/site-playground-cms-angular-ng-e2e-report.png" alt="Screenshot of the Playwright Report">
+#### `npm run report`
 
 See test reports with:
 
 ```sh
 npm run report
 ```
+
+<img src="resources/docs/site-playground-cms-angular-ng-e2e-report.png" alt="Screenshot of the Playwright Report">
+
+### Playwright Reports under GitHub Actions
+
+1. Go to [GitHub Actions for this package](https://github.com/gammamatrix/site-playground-cms-angular/actions)
+
+<img src="resources/docs/site-playground-cms-angular-ci-actions.png" alt="Screenshot of the Playwright Report">
+
+2. Go into one of the builds to download the Playwright Report.
+
+<img src="resources/docs/site-playground-cms-angular-ci-playwright-report.png" alt="Screenshot of the Playwright Report">
+
+- The download will be named `playwright-report.zip` and it contains an `index.html` shown above from `npm run report`
+
+</details>
+
+</section>
+
+<section>
+
+<details>
+<summary>Toggle Coding Standards Information</summary>
+
+## Coding Standards
+
+Development is done using [VS Code](https://code.visualstudio.com/).
+
+In order to set up [Prettier](https://prettier.io/) and [Linting with angular-eslint](https://github.com/angular-eslint/angular-eslint), these commands were ran before adding components.
+
+Aliases have also been added to scripts section under [package.json](package.json)
+
+```sh
+npm install prettier --save-dev
+```
+
+```sh
+npx prettier --write .
+```
+
+```sh
+ng add @angular-eslint/schematics
+```
+
+```sh
+npm install prettier-eslint eslint-config-prettier eslint-plugin-prettier --save-dev
+```
+
 
 ## Linting and Formatting
 
@@ -100,13 +189,23 @@ Formatting code with prettier
 npm run prettier
 ```
 
+</details>
+
+</section>
+
+<section>
+
+<details open>
+<summary>Toggle Application Information</summary>
 
 ## Application
+
+### Dashboard
 
 <img src="resources/docs/site-playground-cms-angular-dashboard.png" alt="Screenshot for the CMS Dashboard">
 
 
-## Interfaces
+### Interfaces
 
 | Interface | Group |
 |---------|---------|
@@ -137,6 +236,15 @@ npm run prettier
 | [UserResponse](src/app/types.ts#L657) | Users, Responses |
 
 
+</details>
+
+</section>
+
+<section>
+
+<details>
+<summary>Toggle Continuous Integration Information</summary>
+
 ## Continuous Integration
 
 ### Slack Integration
@@ -144,3 +252,84 @@ npm run prettier
 The [GitHub CI Workflow: ci.yml](.github/workflows/ci.yml) sends the status and results of the build to Slack:
 
 <img src="resources/docs/site-playground-cms-angular-ci-slack-integration.png" alt="Screenshot of the Slack report for the GitHub CI Workflow">
+
+</details>
+
+</section>
+
+<section>
+
+<details>
+<summary>Toggle Enviroment Information</summary>
+
+## Enviroments
+
+### Production
+
+```sh
+ng build
+```
+
+**NOTE:** Production requires an environment variable `API_CMS_URL` to be defined to access the CMS API.
+
+### Demo
+
+```sh
+ng build --configuration=demo
+```
+
+### Development
+
+```sh
+ng build --configuration=development
+```
+
+See: [src/environments/environment.development.ts](src/environments/environment.development.ts)
+
+```ts
+export const environment = {
+  production: false,
+  apiUrl: 'http://site-playground-integration/mock/api',
+};
+```
+
+</details>
+
+</section>
+
+<details>
+<summary>Toggle Package Components</summary>
+
+## Package Components
+
+This package utilizes [@angular/material](https://material.angular.io/)
+
+**NOTE:** These commands were used to build out
+
+### Generating components
+
+```sh
+ng generate environments
+```
+
+ng generate @angular/material:navigation components/navigation
+
+
+ng generate component components/footer
+
+
+ng generate @angular/material:table components/snippets
+ng generate @angular/material:table components/pages
+
+
+```sh
+ng generate @angular/material:dashboard components/dashboard
+```
+
+
+</details>
+
+</section>
+
+
+

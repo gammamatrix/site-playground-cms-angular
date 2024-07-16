@@ -188,12 +188,12 @@ export interface Page {
   options: string[] | null;
   sources: string[] | null;
   // relations
-  revisions: PageRevisions;
-  children: Pages;
-  creator: User;
-  modifier: User;
-  owner: User;
-  parent: Page;
+  revisions?: PageRevisions;
+  children?: Pages;
+  // creator?: User;
+  // modifier?: User;
+  // owner?: User;
+  // parent?: Page;
 }
 
 export type Pages = Page[];

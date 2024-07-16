@@ -1,10 +1,8 @@
 import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatGridListModule } from '@angular/material/grid-list';
-import { MatIconModule } from '@angular/material/icon';
-import { MatMenuModule } from '@angular/material/menu';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { MatTableModule } from '@angular/material/table';
 
 import { PagesComponent } from './pages.component';
 
@@ -17,11 +15,9 @@ describe('PagesComponent', () => {
       declarations: [PagesComponent],
       imports: [
         NoopAnimationsModule,
-        MatButtonModule,
-        MatCardModule,
-        MatGridListModule,
-        MatIconModule,
-        MatMenuModule,
+        MatPaginatorModule,
+        MatSortModule,
+        MatTableModule,
       ],
     }).compileComponents();
   }));

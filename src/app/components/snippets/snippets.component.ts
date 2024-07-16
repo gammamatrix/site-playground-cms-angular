@@ -3,7 +3,6 @@ import { MatTable } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { SnippetsDataSource } from './snippets-datasource';
-
 import { Snippet } from '../../app.types';
 
 @Component({
