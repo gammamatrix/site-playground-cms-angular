@@ -24,7 +24,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { FooterComponent } from './components/footer/footer.component';
-import { NavigationComponent } from './components/navigation/navigation.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { PagesComponent } from './components/pages/pages.component';
 import { PagesCreateComponent } from './components/pages/create/create.component';
@@ -33,7 +32,6 @@ import { SnippetsComponent } from './components/snippets/snippets.component';
 @NgModule({
   declarations: [
     AppComponent,
-    NavigationComponent,
     DashboardComponent,
     FooterComponent,
     SnippetsComponent,
