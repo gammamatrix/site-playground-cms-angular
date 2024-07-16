@@ -1,7 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
-import { FooterComponent } from './components/footer/footer.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -19,7 +18,7 @@ describe('AppComponent', () => {
         MatSidenavModule,
         MatToolbarModule,
       ],
-      declarations: [AppComponent, FooterComponent],
+      declarations: [AppComponent],
     })
   );
 
