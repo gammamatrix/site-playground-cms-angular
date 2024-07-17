@@ -1,0 +1,216 @@
+<form
+  *ngIf="isReady"
+  class="form-snippets-edit"
+  [formGroup]="editForm"
+  novalidate
+  (ngSubmit)="onSubmit()">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Edit a snippet </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Title" formControlName="title" />
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row" *ngIf="!autoGenerateSlug">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Slug" formControlName="slug" />
+            <mat-error *ngIf="editForm.controls['slug'].hasError('required')">
+              A slug is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Label" formControlName="label" />
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <button
+            mat-button
+            type="button"
+            (click)="autoGenerateSlug = !autoGenerateSlug">
+            <mat-icon *ngIf="autoGenerateSlug">check</mat-icon>
+            <mat-icon *ngIf="!autoGenerateSlug">close</mat-icon>
+            Auto generate slug
+          </button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <textarea
+              matInput
+              placeholder="Content"
+              formControlName="content"></textarea>
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-card-content>
+    <mat-card-content>
+      <div class="row">
+        <div class="col">
+          <!-- <mat-slide-toggle formControlName="published"
+            >published</mat-slide-toggle
+          > -->
+          <!-- <mat-card-title>Access</mat-card-title>
+          <mat-slide-toggle formControlName="active">active</mat-slide-toggle>
+          <mat-slide-toggle formControlName="published"
+            >published</mat-slide-toggle
+          >
+          <mat-slide-toggle formControlName="only_admin"
+            >only admin</mat-slide-toggle
+          >
+          <mat-slide-toggle formControlName="only_user"
+            >only user</mat-slide-toggle
+          >
+          <mat-slide-toggle formControlName="only_guest"
+            >only guest</mat-slide-toggle
+          >
+          <mat-slide-toggle formControlName="allow_public"
+            >allow public</mat-slide-toggle
+          > -->
+          <!-- <mat-slide-toggle formControlName="canceled"
+            >canceled</mat-slide-toggle
+          >
+          <mat-slide-toggle formControlName="closed">closed</mat-slide-toggle>
+          <mat-slide-toggle formControlName="completed"
+            >completed</mat-slide-toggle
+          >
+          <mat-slide-toggle formControlName="duplicate"
+            >duplicate</mat-slide-toggle
+          >
+          <mat-slide-toggle formControlName="fixed">fixed</mat-slide-toggle>
+          <mat-slide-toggle formControlName="flagged">flagged</mat-slide-toggle>
+          <mat-slide-toggle formControlName="is_external"
+            >is_external</mat-slide-toggle
+          >
+          <mat-slide-toggle formControlName="is_redirect"
+            >is_redirect</mat-slide-toggle
+          >
+          <mat-slide-toggle formControlName="locked">locked</mat-slide-toggle>
+          <mat-slide-toggle formControlName="pending">pending</mat-slide-toggle>
+          <mat-slide-toggle formControlName="planned">planned</mat-slide-toggle>
+          <mat-slide-toggle formControlName="problem">problem</mat-slide-toggle>
+          <mat-slide-toggle formControlName="published"
+            >published</mat-slide-toggle
+          >
+          <mat-slide-toggle formControlName="released"
+            >released</mat-slide-toggle
+          >
+          <mat-slide-toggle formControlName="retired">retired</mat-slide-toggle>
+          <mat-slide-toggle formControlName="resolved"
+            >resolved</mat-slide-toggle
+          >
+          <mat-slide-toggle formControlName="sitemap">sitemap</mat-slide-toggle>
+          <mat-slide-toggle formControlName="suspended"
+            >suspended</mat-slide-toggle
+          >
+          <mat-slide-toggle formControlName="unknown">unknown</mat-slide-toggle> -->
+        </div>
+      </div>
+    </mat-card-content>
+    <mat-card-content>
+      <mat-card-title>Dates</mat-card-title>
+      <div class="row">
+        <div class="col">
+          <mat-form-field>
+            <mat-label>Closed at</mat-label>
+            <input
+              matInput
+              [matDatepicker]="picker_closed_at"
+              formControlName="closed_at" />
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle
+              matIconSuffix
+              [for]="picker_closed_at"></mat-datepicker-toggle>
+            <mat-datepicker #picker_closed_at></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field>
+            <mat-label>Published at</mat-label>
+            <input
+              matInput
+              [matDatepicker]="picker_published_at"
+              formControlName="published_at" />
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle
+              matIconSuffix
+              [for]="picker_published_at"></mat-datepicker-toggle>
+            <mat-datepicker #picker_published_at></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field>
+            <mat-label>Planned Start/End Date Range</mat-label>
+            <mat-date-range-input
+              [formGroup]="range_planned"
+              [rangePicker]="picker_planned">
+              <input
+                matStartDate
+                formControlName="start"
+                placeholder="Start date" />
+              <input matEndDate formControlName="end" placeholder="End date" />
+            </mat-date-range-input>
+            <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle
+              matIconSuffix
+              [for]="picker_planned"></mat-datepicker-toggle>
+            <mat-date-range-picker #picker_planned></mat-date-range-picker>
+
+            <mat-error
+              *ngIf="range.controls.start.hasError('matStartDateInvalid')"
+              >Invalid start date</mat-error
+            >
+            <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')"
+              >Invalid end date</mat-error
+            >
+          </mat-form-field>
+
+          <p>Selected range: {{ range_planned.value | json }}</p>
+        </div>
+        <div class="col">
+          <mat-form-field>
+            <mat-label>Start/End Date Range</mat-label>
+            <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
+              <input
+                matStartDate
+                formControlName="start"
+                placeholder="Start date" />
+              <input matEndDate formControlName="end" placeholder="End date" />
+            </mat-date-range-input>
+            <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle
+              matIconSuffix
+              [for]="picker"></mat-datepicker-toggle>
+            <mat-date-range-picker #picker></mat-date-range-picker>
+
+            <mat-error
+              *ngIf="range.controls.start.hasError('matStartDateInvalid')"
+              >Invalid start date</mat-error
+            >
+            <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')"
+              >Invalid end date</mat-error
+            >
+          </mat-form-field>
+
+          <p>Selected range: {{ range.value | json }}</p>
+        </div>
+      </div>
+    </mat-card-content>
+
+    <mat-card-actions>
+      <button mat-raised-button color="primary" type="submit">Submit</button>
+    </mat-card-actions>
+  </mat-card>
+</form>

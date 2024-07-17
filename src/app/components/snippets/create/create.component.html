@@ -1,0 +1,56 @@
+<form [formGroup]="createForm" novalidate (ngSubmit)="onSubmit()">
+  <mat-card class="shipping-card">
+    <mat-card-header>
+      <mat-card-title>Create a snippet </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Title" formControlName="title" />
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row" *ngIf="!autoGenerateSlug">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Slug" formControlName="slug" />
+            <mat-error *ngIf="createForm.controls['slug'].hasError('required')">
+              A slug is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Label" formControlName="label" />
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <button
+            mat-button
+            type="button"
+            (click)="autoGenerateSlug = !autoGenerateSlug">
+            <mat-icon *ngIf="autoGenerateSlug">check</mat-icon>
+            <mat-icon *ngIf="!autoGenerateSlug">close</mat-icon>
+            Auto generate slug
+          </button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <textarea
+              matInput
+              placeholder="Content"
+              formControlName="content"></textarea>
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" type="submit">Submit</button>
+    </mat-card-actions>
+  </mat-card>
+</form>

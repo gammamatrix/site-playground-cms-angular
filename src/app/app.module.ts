@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { LayoutModule } from '@angular/cdk/layout';
+import { FormsModule } from '@angular/forms'; // Adding FormsModule
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -18,29 +19,49 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
+import {
+  MatSlideToggleModule,
+  _MatSlideToggleRequiredValidatorModule,
+} from '@angular/material/slide-toggle';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 import { AppRoutingModule } from './app-routing.module';
+// import { ServicesModule } from './services/services.module';
 import { AppComponent } from './app.component';
 
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { PagesComponent } from './components/pages/pages.component';
 import { PagesCreateComponent } from './components/pages/create/create.component';
+import { PagesEditComponent } from './components/pages/edit/edit.component';
 import { SnippetsComponent } from './components/snippets/snippets.component';
+import { SnippetsCreateComponent } from './components/snippets/create/create.component';
+import { SnippetsEditComponent } from './components/snippets/edit/edit.component';
+import { HttpClientModule } from '@angular/common/http';
+import { SnippetsService } from './services/snippets.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     DashboardComponent,
-    SnippetsComponent,
     PagesComponent,
     PagesCreateComponent,
+    PagesEditComponent,
+    SnippetsComponent,
+    SnippetsCreateComponent,
+    SnippetsEditComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    HttpClientModule,
     LayoutModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatFormFieldModule,
     MatToolbarModule,
     MatButtonModule,
     MatSidenavModule,
@@ -56,9 +77,12 @@ import { SnippetsComponent } from './components/snippets/snippets.component';
     MatInputModule,
     MatSelectModule,
     MatRadioModule,
+    MatSlideToggleModule,
+    _MatSlideToggleRequiredValidatorModule,
+    FormsModule,
     ReactiveFormsModule,
   ],
-  providers: [],
+  providers: [SnippetsService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
