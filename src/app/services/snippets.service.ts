@@ -22,8 +22,14 @@ export class SnippetsService {
 
   protected snippetsList: Snippets = [];
 
+  getApiUrl(): string {
+    console.log('SnippetsService.getApiUrl', { apiUrl: this.apiUrl });
+    return this.apiUrl;
+  }
+
   isReady(): boolean {
-    return this.apiUrl !== '';
+    console.log('SnippetsService.isReady', { apiUrl: this.apiUrl });
+    return this.apiUrl.startsWith('http');
   }
 
   index(options?: IndexParams): Observable<Snippets> {
@@ -50,9 +56,9 @@ export class SnippetsService {
   }
 
   update(model: Snippet): Observable<Snippet> {
-    return this.http.post<Snippet>(`${this.apiUrl}/${model.id}`, model);
+    return this.http.post<Snippet>(
+      `${this.apiUrl}/snippets/${model.id}`,
+      model
+    );
   }
 }
-
-// http://site-playground-integration/mock/api/cms/snippets/?offset=0&page=1&perPage=10
-// http://site-playground-integration/mock/api/cms/snippets?offset=0&page=1&perPage=10
