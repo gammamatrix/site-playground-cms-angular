@@ -4,13 +4,15 @@ import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
 // import { mockSnippetOne } from '../../../mock/snippets';
 import { IndexParams, Snippet, Snippets } from '../app.types';
-// import { SnippetsResponse } from '../app.types';
+// import { SnippetResponse, ResponseShowMeta } from '../app.types';
+import { ResponseShowMeta } from '../app.types';
 // import { SnippetsResponse } from '../app.types';
 // import { SnippetRevision } from '../app.types';
 // import { SnippetEditModel } from '../app.types';
 // import { SnippetRevisionsResponse } from '../app.types';
 // import { SnippetRevisionResponse } from '../app.types';
 // import { User } from '../app.types';
+import { map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -19,8 +21,14 @@ export class SnippetsService {
   constructor(private http: HttpClient) {}
 
   private apiUrl: string = environment.apiUrl;
+  protected snippets$: Snippet[] = [];
 
-  protected snippetsList: Snippets = [];
+  protected snippet$: Snippet | undefined;
+  protected snippetMeta$: ResponseShowMeta | undefined;
+
+  // protected snippets$: BehaviorSubject<Snippet[] | null> = new BehaviorSubject(
+  //   null
+  // );
 
   getApiUrl(): string {
     console.log('SnippetsService.getApiUrl', { apiUrl: this.apiUrl });
@@ -48,7 +56,18 @@ export class SnippetsService {
       id: id,
       apiUrl: this.apiUrl,
     });
-    return this.http.get<Snippet>(`${this.apiUrl}/snippets/${id}`);
+    return this.http.get<Snippet>(`${this.apiUrl}/snippets/${id}`).pipe(
+      map((response: any) => {
+        this.snippet$ = response['data'];
+        this.snippetMeta$ = response['meta'];
+        console.log('SnippetsService.get()', {
+          response: response,
+          snippet: this.snippet$,
+          snippetMeta: this.snippetMeta$,
+        });
+        return response['data'];
+      })
+    );
   }
 
   create(model: Snippet): Observable<Snippet> {

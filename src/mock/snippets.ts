@@ -1,4 +1,4 @@
-import { Snippet, Snippets } from '../app/app.types';
+import { Snippet, Snippets, SnippetResponse } from '../app/app.types';
 
 const mockSnippetOne: Snippet = {
   id: '9c85a579-87a7-4b1e-bc4d-a6746179e009',
@@ -89,4 +89,29 @@ const mockSnippetOne: Snippet = {
 
 const mockSnippetsOne: Snippets = [mockSnippetOne];
 
-export { mockSnippetOne, mockSnippetsOne };
+const mockSnippetOneResponse: SnippetResponse = {
+  data: mockSnippetOne,
+  meta: {
+    id: '9c85a579-87a7-4b1e-bc4d-a6746179e009',
+    rules: [],
+    session_user_id: '9baa6092-a30f-461a-a5fc-5132b3264b91',
+    timestamp: '2024-07-14T17:37:13.520331Z',
+    validated: [],
+    info: {
+      model_attribute: 'title',
+      model_label: 'Snippet',
+      model_label_plural: 'Snippets',
+      model_route: 'playground.cms.api.snippets',
+      model_slug: 'snippet',
+      model_slug_plural: 'snippets',
+      module_label: 'CMS',
+      module_label_plural: 'CMS',
+      module_route: 'playground.cms.api',
+      module_slug: 'cms',
+      privilege: 'playground-cms-api:snippet',
+      table: 'cms_snippets',
+    },
+  },
+};
+
+export { mockSnippetOne, mockSnippetsOne, mockSnippetOneResponse };

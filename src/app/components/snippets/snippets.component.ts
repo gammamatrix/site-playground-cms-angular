@@ -4,6 +4,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { SnippetsDataSource } from './snippets-datasource';
 import { Snippet } from '../../app.types';
+import { SnippetsService } from '../../services/snippets.service';
 
 @Component({
   selector: 'app-snippets',
@@ -14,7 +15,8 @@ export class SnippetsComponent implements AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatTable) table!: MatTable<Snippet>;
-  dataSource = new SnippetsDataSource();
+  dataSource = new SnippetsDataSource(this.service);
+  constructor(private service: SnippetsService) {}
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['id', 'title', 'created_at', 'updated_at', 'edit'];

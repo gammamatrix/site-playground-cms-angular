@@ -27,6 +27,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { AppRoutingModule } from './app-routing.module';
 // import { ServicesModule } from './services/services.module';
@@ -80,6 +81,7 @@ import { SnippetsService } from './services/snippets.service';
     MatSlideToggleModule,
     _MatSlideToggleRequiredValidatorModule,
     FormsModule,
+    MatProgressSpinnerModule,
     ReactiveFormsModule,
   ],
   providers: [SnippetsService],

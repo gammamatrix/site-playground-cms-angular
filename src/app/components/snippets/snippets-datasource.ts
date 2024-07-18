@@ -5,11 +5,11 @@ import { MatSort } from '@angular/material/sort';
 import { map } from 'rxjs/operators';
 import { Observable, of as observableOf, merge } from 'rxjs';
 import { Snippet, Snippets } from '../../app.types';
-import { mockSnippetsOne } from '../../../mock/snippets';
-// import { SnippetsService } from '../../services/snippets.service';
+// import { mockSnippetsOne } from '../../../mock/snippets';
+import { SnippetsService } from '../../services/snippets.service';
 
 // TODO: replace this with real data from your application
-const EXAMPLE_DATA: Snippets = mockSnippetsOne;
+// const EXAMPLE_DATA: Snippets = mockSnippetsOne;
 
 /**
  * Data source for the Snippets view. This class should
@@ -17,13 +17,14 @@ const EXAMPLE_DATA: Snippets = mockSnippetsOne;
  * (including sorting, pagination, and filtering).
  */
 export class SnippetsDataSource extends DataSource<Snippet> {
-  data: Snippets = EXAMPLE_DATA;
+  // data: Snippets = EXAMPLE_DATA;
+  data: Snippets = [];
   paginator: MatPaginator | undefined;
   sort: MatSort | undefined;
 
   // private service = inject(SnippetsService);
 
-  constructor() {
+  constructor(private service: SnippetsService) {
     super();
   }
 
@@ -88,7 +89,9 @@ export class SnippetsDataSource extends DataSource<Snippet> {
         case 'name':
           return compare(a.title, b.title, isAsc);
         case 'id':
-          return compare(+a.id, +b.id, isAsc);
+          return a.id !== undefined && b.id !== undefined
+            ? compare(+a.id, +b.id, isAsc)
+            : 0;
         default:
           return 0;
       }

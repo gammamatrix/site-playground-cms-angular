@@ -1,7 +1,7 @@
 import { Snippet as iSnippet } from '../../app.types';
 
 export class Snippet implements iSnippet {
-  id = '';
+  id?: string;
   created_by_id = '';
   modified_by_id = '';
   owned_by_id = '';

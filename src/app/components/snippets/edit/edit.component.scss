@@ -27,6 +27,9 @@
 }
 
 .form-snippets-edit {
+  mat-spinner {
+    margin: 5em auto;
+  }
   mat-card-content {
     .row {
       .col {

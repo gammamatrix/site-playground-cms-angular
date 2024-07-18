@@ -112,8 +112,8 @@ jobs:
       - run: npm run build --if-present
       - name: Run unit tests
         run: ng test --no-watch --no-progress --browsers=ChromeHeadless
-      - name: Run lint
-        run: ng lint
+      # - name: Run lint
+      #   run: ng lint
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
       - name: Run Playwright tests

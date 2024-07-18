@@ -1,14 +1,28 @@
 export interface ResponseShowMeta {
   id?: string | null;
   timestamp?: string | null;
-  session_user_id?: number | null;
+  session_user_id?: string | null;
   rules: object;
   validated: object;
+  info: {
+    model_attribute: string;
+    model_label: string;
+    model_label_plural: string;
+    model_route: string;
+    model_slug: string;
+    model_slug_plural: string;
+    module_label: string;
+    module_label_plural: string;
+    module_route: string;
+    module_slug: string;
+    privilege: string;
+    table: string;
+  };
 }
 
 export interface ResponseIndexMeta {
   timestamp?: string | null;
-  session_user_id?: number | null;
+  session_user_id?: string | null;
   rules: object;
   validated: object;
 }
@@ -421,7 +435,7 @@ export interface SnippetEditModel {
 
 export interface Snippet {
   // columns
-  readonly id: string;
+  readonly id?: string;
   created_by_id?: string;
   modified_by_id: string | null;
   owned_by_id: string | null;

@@ -3,6 +3,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { SnippetsComponent } from './snippets.component';
 
@@ -14,6 +15,7 @@ describe('SnippetsComponent', () => {
     TestBed.configureTestingModule({
       declarations: [SnippetsComponent],
       imports: [
+        HttpClientTestingModule,
         NoopAnimationsModule,
         MatPaginatorModule,
         MatSortModule,
