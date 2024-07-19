@@ -15,7 +15,7 @@ export class LoginComponent implements OnInit {
   model: iLogin = {
     email: '',
     password: '',
-    // _token: '',
+    _token: '',
   };
   constructor(
     private formBuilder: FormBuilder,
@@ -24,13 +24,13 @@ export class LoginComponent implements OnInit {
     this.loginForm = this.formBuilder.group({
       email: ['', Validators.required],
       password: ['', Validators.required],
-      _token: [this.service.getCsfrToken(), Validators.required],
+      _token: ['', Validators.required],
     });
   }
 
   ngOnInit() {
     this.token();
-    console.log('LoginComponent.ngOnInit', {
+    console.debug('LoginComponent.ngOnInit', {
       isReady: this.isReady,
       loginForm: this.loginForm.value,
       this: this,
@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(): void {
-    console.log('LoginComponent.onSubmit', {
+    console.debug('LoginComponent.onSubmit', {
       this: this,
       loginForm: this.loginForm.value,
       model: this.model,
@@ -49,8 +49,13 @@ export class LoginComponent implements OnInit {
   login() {
     this.model.email = this.loginForm.value.email;
     this.model.password = this.loginForm.value.password;
+    // NOTE: verify csfr works with junk token
+    // junk value: 419 CSRF token mismatch.
+    this.model._token = 'junk';
+    // Empty returns 422 error
+    // this.model._token = '';
     this.service.login(this.model).subscribe(response => {
-      console.log('LoginComponent.login', {
+      console.debug('LoginComponent.login', {
         this: this,
         response: response,
       });
@@ -58,9 +63,9 @@ export class LoginComponent implements OnInit {
   }
 
   csrf() {
-    this.service.csrf().subscribe(token => {
+    this.service.csrfCookie().subscribe(token => {
       this.isReady = true;
-      console.log('LoginComponent.csrf - csrf', {
+      console.debug('LoginComponent.csrf', {
         this: this,
         token: token,
       });
@@ -68,22 +73,22 @@ export class LoginComponent implements OnInit {
   }
 
   token() {
-    // if (!this.model._token) {
-    this.service.requestToken().subscribe(token => {
-      // this.model._token = token;
-      this.csrf();
-      console.log('LoginComponent.token - requestToken', {
-        this: this,
-        token: token,
+    if (!this.model._token) {
+      this.service.requestToken().subscribe(token => {
+        this.model._token = token;
+        this.csrf();
+        console.debug('LoginComponent.token - requestToken', {
+          this: this,
+          token: token,
+        });
       });
-    });
-    // } else {
-    //   this.csrf();
-    //   this.isReady = true;
-    // }
-    console.log('LoginComponent.token', {
+    } else {
+      this.csrf();
+      this.isReady = true;
+    }
+    console.debug('LoginComponent.token', {
       this: this,
-      // token: this.model._token,
+      token: this.model._token,
     });
   }
 }

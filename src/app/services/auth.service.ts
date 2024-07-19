@@ -7,9 +7,7 @@ import { environment } from '../../environments/environment';
 import {
   AuthToken as iAuthToken,
   CreateToken as iCreateToken,
-  // CsfrToken as iCsfrToken,
   Login as iLogin,
-  // SessionToken as iSessionToken,
 } from '../app.types';
 
 @Injectable({
@@ -37,17 +35,11 @@ export class AuthService {
       );
   }
 
-  // createToken(): Observable<string> {
-  //   return this.http
-  //     .get<iCreateToken>(this.authUrl + '/api/tokens/create')
-  //     .pipe(
-  //       map(result => {
-  //         localStorage.setItem('csrf_token', result.token);
-  //         return result.token;
-  //       })
-  //     );
-  // }
-
+  /**
+   * Request a CSFR token for forms.
+   *
+   * @returns Observable<string> Returns the csfr token to submit in forms.
+   */
   requestToken(): Observable<string> {
     return this.http.get<iCreateToken>(this.authUrl + '/api/token').pipe(
       map(result => {
@@ -57,7 +49,16 @@ export class AuthService {
     );
   }
 
-  csrf(): Observable<boolean> {
+  /**
+   * This Authentication API call sets up the session.
+   *
+   * Cookies created:
+   * Set-Cookie: XSRF-TOKEN
+   * Set-Cookie: _session
+   *
+   * @returns Observable<boolean> Returns true if a token was returned.
+   */
+  csrfCookie(): Observable<boolean> {
     return this.http.get(this.authUrl + '/api/sanctum/csrf-cookie').pipe(
       map(result => {
         console.log('AuthService.csrf', {

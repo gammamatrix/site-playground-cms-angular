@@ -711,13 +711,7 @@ export interface IndexParams {
 export interface Login {
   email: string;
   password: string;
-  // _token: string;
-}
-
-export interface CsfrToken {
-  meta: {
-    token: string;
-  };
+  _token: string;
 }
 
 export interface CreateToken {
@@ -728,12 +722,4 @@ export interface AuthToken {
   message: string;
   csrf_token: string;
   token: string;
-}
-
-export interface SessionToken {
-  message: string;
-  tokens: {
-    app: string;
-    session: string;
-  };
 }
