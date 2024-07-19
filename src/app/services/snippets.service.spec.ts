@@ -8,7 +8,7 @@ import { SnippetsService } from './snippets.service';
 import {
   mockSnippetOne,
   mockSnippetsOne,
-  // mockSnippetOneResponse,
+  mockSnippetOneResponse,
 } from '../../mock/snippets';
 import { environment } from '../../environments/environment';
 
@@ -27,7 +27,7 @@ describe('SnippetsService', () => {
   });
 
   it('should be created', () => {
-    const service: SnippetsService = TestBed.get(SnippetsService);
+    const service: SnippetsService = TestBed.inject(SnippetsService);
     expect(service).toBeTruthy();
   });
 
@@ -57,18 +57,18 @@ describe('SnippetsService', () => {
     req.flush(mockSnippetsOne);
   });
 
-  // it('should call get and return a single snippet', () => {
-  //   service.get(id).subscribe(response => {
-  //     expect(response).toEqual(mockSnippetOne);
-  //   });
+  it('should call get and return a single snippet', () => {
+    service.get(id).subscribe(response => {
+      expect(response).toEqual(mockSnippetOne);
+    });
 
-  //   const req = httpController.expectOne({
-  //     method: 'GET',
-  //     url: `${url}/snippets/${id}`,
-  //   });
+    const req = httpController.expectOne({
+      method: 'GET',
+      url: `${url}/snippets/${id}`,
+    });
 
-  //   req.flush(mockSnippetOneResponse);
-  // });
+    req.flush(mockSnippetOneResponse);
+  });
 
   it('should call create and return a single snippet', () => {
     service.create(mockSnippetOne).subscribe(response => {
@@ -89,7 +89,7 @@ describe('SnippetsService', () => {
     });
 
     const req = httpController.expectOne({
-      method: 'POST',
+      method: 'PATCH',
       url: `${url}/snippets/${id}`,
     });
 

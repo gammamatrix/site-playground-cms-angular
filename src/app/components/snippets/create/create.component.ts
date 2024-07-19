@@ -1,5 +1,9 @@
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { FormBuilder, Validators } from '@angular/forms';
+import { SnippetResponse, Snippet as iSnippet } from '../../../app.types';
+import { SnippetsService } from '../../../services/snippets.service';
+import { Snippet } from '../snippet.model';
 
 @Component({
   selector: 'app-snippets-create',
@@ -7,20 +11,94 @@ import { FormBuilder, Validators } from '@angular/forms';
   styleUrls: ['./create.component.scss'],
 })
 export class SnippetsCreateComponent {
-  private fb = inject(FormBuilder);
-  createForm = this.fb.group({
-    title: ['', Validators.required],
-    slug: ['', Validators.required],
-    label: [''],
-    content: [''],
-  });
-
   autoGenerateSlug = true;
+  createForm: FormGroup;
+  isReady = false;
+  model: iSnippet | undefined;
+  response: SnippetResponse | undefined;
+
+  constructor(
+    private formBuilder: FormBuilder,
+    private service: SnippetsService
+  ) {
+    this.model = new Snippet();
+    this.createForm = this.formBuilder.group({
+      owned_by_id: [''],
+      parent_id: [''],
+      snippet_type: [''],
+      title: ['', Validators.required],
+      slug: ['', Validators.required],
+      label: [''],
+      byline: [''],
+      url: [''],
+      content: [''],
+      description: [''],
+      introduction: [''],
+      summary: [''],
+      locale: [''],
+      icon: [''],
+      image: [''],
+      avatar: [''],
+      canceled_at: [''],
+      closed_at: [''],
+      published_at: [''],
+      embargo_at: [''],
+      fixed_at: [''],
+      postponed_at: [''],
+      released_at: [''],
+      resumed_at: [''],
+      suspended_at: [''],
+      start_at: [''],
+      planned_start_at: [''],
+      end_at: [''],
+      planned_end_at: [''],
+      active: [false],
+      canceled: [false],
+      closed: [false],
+      completed: [false],
+      duplicate: [false],
+      fixed: [false],
+      flagged: [false],
+      is_external: [false],
+      is_redirect: [false],
+      locked: [false],
+      pending: [false],
+      planned: [false],
+      problem: [false],
+      published: [false],
+      released: [false],
+      retired: [false],
+      resolved: [false],
+      sitemap: [false],
+      suspended: [false],
+      unknown: [false],
+      only_user: [false],
+      only_guest: [false],
+      allow_public: [false],
+      only_admin: [false],
+    });
+    this.isReady = true;
+  }
 
   onSubmit(): void {
-    console.log('SnippetsCreateComponent', {
+    console.log('SnippetsCreateComponent.onSubmit', {
       this: this,
       createForm: this.createForm.value,
+      model: this.model,
     });
+    this.save();
+  }
+
+  save() {
+    if (this.model) {
+      this.service.create(this.createForm.value).subscribe(response => {
+        this.model = response;
+        this.createForm.patchValue(this.model);
+      });
+      console.log('SnippetsCreateComponent.save', {
+        this: this,
+        model: this.model,
+      });
+    }
   }
 }

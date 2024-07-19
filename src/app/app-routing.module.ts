@@ -6,6 +6,7 @@ import { PagesCreateComponent } from './components/pages/create/create.component
 import { SnippetsComponent } from './components/snippets/snippets.component';
 import { SnippetsCreateComponent } from './components/snippets/create/create.component';
 import { SnippetsEditComponent } from './components/snippets/edit/edit.component';
+import { LoginComponent } from './components/auth/login/login.component';
 
 const routes: Routes = [
   {
@@ -37,6 +38,11 @@ const routes: Routes = [
     path: 'snippets/edit/:id',
     component: SnippetsEditComponent,
     title: 'CMS Edit a Snippet',
+  },
+  {
+    path: 'login',
+    component: LoginComponent,
+    title: 'Login',
   },
 ];
 

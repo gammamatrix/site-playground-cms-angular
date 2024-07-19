@@ -1,27 +1,8 @@
-import {
-  Component,
-  // inject,
-  // Input,
-  Input as RouteParam,
-  // Input as RouteQueryParam,
-  OnInit,
-} from '@angular/core';
-import {
-  FormGroup,
-  // FormControl,
-  // FormsModule,
-  // ReactiveFormsModule,
-} from '@angular/forms';
-
+import { Component, Input as RouteParam, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { FormBuilder, Validators } from '@angular/forms';
-// import { HttpClient } from '@angular/common/http';
-// import { Observable } from 'rxjs';
-
 import { SnippetResponse, Snippet as iSnippet } from '../../../app.types';
 import { SnippetsService } from '../../../services/snippets.service';
-// import { map } from 'rxjs/operators';
-
-// import { Snippet } from '../snippet.model';
 
 @Component({
   selector: 'app-snippets-edit',
@@ -114,63 +95,6 @@ export class SnippetsEditComponent implements OnInit {
     this.service.get(this.id).subscribe(response => {
       this.model = response;
       this.editForm.patchValue(this.model);
-      // this.model.title = data.title;
-      // this.model.slug = data.slug ?? '';
-      // this.model.label = data.label;
-      // this.model.byline = data.byline;
-      // this.model.url = data.url;
-
-      // this.model.description = data.description;
-      // this.model.introduction = data.introduction;
-      // this.model.content = data.content ?? '';
-      // this.model.summary = data.summary ?? '';
-
-      // this.model.locale = data.locale;
-      // this.model.icon = data.icon;
-      // this.model.image = data.image;
-      // this.model.avatar = data.avatar;
-
-      // this.model.created_by_id = data.created_by_id ?? '';
-      // this.model.modified_by_id = data.modified_by_id ?? '';
-      // this.model.owned_by_id = data.owned_by_id ?? '';
-      // this.model.parent_id = data.parent_id ?? '';
-      // this.model.snippet_type = data.snippet_type ?? '';
-
-      // this.model.created_at = data.created_at ?? '';
-      // this.model.updated_at = data.updated_at ?? '';
-      // this.model.deleted_at = data.deleted_at ?? '';
-      // this.model.start_at = data.start_at ?? '';
-      // this.model.planned_start_at = data.planned_start_at ?? '';
-      // this.model.planned_end_at = data.planned_end_at ?? '';
-      // this.model.canceled_at = data.canceled_at ?? '';
-      // this.model.closed_at = data.closed_at ?? '';
-      // this.model.embargo_at = data.embargo_at ?? '';
-      // this.model.fixed_at = data.fixed_at ?? '';
-      // this.model.postponed_at = data.postponed_at ?? '';
-      // this.model.published_at = data.published_at ?? '';
-      // this.model.released_at = data.released_at ?? '';
-      // this.model.resumed_at = data.resumed_at ?? '';
-      // this.model.suspended_at = data.suspended_at ?? '';
-
-      // this.model.active = data.active;
-      // this.model.canceled = data.canceled;
-      // this.model.closed = data.closed;
-      // this.model.completed = data.completed;
-      // this.model.duplicate = data.duplicate;
-      // this.model.fixed = data.fixed;
-      // this.model.flagged = data.flagged;
-      // this.model.internal = data.internal;
-      // this.model.locked = data.locked;
-      // this.model.pending = data.pending;
-      // this.model.planned = data.planned;
-      // this.model.problem = data.problem;
-      // this.model.published = data.published;
-      // this.model.released = data.released;
-      // this.model.retired = data.retired;
-      // this.model.resolved = data.resolved;
-      // this.model.sitemap = data.sitemap;
-      // this.model.suspended = data.suspended;
-      // this.model.unknown = data.unknown;
       this.isReady = true;
     });
     console.log('SnippetsEditComponent.fetch', {
@@ -180,51 +104,25 @@ export class SnippetsEditComponent implements OnInit {
   }
 
   onSubmit(): void {
-    // this.model.title = this.editForm?.value?.title ?? '';
-    // this.model.slug = this.editForm?.value?.slug ?? '';
-    // this.model.label = this.editForm?.value?.label ?? '';
-    // this.model.byline = this.editForm?.value?.byline ?? '';
-    // this.model.url = this.editForm?.value?.url ?? '';
-
-    // this.model.description = this.editForm?.value?.description ?? '';
-    // this.model.introduction = this.editForm?.value?.introduction ?? '';
-    // this.model.content = this.editForm?.value?.content ?? '';
-    // this.model.summary = this.editForm?.value?.summary ?? '';
-
-    // this.model.locale = this.editForm?.value?.locale ?? '';
-    // this.model.icon = this.editForm?.value?.icon ?? '';
-    // this.model.image = this.editForm?.value?.image ?? '';
-    // this.model.avatar = this.editForm?.value?.avatar ?? '';
-
-    // this.model.created_by_id = this.editForm?.value?.created_by_id ?? '';
-    // this.model.modified_by_id = this.editForm?.value?.modified_by_id ?? '';
-    // this.model.owned_by_id = this.editForm?.value?.owned_by_id ?? '';
-    // this.model.parent_id = this.editForm?.value?.parent_id ?? '';
-    // this.model.snippet_type = this.editForm?.value?.snippet_type ?? '';
-
-    // this.model.planned_start_at = this.editForm?.value?.planned_start_at ?? '';
-    // this.model.planned_end_at = this.editForm?.value?.planned_end_at ?? '';
-
-    // this.model.canceled_at = this.editForm?.value?.canceled_at ?? '';
-    // this.model.closed_at = this.editForm?.value?.closed_at ?? '';
-    // this.model.embargo_at = this.editForm?.value?.embargo_at ?? '';
-    // this.model.fixed_at = this.editForm?.value?.fixed_at ?? '';
-    // this.model.postponed_at = this.editForm?.value?.postponed_at ?? '';
-    // this.model.published_at = this.editForm?.value?.published_at ?? '';
-    // this.model.released_at = this.editForm?.value?.released_at ?? '';
-    // this.model.resumed_at = this.editForm?.value?.resumed_at ?? '';
-    // this.model.suspended_at = this.editForm?.value?.suspended_at ?? '';
-
-    // this.model.start_at = this.range?.value?.start?.toISOString() ?? '';
-    // this.model.start_at = this.range?.value?.start?.toISOString() ?? '';
-    // this.model.end_at = this.range?.value?.end?.toISOString() ?? '';
-    // new Date().toISOString()
     console.log('SnippetsEditComponent.onSubmit', {
       this: this,
       editForm: this.editForm.value,
-      // range: this.range.value,
       id: this.id,
       model: this.model,
     });
+    this.save();
+  }
+
+  save() {
+    if (this.model) {
+      this.service.update(this.model).subscribe(response => {
+        this.model = response;
+        this.editForm.patchValue(this.model);
+      });
+      console.log('SnippetsEditComponent.save', {
+        this: this,
+        model: this.model,
+      });
+    }
   }
 }

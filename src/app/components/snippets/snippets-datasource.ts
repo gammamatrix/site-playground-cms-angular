@@ -4,7 +4,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { map } from 'rxjs/operators';
 import { Observable, of as observableOf, merge } from 'rxjs';
-import { Snippet, Snippets } from '../../app.types';
+import { IndexParams, Snippet, Snippets } from '../../app.types';
 // import { mockSnippetsOne } from '../../../mock/snippets';
 import { SnippetsService } from '../../services/snippets.service';
 
@@ -34,6 +34,9 @@ export class SnippetsDataSource extends DataSource<Snippet> {
    * @returns A stream of the items to be rendered.
    */
   connect(): Observable<Snippets> {
+    console.log('SnippetsDataSource.connect', {
+      this: this,
+    });
     if (this.paginator && this.sort) {
       // Combine everything that affects the rendered data into one update
       // stream for the data-table to consume.

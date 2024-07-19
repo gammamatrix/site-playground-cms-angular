@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 // import { mockSnippetOne } from '../../../mock/snippets';
 import { IndexParams, Snippet, Snippets } from '../app.types';
 // import { SnippetResponse, ResponseShowMeta } from '../app.types';
-import { ResponseShowMeta } from '../app.types';
+import { ResponseIndexMeta, ResponseShowMeta } from '../app.types';
 // import { SnippetsResponse } from '../app.types';
 // import { SnippetRevision } from '../app.types';
 // import { SnippetEditModel } from '../app.types';
@@ -22,6 +22,7 @@ export class SnippetsService {
 
   private apiUrl: string = environment.apiUrl;
   protected snippets$: Snippet[] = [];
+  protected snippetsMeta$: ResponseIndexMeta | undefined;
 
   protected snippet$: Snippet | undefined;
   protected snippetMeta$: ResponseShowMeta | undefined;
@@ -41,14 +42,27 @@ export class SnippetsService {
   }
 
   index(options?: IndexParams): Observable<Snippets> {
-    return this.http.get<Snippets>(`${this.apiUrl}/snippets`, {
-      params: {
-        filters: options?.filters ?? [],
-        offset: options?.offset ?? 0,
-        page: options?.page ?? 1,
-        perPage: options?.perPage ?? 10,
-      },
-    });
+    return this.http
+      .get<Snippets>(`${this.apiUrl}/snippets`, {
+        params: {
+          filters: options?.filters ?? [],
+          offset: options?.offset ?? 0,
+          page: options?.page ?? 1,
+          perPage: options?.perPage ?? 10,
+        },
+      })
+      .pipe(
+        map((response: any) => {
+          this.snippets$ = response['data'];
+          this.snippetsMeta$ = response['meta'];
+          console.log('SnippetsService.get()', {
+            response: response,
+            snippet: this.snippet$,
+            snippetMeta: this.snippetMeta$,
+          });
+          return response['data'];
+        })
+      );
   }
 
   get(id: string): Observable<Snippet> {
@@ -75,7 +89,7 @@ export class SnippetsService {
   }
 
   update(model: Snippet): Observable<Snippet> {
-    return this.http.post<Snippet>(
+    return this.http.patch<Snippet>(
       `${this.apiUrl}/snippets/${model.id}`,
       model
     );

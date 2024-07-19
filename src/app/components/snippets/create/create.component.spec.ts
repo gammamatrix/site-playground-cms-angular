@@ -7,8 +7,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
-
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { SnippetsCreateComponent } from './create.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('SnippetsCreateComponent', () => {
   let component: SnippetsCreateComponent;
@@ -18,10 +21,14 @@ describe('SnippetsCreateComponent', () => {
     TestBed.configureTestingModule({
       declarations: [SnippetsCreateComponent],
       imports: [
+        HttpClientTestingModule,
         NoopAnimationsModule,
         ReactiveFormsModule,
         MatButtonModule,
         MatCardModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatProgressSpinnerModule,
         MatIconModule,
         MatInputModule,
         MatRadioModule,

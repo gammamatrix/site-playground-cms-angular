@@ -40,8 +40,14 @@ import { PagesEditComponent } from './components/pages/edit/edit.component';
 import { SnippetsComponent } from './components/snippets/snippets.component';
 import { SnippetsCreateComponent } from './components/snippets/create/create.component';
 import { SnippetsEditComponent } from './components/snippets/edit/edit.component';
-import { HttpClientModule } from '@angular/common/http';
+import {
+  HttpClientModule,
+  HttpClientXsrfModule,
+  // HTTP_INTERCEPTORS,
+} from '@angular/common/http';
 import { SnippetsService } from './services/snippets.service';
+import { LoginComponent } from './components/auth/login/login.component';
+// import { CsfrInterceptorService } from './services/csrf-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -53,12 +59,14 @@ import { SnippetsService } from './services/snippets.service';
     SnippetsComponent,
     SnippetsCreateComponent,
     SnippetsEditComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    HttpClientXsrfModule,
     LayoutModule,
     MatDatepickerModule,
     MatNativeDateModule,
@@ -84,7 +92,14 @@ import { SnippetsService } from './services/snippets.service';
     MatProgressSpinnerModule,
     ReactiveFormsModule,
   ],
-  providers: [SnippetsService],
+  providers: [
+    SnippetsService,
+    // {
+    //   provide: HTTP_INTERCEPTORS,
+    //   useClass: CsfrInterceptorService,
+    //   multi: true,
+    // },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

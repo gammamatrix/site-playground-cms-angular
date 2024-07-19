@@ -25,3 +25,18 @@
 .col:last-child {
   margin-right: 0;
 }
+
+.form-snippets-create {
+  mat-spinner {
+    margin: 5em auto;
+  }
+  mat-card-content {
+    .row {
+      .col {
+        mat-slide-toggle {
+          margin: 1em .5em;
+        }
+      }
+    }
+  }
+}
