@@ -1,11 +1,15 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
 // import { mockSnippetOne } from '../../../mock/snippets';
 import { IndexParams, Snippet, Snippets } from '../app.types';
 // import { SnippetResponse, ResponseShowMeta } from '../app.types';
-import { ResponseIndexMeta, ResponseShowMeta } from '../app.types';
+import {
+  SnippetRequestCreateInfo,
+  ResponseIndexMeta,
+  ResponseShowMeta,
+} from '../app.types';
 // import { SnippetsResponse } from '../app.types';
 // import { SnippetRevision } from '../app.types';
 // import { SnippetEditModel } from '../app.types';
@@ -38,7 +42,7 @@ export class SnippetsService {
 
   isReady(): boolean {
     console.log('SnippetsService.isReady', { apiUrl: this.apiUrl });
-    return this.apiUrl.startsWith('http');
+    return this.apiUrl.startsWith('//');
   }
 
   index(options?: IndexParams): Observable<Snippets> {
@@ -83,6 +87,58 @@ export class SnippetsService {
       })
     );
   }
+
+  createInfo(options?: SnippetRequestCreateInfo): Observable<Snippet> {
+    const params = new HttpParams()
+      .set('owned_by_id', options?.owned_by_id ?? '')
+      .set('parent_id', options?.parent_id ?? '')
+      .set('snippet_type', options?.snippet_type ?? '');
+    console.log('SnippetsService', {
+      apiUrl: this.apiUrl,
+      params: params,
+      options: options,
+    });
+    return this.http
+      .get<Snippet>(`${this.apiUrl}/snippets/create`, { params: params })
+      .pipe(
+        map((response: any) => {
+          this.snippet$ = response['data'];
+          this.snippetMeta$ = response['meta'];
+          console.log('SnippetsService.get()', {
+            response: response,
+            snippet: this.snippet$,
+            snippetMeta: this.snippetMeta$,
+          });
+          return response['data'];
+        })
+      );
+  }
+
+  // createInfo(options?: SnippetRequestCreateInfo): Observable<Snippet> {
+  //   console.log('SnippetsService', {
+  //     apiUrl: this.apiUrl,
+  //   });
+  //   return this.http
+  //     .get<Snippet>(`${this.apiUrl}/snippets/create`, {
+  //       params: {
+  //         owned_by_id: options?.owned_by_id,
+  //         parent_id: options?.parent_id,
+  //         snippet_type: options?.snippet_type,
+  //       },
+  //     })
+  //     .pipe(
+  //       map((response: any) => {
+  //         this.snippet$ = response['data'];
+  //         this.snippetMeta$ = response['meta'];
+  //         console.log('SnippetsService.get()', {
+  //           response: response,
+  //           snippet: this.snippet$,
+  //           snippetMeta: this.snippetMeta$,
+  //         });
+  //         return response['data'];
+  //       })
+  //     );
+  // }
 
   create(model: Snippet): Observable<Snippet> {
     return this.http.post<Snippet>(`${this.apiUrl}/snippets`, model);

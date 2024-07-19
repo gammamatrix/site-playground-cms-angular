@@ -9,6 +9,7 @@ import {
   mockSnippetOne,
   mockSnippetsOne,
   mockSnippetOneResponse,
+  mockSnippetsOneResponse,
 } from '../../mock/snippets';
 import { environment } from '../../environments/environment';
 
@@ -34,9 +35,7 @@ describe('SnippetsService', () => {
   it('should have getApiUrl function that returns an API URL', () => {
     const service: SnippetsService = TestBed.get(SnippetsService);
     // expect(service.getApiUrl).toMatch('/^http/');
-    expect(service.getApiUrl()).toContain(
-      'http://site-playground-integration/mock/api/cms'
-    );
+    expect(service.getApiUrl()).toContain('//site-api-angular/api/cms');
   });
 
   it('should have isReady function', () => {
@@ -54,7 +53,7 @@ describe('SnippetsService', () => {
       url: `${url}/snippets?offset=0&page=1&perPage=10`,
     });
 
-    req.flush(mockSnippetsOne);
+    req.flush(mockSnippetsOneResponse);
   });
 
   it('should call get and return a single snippet', () => {

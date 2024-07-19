@@ -1,15 +1,9 @@
-// import { inject } from '@angular/core';
 import { DataSource } from '@angular/cdk/collections';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { map } from 'rxjs/operators';
 import { Observable, of as observableOf, merge } from 'rxjs';
-import { IndexParams, Snippet, Snippets } from '../../app.types';
-// import { mockSnippetsOne } from '../../../mock/snippets';
-import { SnippetsService } from '../../services/snippets.service';
-
-// TODO: replace this with real data from your application
-// const EXAMPLE_DATA: Snippets = mockSnippetsOne;
+import { Snippet, Snippets } from '../../app.types';
 
 /**
  * Data source for the Snippets view. This class should
@@ -17,14 +11,11 @@ import { SnippetsService } from '../../services/snippets.service';
  * (including sorting, pagination, and filtering).
  */
 export class SnippetsDataSource extends DataSource<Snippet> {
-  // data: Snippets = EXAMPLE_DATA;
   data: Snippets = [];
   paginator: MatPaginator | undefined;
   sort: MatSort | undefined;
 
-  // private service = inject(SnippetsService);
-
-  constructor(private service: SnippetsService) {
+  constructor() {
     super();
   }
 

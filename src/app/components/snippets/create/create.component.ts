@@ -1,16 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FormBuilder, Validators } from '@angular/forms';
 import { SnippetResponse, Snippet as iSnippet } from '../../../app.types';
 import { SnippetsService } from '../../../services/snippets.service';
-import { Snippet } from '../snippet.model';
 
 @Component({
   selector: 'app-snippets-create',
   templateUrl: './create.component.html',
   styleUrls: ['./create.component.scss'],
 })
-export class SnippetsCreateComponent {
+export class SnippetsCreateComponent implements OnInit {
   autoGenerateSlug = true;
   createForm: FormGroup;
   isReady = false;
@@ -21,7 +20,6 @@ export class SnippetsCreateComponent {
     private formBuilder: FormBuilder,
     private service: SnippetsService
   ) {
-    this.model = new Snippet();
     this.createForm = this.formBuilder.group({
       owned_by_id: [''],
       parent_id: [''],
@@ -77,7 +75,27 @@ export class SnippetsCreateComponent {
       allow_public: [false],
       only_admin: [false],
     });
-    this.isReady = true;
+  }
+
+  ngOnInit() {
+    this.fetch();
+    console.log('SnippetsCreateComponent.ngOnInit', {
+      isReady: this.isReady,
+      createForm: this.createForm.value,
+      this: this,
+    });
+  }
+
+  fetch() {
+    this.service.createInfo().subscribe(response => {
+      this.model = response;
+      this.createForm.patchValue(this.model);
+      this.isReady = true;
+    });
+    console.log('SnippetsCreateComponent.fetch', {
+      this: this,
+      model: this.model,
+    });
   }
 
   onSubmit(): void {

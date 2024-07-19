@@ -115,11 +115,11 @@ export class SnippetsEditComponent implements OnInit {
 
   save() {
     if (this.model) {
-      this.service.update(this.model).subscribe(response => {
+      this.service.update(this.editForm.value).subscribe(response => {
         this.model = response;
         this.editForm.patchValue(this.model);
       });
-      console.log('SnippetsEditComponent.save', {
+      console.log('SnippetsEditComponent.save - DISABLED', {
         this: this,
         model: this.model,
       });

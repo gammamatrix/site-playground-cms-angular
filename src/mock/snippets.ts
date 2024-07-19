@@ -1,4 +1,9 @@
-import { Snippet, Snippets, SnippetResponse } from '../app/app.types';
+import {
+  Snippet,
+  Snippets,
+  SnippetResponse,
+  SnippetsResponse,
+} from '../app/app.types';
 
 const mockSnippetOne: Snippet = {
   id: '9c85a579-87a7-4b1e-bc4d-a6746179e009',
@@ -114,4 +119,69 @@ const mockSnippetOneResponse: SnippetResponse = {
   },
 };
 
-export { mockSnippetOne, mockSnippetsOne, mockSnippetOneResponse };
+const mockSnippetsOneResponse: SnippetsResponse = {
+  data: [mockSnippetOne],
+  links: {
+    first:
+      'http://site-playground-integration/api/cms/snippets?perPage=15&page=1',
+    last: 'http://site-playground-integration/api/cms/snippets?perPage=15&page=1',
+    prev: null,
+    next: null,
+  },
+  meta: {
+    current_page: 1,
+    from: 1,
+    last_page: 1,
+    links: [
+      {
+        url: null,
+        label: '&laquo; Previous',
+        active: false,
+      },
+      {
+        url: 'http://site-playground-integration/api/cms/snippets?perPage=15&page=1',
+        label: '1',
+        active: true,
+      },
+      {
+        url: null,
+        label: 'Next &raquo;',
+        active: false,
+      },
+    ],
+    columns: [],
+    dates: [],
+    flags: [],
+    ids: [],
+    rules: [],
+    sortable: [],
+    session_user_id: '9baa6092-a30f-461a-a5fc-5132b3264b91',
+    timestamp: '2024-07-14T17:37:13.520331Z',
+    validated: [],
+    path: 'http://site-playground-integration/api/cms/snippets',
+    per_page: 15,
+    to: 1,
+    total: 1,
+    info: {
+      model_attribute: 'title',
+      model_label: 'Snippet',
+      model_label_plural: 'Snippets',
+      model_route: 'playground.cms.api.snippets',
+      model_slug: 'snippet',
+      model_slug_plural: 'snippets',
+      module_label: 'CMS',
+      module_label_plural: 'CMS',
+      module_route: 'playground.cms.api',
+      module_slug: 'cms',
+      privilege: 'playground-cms-api:snippet',
+      table: 'cms_snippets',
+    },
+  },
+};
+
+export {
+  mockSnippetOne,
+  mockSnippetsOne,
+  mockSnippetOneResponse,
+  mockSnippetsOneResponse,
+};

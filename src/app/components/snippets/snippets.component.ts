@@ -15,7 +15,7 @@ export class SnippetsComponent implements AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatTable) table!: MatTable<Snippet>;
-  dataSource = new SnippetsDataSource(this.service);
+  dataSource = new SnippetsDataSource();
   isReady = false;
   options: IndexParams = {
     perPage: 10,

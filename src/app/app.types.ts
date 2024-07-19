@@ -1,30 +1,52 @@
+export interface ResponseMetaPackageInfo {
+  model_attribute: string;
+  model_label: string;
+  model_label_plural: string;
+  model_route: string;
+  model_slug: string;
+  model_slug_plural: string;
+  module_label: string;
+  module_label_plural: string;
+  module_route: string;
+  module_slug: string;
+  privilege: string;
+  table: string;
+}
+
 export interface ResponseShowMeta {
   id?: string | null;
   timestamp?: string | null;
   session_user_id?: string | null;
   rules: object;
   validated: object;
-  info: {
-    model_attribute: string;
-    model_label: string;
-    model_label_plural: string;
-    model_route: string;
-    model_slug: string;
-    model_slug_plural: string;
-    module_label: string;
-    module_label_plural: string;
-    module_route: string;
-    module_slug: string;
-    privilege: string;
-    table: string;
-  };
+  info: ResponseMetaPackageInfo;
 }
 
 export interface ResponseIndexMeta {
+  current_page: number;
+  from: number;
+  last_page: number;
   timestamp?: string | null;
   session_user_id?: string | null;
+  links: ResponseIndexLink[];
+  columns: object;
+  dates: object;
+  flags: object;
+  ids: object;
   rules: object;
+  sortable: object;
   validated: object;
+  path: string;
+  to: number;
+  per_page: number;
+  total: number;
+  info: ResponseMetaPackageInfo;
+}
+
+export interface ResponseIndexLink {
+  url?: string | null;
+  label: string;
+  active?: boolean;
 }
 
 export interface ResponseIndexLinks {
@@ -539,6 +561,12 @@ export interface SnippetsResponse {
 export interface SnippetResponse {
   data: Snippet;
   meta: ResponseShowMeta;
+}
+
+export interface SnippetRequestCreateInfo {
+  owned_by_id: string | null;
+  parent_id: string | null;
+  snippet_type: string | null;
 }
 
 export interface SnippetRevision {
