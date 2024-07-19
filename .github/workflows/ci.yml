@@ -112,12 +112,11 @@ jobs:
       - run: npm run build --if-present
       - name: Run unit tests
         run: ng test --no-watch --no-progress --browsers=ChromeHeadless
-      # - name: Run lint
-      #   run: ng lint
+      - name: Run lint
+        run: ng lint
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
-      - name: Run Playwright tests
-        # run: npx playwright test
+      - name: Run e2e Playwright tests
         run: ng e2e
       - uses: actions/upload-artifact@v4
         if: always()

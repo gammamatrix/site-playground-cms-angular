@@ -34,7 +34,6 @@ describe('SnippetsEditComponent', () => {
         MatInputModule,
         MatRadioModule,
         MatSelectModule,
-        // SnippetsService,
       ],
       providers: [SnippetsService],
     }).compileComponents();

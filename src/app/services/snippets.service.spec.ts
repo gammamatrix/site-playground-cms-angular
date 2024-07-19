@@ -7,7 +7,6 @@ import {
 import { SnippetsService } from './snippets.service';
 import {
   mockSnippetOne,
-  mockSnippetsOne,
   mockSnippetOneResponse,
   mockSnippetsOneResponse,
 } from '../../mock/snippets';
@@ -43,9 +42,9 @@ describe('SnippetsService', () => {
     expect(service.isReady()).toBeTrue();
   });
 
-  it('should call index and return an array of a single snippet', () => {
+  it('should call index and return the full response with data, links and meta', () => {
     service.index().subscribe(response => {
-      expect(response).toEqual(mockSnippetsOne);
+      expect(response).toEqual(mockSnippetsOneResponse);
     });
 
     const req = httpController.expectOne({

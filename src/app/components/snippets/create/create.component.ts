@@ -79,7 +79,7 @@ export class SnippetsCreateComponent implements OnInit {
 
   ngOnInit() {
     this.fetch();
-    console.log('SnippetsCreateComponent.ngOnInit', {
+    console.debug('SnippetsCreateComponent.ngOnInit', {
       isReady: this.isReady,
       createForm: this.createForm.value,
       this: this,

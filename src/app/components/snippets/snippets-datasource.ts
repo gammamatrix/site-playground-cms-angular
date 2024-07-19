@@ -25,7 +25,7 @@ export class SnippetsDataSource extends DataSource<Snippet> {
    * @returns A stream of the items to be rendered.
    */
   connect(): Observable<Snippets> {
-    console.log('SnippetsDataSource.connect', {
+    console.debug('SnippetsDataSource.connect', {
       this: this,
     });
     if (this.paginator && this.sort) {

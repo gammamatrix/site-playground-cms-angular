@@ -1,7 +1,7 @@
 import { Component, Input as RouteParam, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FormBuilder, Validators } from '@angular/forms';
-import { SnippetResponse, Snippet as iSnippet } from '../../../app.types';
+import { Snippet as iSnippet } from '../../../app.types';
 import { SnippetsService } from '../../../services/snippets.service';
 
 @Component({
@@ -14,7 +14,6 @@ export class SnippetsEditComponent implements OnInit {
   editForm: FormGroup;
   isReady = false;
   model: iSnippet | undefined;
-  response: SnippetResponse | undefined;
   @RouteParam() id = '';
 
   constructor(
@@ -83,7 +82,7 @@ export class SnippetsEditComponent implements OnInit {
 
   ngOnInit() {
     this.fetch();
-    console.log('SnippetsEditComponent.ngOnInit', {
+    console.debug('SnippetsEditComponent.ngOnInit', {
       id: this.id,
       isReady: this.isReady,
       editForm: this.editForm.value,
@@ -96,15 +95,16 @@ export class SnippetsEditComponent implements OnInit {
       this.model = response;
       this.editForm.patchValue(this.model);
       this.isReady = true;
-    });
-    console.log('SnippetsEditComponent.fetch', {
-      this: this,
-      model: this.model,
+      console.debug('SnippetsEditComponent.fetch', {
+        this: this,
+        response: response,
+        model: this.model,
+      });
     });
   }
 
   onSubmit(): void {
-    console.log('SnippetsEditComponent.onSubmit', {
+    console.debug('SnippetsEditComponent.onSubmit', {
       this: this,
       editForm: this.editForm.value,
       id: this.id,
@@ -119,7 +119,7 @@ export class SnippetsEditComponent implements OnInit {
         this.model = response;
         this.editForm.patchValue(this.model);
       });
-      console.log('SnippetsEditComponent.save - DISABLED', {
+      console.debug('SnippetsEditComponent.save - DISABLED', {
         this: this,
         model: this.model,
       });
