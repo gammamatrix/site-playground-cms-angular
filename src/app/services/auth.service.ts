@@ -81,4 +81,8 @@ export class AuthService {
       this.router.navigate(['login']);
     }
   }
+
+  goToDashboard() {
+    this.router.navigate(['dashboard']);
+  }
 }

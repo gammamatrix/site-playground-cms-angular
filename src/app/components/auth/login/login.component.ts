@@ -51,7 +51,7 @@ export class LoginComponent implements OnInit {
     this.model.password = this.loginForm.value.password;
     // NOTE: verify csfr works with junk token
     // junk value: 419 CSRF token mismatch.
-    this.model._token = 'junk';
+    // this.model._token = 'junk';
     // Empty returns 422 error
     // this.model._token = '';
     this.service.login(this.model).subscribe(response => {
@@ -59,6 +59,7 @@ export class LoginComponent implements OnInit {
         this: this,
         response: response,
       });
+      this.service.goToDashboard();
     });
   }
 
