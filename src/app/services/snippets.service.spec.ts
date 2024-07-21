@@ -9,8 +9,10 @@ import {
   mockSnippetOne,
   mockSnippetOneResponse,
   mockSnippetsOneResponse,
+  mockSnippetRevisionsOneResponse,
 } from '../../mock/snippets';
 import { environment } from '../../environments/environment';
+import { IndexParams } from '../app.types';
 
 describe('SnippetsService', () => {
   let service: SnippetsService;
@@ -33,7 +35,6 @@ describe('SnippetsService', () => {
 
   it('should have getApiUrl function that returns an API URL', () => {
     const service: SnippetsService = TestBed.get(SnippetsService);
-    // expect(service.getApiUrl).toMatch('/^http/');
     expect(service.getApiUrl()).toContain('//site-api-angular/api/cms');
   });
 
@@ -42,17 +43,56 @@ describe('SnippetsService', () => {
     expect(service.isReady()).toBeTrue();
   });
 
-  it('should call index and return the full response with data, links and meta', () => {
-    service.index().subscribe(response => {
-      expect(response).toEqual(mockSnippetsOneResponse);
+  it('should call createInfo and return an prefilled snippet', () => {
+    service.createInfo().subscribe(response => {
+      expect(response).toEqual(mockSnippetOne);
     });
 
     const req = httpController.expectOne({
       method: 'GET',
-      url: `${url}/snippets?offset=0&page=1&perPage=10`,
+      url: `${url}/snippets/create?owned_by_id=&parent_id=&snippet_type=`,
     });
 
-    req.flush(mockSnippetsOneResponse);
+    req.flush(mockSnippetOneResponse);
+  });
+
+  it('should call create and return a single snippet', () => {
+    service.create(mockSnippetOne).subscribe(response => {
+      expect(response).toEqual(mockSnippetOne);
+    });
+
+    const req = httpController.expectOne({
+      method: 'POST',
+      url: `${url}/snippets`,
+    });
+
+    req.flush(mockSnippetOne);
+  });
+
+  it('should call delete and return a single snippet', () => {
+    service.delete(mockSnippetOne).subscribe(response => {
+      expect(response).toEqual(true);
+    });
+
+    const req = httpController.expectOne({
+      method: 'DELETE',
+      url: `${url}/snippets/lock/${id}?force=1`,
+    });
+
+    req.flush(mockSnippetOne);
+  });
+
+  it('should call editInfo and return an prefilled snippet', () => {
+    service.editInfo(id).subscribe(response => {
+      expect(response).toEqual(mockSnippetOne);
+    });
+
+    const req = httpController.expectOne({
+      method: 'GET',
+      url: `${url}/snippets/edit/${id}`,
+    });
+
+    req.flush(mockSnippetOneResponse);
   });
 
   it('should call get and return a single snippet', () => {
@@ -68,14 +108,71 @@ describe('SnippetsService', () => {
     req.flush(mockSnippetOneResponse);
   });
 
-  it('should call create and return a single snippet', () => {
-    service.create(mockSnippetOne).subscribe(response => {
-      expect(response).toEqual(mockSnippetOne);
+  it('should call index and return the full response with data, links and meta', () => {
+    const options: IndexParams = {
+      perPage: 10,
+      page: 1,
+      offset: 0,
+      filter: {
+        trash: '',
+      },
+    };
+
+    service.index(options).subscribe(response => {
+      expect(response).toEqual(mockSnippetsOneResponse);
     });
 
     const req = httpController.expectOne({
       method: 'POST',
-      url: `${url}/snippets`,
+      url: `${url}/snippets/index`,
+    });
+
+    req.flush(mockSnippetsOneResponse);
+  });
+
+  it('should call lock and return a single snippet', () => {
+    service.lock(mockSnippetOne).subscribe(response => {
+      expect(response).toEqual(mockSnippetOne);
+    });
+
+    const req = httpController.expectOne({
+      method: 'PUT',
+      url: `${url}/snippets/lock/${id}`,
+    });
+
+    req.flush(mockSnippetOne);
+  });
+
+  it('should call revisions and return the full response with data, links and meta', () => {
+    const options: IndexParams = {
+      perPage: 10,
+      page: 1,
+      offset: 0,
+      filter: {
+        trash: '',
+      },
+    };
+
+    service.revisions(id, options).subscribe(response => {
+      expect(response).toEqual(mockSnippetRevisionsOneResponse);
+    });
+
+    const req = httpController.expectOne({
+      method: 'POST',
+      url: `${url}/snippets/${id}/revisions`,
+    });
+
+    req.flush(mockSnippetRevisionsOneResponse);
+  });
+
+  it('should call unlock and return a single snippet', () => {
+    service.unlock(mockSnippetOne).subscribe(response => {
+      expect(response).toEqual(mockSnippetOne);
+    });
+
+    const req = httpController.expectOne({
+      method: 'DELETE',
+      url: `${url}/snippets/lock/${id}`,
     });
 
     req.flush(mockSnippetOne);

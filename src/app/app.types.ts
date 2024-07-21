@@ -657,12 +657,12 @@ export interface SnippetRevision {
   options: string[];
   sources: string[];
   // relations
-  parent: Snippet;
-  snippet: Snippet;
-  children: SnippetRevisions;
-  creator: User;
-  modifier: User;
-  owner: User;
+  // parent: Snippet;
+  // snippet: Snippet;
+  // children: SnippetRevisions;
+  // creator: User;
+  // modifier: User;
+  // owner: User;
 }
 
 export type SnippetRevisions = SnippetRevision[];
@@ -705,7 +705,14 @@ export interface IndexParams {
   perPage: number;
   page: number;
   offset: number;
-  filters: [];
+  filter: IndexParamsFilter;
+  // filter: {
+  //   trash: 'with' | 'only' | '';
+  // };
+}
+
+export interface IndexParamsFilter {
+  trash?: 'with' | 'only' | '' | undefined;
 }
 
 export interface Login {
@@ -722,4 +729,16 @@ export interface AuthToken {
   message: string;
   csrf_token: string;
   token: string;
+}
+
+export interface Logout {
+  everywhere: boolean;
+  session: boolean;
+  storage: boolean;
+}
+
+export interface LogoutToken {
+  everywhere: boolean;
+  message: string;
+  csrf_token: string;
 }

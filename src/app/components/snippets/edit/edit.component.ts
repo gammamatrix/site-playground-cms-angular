@@ -91,7 +91,7 @@ export class SnippetsEditComponent implements OnInit {
   }
 
   fetch() {
-    this.service.get(this.id).subscribe(response => {
+    this.service.editInfo(this.id).subscribe(response => {
       this.model = response;
       this.editForm.patchValue(this.model);
       this.isReady = true;

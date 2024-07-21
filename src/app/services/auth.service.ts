@@ -8,6 +8,8 @@ import {
   AuthToken as iAuthToken,
   CreateToken as iCreateToken,
   Login as iLogin,
+  Logout as iLogout,
+  LogoutToken as iLogoutToken,
 } from '../app.types';
 
 @Injectable({
@@ -74,12 +76,27 @@ export class AuthService {
     return csrf_token ?? '';
   }
 
-  logout() {
-    const removeToken = localStorage.removeItem('csrf_token');
-
-    if (removeToken == null) {
-      this.router.navigate(['login']);
+  logout(logout: iLogout): Observable<iLogoutToken> {
+    if (logout.session) {
+      sessionStorage.clear();
     }
+    if (logout.storage) {
+      localStorage.clear();
+    }
+    return this.http
+      .post<iLogoutToken>(this.authUrl + '/api/logout', logout, {
+        withCredentials: true,
+      })
+      .pipe(
+        map(result => {
+          localStorage.setItem('csrf_token', result.csrf_token);
+          return result;
+        })
+      );
+  }
+
+  goToLogin() {
+    this.router.navigate(['login']);
   }
 
   goToDashboard() {

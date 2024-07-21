@@ -7,6 +7,7 @@ import { SnippetsComponent } from './components/snippets/snippets.component';
 import { SnippetsCreateComponent } from './components/snippets/create/create.component';
 import { SnippetsEditComponent } from './components/snippets/edit/edit.component';
 import { LoginComponent } from './components/auth/login/login.component';
+import { LogoutComponent } from './components/auth/logout/logout.component';
 
 const routes: Routes = [
   {
@@ -35,6 +36,16 @@ const routes: Routes = [
     title: 'CMS Snippets',
   },
   {
+    path: 'snippets/trash/:trash',
+    component: SnippetsComponent,
+    title: 'CMS Snippets Trash',
+  },
+  {
+    path: 'snippets/:snippet_type',
+    component: SnippetsComponent,
+    title: 'CMS Snippets',
+  },
+  {
     path: 'snippets/create',
     component: SnippetsCreateComponent,
     title: 'CMS Create a Snippet',
@@ -48,6 +59,11 @@ const routes: Routes = [
     path: 'login',
     component: LoginComponent,
     title: 'Login',
+  },
+  {
+    path: 'logout',
+    component: LogoutComponent,
+    title: 'Logout',
   },
 ];
 

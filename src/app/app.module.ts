@@ -47,6 +47,7 @@ import {
 } from '@angular/common/http';
 import { SnippetsService } from './services/snippets.service';
 import { LoginComponent } from './components/auth/login/login.component';
+import { LogoutComponent } from './components/auth/logout/logout.component';
 // import { CsfrInterceptorService } from './services/csrf-interceptor.service';
 
 @NgModule({
@@ -60,6 +61,7 @@ import { LoginComponent } from './components/auth/login/login.component';
     SnippetsCreateComponent,
     SnippetsEditComponent,
     LoginComponent,
+    LogoutComponent,
   ],
   imports: [
     BrowserModule,

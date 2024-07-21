@@ -1,4 +1,10 @@
-import { AfterViewInit, Component, ViewChild, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ViewChild,
+  OnInit,
+  Input as RouteParam,
+} from '@angular/core';
 import { MatTable } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -13,6 +19,8 @@ import { Observable } from 'rxjs';
   styleUrls: ['./snippets.component.scss'],
 })
 export class SnippetsComponent implements AfterViewInit, OnInit {
+  @RouteParam() snippet_type = '';
+  @RouteParam() trash = '';
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatTable) table!: MatTable<Snippet>;
@@ -22,7 +30,9 @@ export class SnippetsComponent implements AfterViewInit, OnInit {
     perPage: 10,
     page: 1,
     offset: 0,
-    filters: [],
+    filter: {
+      trash: '',
+    },
   };
 
   protected snippets$: Observable<Snippets> | undefined;
@@ -35,6 +45,7 @@ export class SnippetsComponent implements AfterViewInit, OnInit {
     'created_at',
     'updated_at',
     'edit',
+    'revision',
   ];
 
   fetch(options: IndexParams) {
@@ -56,9 +67,15 @@ export class SnippetsComponent implements AfterViewInit, OnInit {
   }
 
   ngOnInit() {
+    if (this.trash === 'with' || this.trash === 'only') {
+      this.options.filter.trash = this.trash;
+    } else {
+      this.options.filter.trash = '';
+    }
     this.fetch(this.options);
     console.log('SnippetsComponent.ngOnInit', {
       isReady: this.isReady,
+      snippet_type: this.snippet_type,
       this: this,
     });
   }
