@@ -6,15 +6,15 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
-import { SnippetsComponent } from './snippets.component';
+import { RevisionsComponent } from './revisions.component';
 
-describe('SnippetsComponent', () => {
-  let component: SnippetsComponent;
-  let fixture: ComponentFixture<SnippetsComponent>;
+describe('RevisionsComponent', () => {
+  let component: RevisionsComponent;
+  let fixture: ComponentFixture<RevisionsComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [SnippetsComponent],
+      declarations: [RevisionsComponent],
       imports: [
         HttpClientTestingModule,
         NoopAnimationsModule,
@@ -27,7 +27,7 @@ describe('SnippetsComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SnippetsComponent);
+    fixture = TestBed.createComponent(RevisionsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

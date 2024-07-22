@@ -48,6 +48,7 @@ import {
 import { SnippetsService } from './services/snippets.service';
 import { LoginComponent } from './components/auth/login/login.component';
 import { LogoutComponent } from './components/auth/logout/logout.component';
+import { RevisionsComponent } from './components/snippets/revisions/revisions.component';
 // import { CsfrInterceptorService } from './services/csrf-interceptor.service';
 
 @NgModule({
@@ -62,6 +63,7 @@ import { LogoutComponent } from './components/auth/logout/logout.component';
     SnippetsEditComponent,
     LoginComponent,
     LogoutComponent,
+    RevisionsComponent,
   ],
   imports: [
     BrowserModule,

@@ -8,6 +8,7 @@ import { SnippetsCreateComponent } from './components/snippets/create/create.com
 import { SnippetsEditComponent } from './components/snippets/edit/edit.component';
 import { LoginComponent } from './components/auth/login/login.component';
 import { LogoutComponent } from './components/auth/logout/logout.component';
+import { RevisionsComponent as SnippetRevisionsComponent } from './components/snippets/revisions/revisions.component';
 
 const routes: Routes = [
   {
@@ -34,6 +35,16 @@ const routes: Routes = [
     path: 'snippets',
     component: SnippetsComponent,
     title: 'CMS Snippets',
+  },
+  {
+    path: 'snippets/revisions/:snippet_id',
+    component: SnippetRevisionsComponent,
+    title: 'CMS Snippet Revisions',
+  },
+  {
+    path: 'snippets/revisions/:snippet_id/trash/:trash',
+    component: SnippetRevisionsComponent,
+    title: 'CMS Snippet Revisions Trash',
   },
   {
     path: 'snippets/trash/:trash',
