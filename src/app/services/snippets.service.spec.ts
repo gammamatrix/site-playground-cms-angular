@@ -12,7 +12,7 @@ import {
   mockSnippetRevisionsOneResponse,
 } from '../../mock/snippets';
 import { environment } from '../../environments/environment';
-import { IndexParams } from '../app.types';
+import { SnippetsIndexParams, SnippetRevisionsIndexParams } from '../app.types';
 
 describe('SnippetsService', () => {
   let service: SnippetsService;
@@ -109,7 +109,7 @@ describe('SnippetsService', () => {
   });
 
   it('should call index and return the full response with data, links and meta', () => {
-    const options: IndexParams = {
+    const options: SnippetsIndexParams = {
       perPage: 10,
       page: 1,
       offset: 0,
@@ -144,7 +144,7 @@ describe('SnippetsService', () => {
   });
 
   it('should call revisions and return the full response with data, links and meta', () => {
-    const options: IndexParams = {
+    const options: SnippetRevisionsIndexParams = {
       perPage: 10,
       page: 1,
       offset: 0,

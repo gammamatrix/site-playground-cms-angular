@@ -32,6 +32,17 @@
         <div class="row">
           <div class="col">
             <mat-form-field class="full-width">
+              <mat-select formControlName="snippet_type" placeholder="Type">
+                <mat-option></mat-option>
+                <mat-option
+                  *ngFor="let snippetType of snippetTypes"
+                  [value]="snippetType.value">
+                  {{ snippetType.label }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <br />
+            <mat-form-field class="full-width">
               <input matInput placeholder="Label" formControlName="label" />
             </mat-form-field>
           </div>

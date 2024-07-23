@@ -37,6 +37,11 @@ const routes: Routes = [
     title: 'CMS Snippets',
   },
   {
+    path: 'snippets/create',
+    component: SnippetsCreateComponent,
+    title: 'CMS Create a Snippet',
+  },
+  {
     path: 'snippets/revisions/:snippet_id',
     component: SnippetRevisionsComponent,
     title: 'CMS Snippet Revisions',
@@ -55,11 +60,6 @@ const routes: Routes = [
     path: 'snippets/:snippet_type',
     component: SnippetsComponent,
     title: 'CMS Snippets',
-  },
-  {
-    path: 'snippets/create',
-    component: SnippetsCreateComponent,
-    title: 'CMS Create a Snippet',
   },
   {
     path: 'snippets/edit/:id',

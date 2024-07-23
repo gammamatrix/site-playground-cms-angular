@@ -18,7 +18,7 @@
             </mat-form-field>
           </div>
         </div>
-        <div class="row" *ngIf="!autoGenerateSlug">
+        <div class="row">
           <div class="col">
             <mat-form-field class="full-width">
               <input matInput placeholder="Slug" formControlName="slug" />
@@ -31,18 +31,19 @@
         <div class="row">
           <div class="col">
             <mat-form-field class="full-width">
+              <mat-select formControlName="snippet_type" placeholder="Type">
+                <mat-option></mat-option>
+                <mat-option
+                  *ngFor="let snippetType of snippetTypes"
+                  [value]="snippetType.value">
+                  {{ snippetType.label }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <br />
+            <mat-form-field class="full-width">
               <input matInput placeholder="Label" formControlName="label" />
             </mat-form-field>
-          </div>
-          <div class="col">
-            <button
-              mat-button
-              type="button"
-              (click)="autoGenerateSlug = !autoGenerateSlug">
-              <mat-icon *ngIf="autoGenerateSlug">check</mat-icon>
-              <mat-icon *ngIf="!autoGenerateSlug">close</mat-icon>
-              Auto generate slug
-            </button>
           </div>
         </div>
         <div class="row">

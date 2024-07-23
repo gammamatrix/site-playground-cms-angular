@@ -705,14 +705,29 @@ export interface IndexParams {
   perPage: number;
   page: number;
   offset: number;
-  filter: IndexParamsFilter;
+  // filter: IndexParamsFilter;
   // filter: {
   //   trash: 'with' | 'only' | '';
   // };
 }
-
 export interface IndexParamsFilter {
   trash?: 'with' | 'only' | '' | undefined;
+}
+
+export interface SnippetsIndexParamsFilter extends IndexParamsFilter {
+  snippet_type?: string | null | undefined;
+}
+
+export interface SnippetsIndexParams extends IndexParams {
+  filter: SnippetsIndexParamsFilter;
+}
+
+export interface SnippetRevisionsIndexParamsFilter extends IndexParamsFilter {
+  snippet_id?: string | null | undefined;
+}
+
+export interface SnippetRevisionsIndexParams extends IndexParams {
+  filter: SnippetRevisionsIndexParamsFilter;
 }
 
 export interface Login {
@@ -741,4 +756,9 @@ export interface LogoutToken {
   everywhere: boolean;
   message: string;
   csrf_token: string;
+}
+
+export interface SelectOptionString {
+  value: string;
+  label: string;
 }

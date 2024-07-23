@@ -1,7 +1,7 @@
 import { Component, Input as RouteParam, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Snippet as iSnippet } from '../../../app.types';
+import { Snippet as iSnippet, SelectOptionString } from '../../../app.types';
 import { SnippetsService } from '../../../services/snippets.service';
 
 @Component({
@@ -10,16 +10,17 @@ import { SnippetsService } from '../../../services/snippets.service';
   styleUrls: ['./edit.component.scss'],
 })
 export class SnippetsEditComponent implements OnInit {
-  autoGenerateSlug = true;
+  @RouteParam() id = '';
   editForm: FormGroup;
   isReady = false;
   model: iSnippet | undefined;
-  @RouteParam() id = '';
+  public snippetTypes: SelectOptionString[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
     private service: SnippetsService
   ) {
+    this.snippetTypes = this.service.snippetTypes;
     this.editForm = this.formBuilder.group({
       id: [this.id],
       created_by_id: [],

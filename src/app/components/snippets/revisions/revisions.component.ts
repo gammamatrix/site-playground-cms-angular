@@ -1,5 +1,4 @@
 import {
-  AfterViewInit,
   Component,
   ViewChild,
   OnInit,
@@ -9,7 +8,10 @@ import { MatTable } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { RevisionsDataSource } from './revisions-datasource';
-import { IndexParams, SnippetRevision } from '../../../app.types';
+import {
+  SnippetRevisionsIndexParams,
+  SnippetRevision,
+} from '../../../app.types';
 import { SnippetsService } from '../../../services/snippets.service';
 
 @Component({
@@ -17,7 +19,7 @@ import { SnippetsService } from '../../../services/snippets.service';
   templateUrl: './revisions.component.html',
   styleUrls: ['./revisions.component.scss'],
 })
-export class RevisionsComponent implements AfterViewInit, OnInit {
+export class RevisionsComponent implements OnInit {
   @RouteParam() snippet_id = '';
   @RouteParam() trash = '';
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -26,7 +28,7 @@ export class RevisionsComponent implements AfterViewInit, OnInit {
   dataSource = new RevisionsDataSource();
   isReady = false;
   pageSizeOptions: number[] = [1, 2, 3, 4, 5, 10, 15, 20, 25, 35, 50];
-  options: IndexParams = {
+  options: SnippetRevisionsIndexParams = {
     perPage: 10,
     page: 1,
     offset: 0,
@@ -47,7 +49,7 @@ export class RevisionsComponent implements AfterViewInit, OnInit {
 
   constructor(private service: SnippetsService) {}
 
-  fetch(options: IndexParams) {
+  fetch(options: SnippetRevisionsIndexParams) {
     this.service.revisions(this.snippet_id, options).subscribe(response => {
       this.dataSource.data = response.data;
       this.options.perPage = response.meta.per_page;
@@ -77,12 +79,6 @@ export class RevisionsComponent implements AfterViewInit, OnInit {
     console.log('RevisionsComponent.ngOnInit', {
       isReady: this.isReady,
       snippet_id: this.snippet_id,
-      this: this,
-    });
-  }
-
-  ngAfterViewInit(): void {
-    console.log('RevisionsComponent.ngAfterViewInit', {
       this: this,
     });
   }

@@ -3,12 +3,14 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
 import {
-  IndexParams,
+  SnippetsIndexParams,
+  SnippetRevisionsIndexParams,
   Snippet,
   SnippetRevision,
   SnippetRequestCreateInfo,
   ResponseIndexMeta,
   ResponseShowMeta,
+  SelectOptionString,
   SnippetsResponse,
   SnippetRevisionsResponse,
   SnippetResponse,
@@ -26,6 +28,11 @@ export class SnippetsService {
 
   protected snippet$: Observable<Snippet> | undefined;
   protected snippetMeta$: ResponseShowMeta | undefined;
+
+  public snippetTypes: SelectOptionString[] = [
+    { value: 'banner', label: 'Banner' },
+    { value: 'slideshow', label: 'Slideshow' },
+  ];
 
   getApiUrl(): string {
     console.debug('SnippetsService.getApiUrl', { apiUrl: this.apiUrl });
@@ -109,7 +116,7 @@ export class SnippetsService {
     );
   }
 
-  index(params: IndexParams): Observable<SnippetsResponse> {
+  index(params: SnippetsIndexParams): Observable<SnippetsResponse> {
     return this.http.post<SnippetsResponse>(
       `${this.apiUrl}/snippets/index`,
       params
@@ -125,7 +132,7 @@ export class SnippetsService {
 
   revisions(
     snippet_id: string,
-    params: IndexParams
+    params: SnippetRevisionsIndexParams
   ): Observable<SnippetRevisionsResponse> {
     return this.http.post<SnippetRevisionsResponse>(
       `${this.apiUrl}/snippets/${snippet_id}/revisions`,

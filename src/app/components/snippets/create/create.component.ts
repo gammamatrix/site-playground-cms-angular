@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FormBuilder, Validators } from '@angular/forms';
-import { SnippetResponse, Snippet as iSnippet } from '../../../app.types';
+import { Snippet as iSnippet, SelectOptionString } from '../../../app.types';
 import { SnippetsService } from '../../../services/snippets.service';
 
 @Component({
@@ -14,12 +14,13 @@ export class SnippetsCreateComponent implements OnInit {
   createForm: FormGroup;
   isReady = false;
   model: iSnippet | undefined;
-  response: SnippetResponse | undefined;
+  public snippetTypes: SelectOptionString[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
     private service: SnippetsService
   ) {
+    this.snippetTypes = this.service.snippetTypes;
     this.createForm = this.formBuilder.group({
       owned_by_id: [''],
       parent_id: [''],

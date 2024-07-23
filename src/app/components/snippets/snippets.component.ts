@@ -1,5 +1,4 @@
 import {
-  AfterViewInit,
   Component,
   ViewChild,
   OnInit,
@@ -9,7 +8,7 @@ import { MatTable } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { SnippetsDataSource } from './snippets-datasource';
-import { IndexParams, Snippet } from '../../app.types';
+import { SnippetsIndexParams, Snippet } from '../../app.types';
 import { SnippetsService } from '../../services/snippets.service';
 
 @Component({
@@ -17,7 +16,7 @@ import { SnippetsService } from '../../services/snippets.service';
   templateUrl: './snippets.component.html',
   styleUrls: ['./snippets.component.scss'],
 })
-export class SnippetsComponent implements AfterViewInit, OnInit {
+export class SnippetsComponent implements OnInit {
   @RouteParam() snippet_type = '';
   @RouteParam() trash = '';
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -26,14 +25,12 @@ export class SnippetsComponent implements AfterViewInit, OnInit {
   dataSource = new SnippetsDataSource();
   isReady = false;
   pageSizeOptions: number[] = [1, 2, 3, 4, 5, 10, 15, 20, 25, 35, 50];
-  options: IndexParams = {
+  options = {
     perPage: 10,
     page: 1,
     offset: 0,
-    filter: {
-      trash: '',
-    },
-  };
+    filter: {},
+  } as SnippetsIndexParams;
 
   displayedColumns: string[] = [
     'id',
@@ -47,16 +44,13 @@ export class SnippetsComponent implements AfterViewInit, OnInit {
 
   constructor(private service: SnippetsService) {}
 
-  fetch(options: IndexParams) {
+  fetch(options: SnippetsIndexParams) {
     this.service.index(options).subscribe(response => {
       this.dataSource.data = response.data;
       this.options.perPage = response.meta.per_page;
-      this.dataSource.sort = this.sort;
-      this.dataSource.paginator = this.paginator;
-      this.table.dataSource = this.dataSource;
-      // this.initDataTable();
+      this.initDataTable();
       this.isReady = true;
-      console.log('SnippetsDataSource.fetch', {
+      console.log('SnippetsComponent.fetch', {
         this: this,
         response: response,
         dataSource: this.dataSource,
@@ -65,9 +59,9 @@ export class SnippetsComponent implements AfterViewInit, OnInit {
   }
 
   initDataTable() {
-    // this.dataSource.sort = this.sort;
-    // this.dataSource.paginator = this.paginator;
-    // this.table.dataSource = this.dataSource;
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
+    this.table.dataSource = this.dataSource;
   }
 
   ngOnInit() {
@@ -76,16 +70,13 @@ export class SnippetsComponent implements AfterViewInit, OnInit {
     } else {
       this.options.filter.trash = '';
     }
+    if (this.snippet_type) {
+      this.options.filter.snippet_type = this.snippet_type;
+    }
     this.fetch(this.options);
     console.log('SnippetsComponent.ngOnInit', {
       isReady: this.isReady,
       snippet_type: this.snippet_type,
-      this: this,
-    });
-  }
-
-  ngAfterViewInit(): void {
-    console.log('SnippetsComponent.ngAfterViewInit', {
       this: this,
     });
   }
