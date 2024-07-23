@@ -21,11 +21,13 @@ import { MatSlideToggleChange } from '@angular/material/slide-toggle';
   styleUrls: ['./create.component.scss'],
 })
 export class SnippetsCreateComponent implements OnInit {
-  autoGenerateSlug = true;
-  createForm: FormGroup;
-  isAdvanced = true;
-  isReady = false;
-  model: iSnippet | undefined;
+  public autoGenerateSlug = true;
+  public createForm: FormGroup;
+  public isAdvanced = true;
+  public isReady = false;
+  public model: iSnippet | undefined;
+  public snippetTypes: SelectOptionString[] = [];
+
   public viewPortGrid: iViewPortGrids = {
     title: {
       cols: 2,
@@ -58,6 +60,7 @@ export class SnippetsCreateComponent implements OnInit {
       class: 'my-grid',
     },
   };
+
   public viewPorts: iViewPorts = {
     title: {
       colspan: 2,
@@ -93,7 +96,6 @@ export class SnippetsCreateComponent implements OnInit {
       class: 'my-publishing',
     },
   };
-  public snippetTypes: SelectOptionString[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -156,47 +158,6 @@ export class SnippetsCreateComponent implements OnInit {
       allow_public: [false],
       only_admin: [false],
     });
-  }
-
-  toggleAccess(formControlName: string, event: MatSlideToggleChange) {
-    // console.log('SnippetsCreateComponent.toggle', {
-    //   formControlName: formControlName,
-    //   event: event,
-    //   value: this.createForm.value[formControlName],
-    // });
-    if ('only_admin' === formControlName) {
-      if (event.checked) {
-        this.createForm.patchValue({
-          only_user: false,
-          only_guest: false,
-          allow_public: false,
-        });
-      }
-    } else if ('only_user' === formControlName) {
-      if (event.checked) {
-        this.createForm.patchValue({
-          only_admin: false,
-          only_guest: false,
-          allow_public: false,
-        });
-      }
-    } else if ('only_guest' === formControlName) {
-      if (event.checked) {
-        this.createForm.patchValue({
-          only_admin: false,
-          only_user: false,
-          allow_public: false,
-        });
-      }
-    } else if ('allow_public' === formControlName) {
-      if (event.checked) {
-        this.createForm.patchValue({
-          only_admin: false,
-          only_guest: false,
-          only_user: false,
-        });
-      }
-    }
   }
 
   ngOnInit() {
@@ -266,6 +227,47 @@ export class SnippetsCreateComponent implements OnInit {
         this: this,
         model: this.model,
       });
+    }
+  }
+
+  toggleAccess(formControlName: string, event: MatSlideToggleChange) {
+    // console.log('SnippetsCreateComponent.toggle', {
+    //   formControlName: formControlName,
+    //   event: event,
+    //   value: this.createForm.value[formControlName],
+    // });
+    if ('only_admin' === formControlName) {
+      if (event.checked) {
+        this.createForm.patchValue({
+          only_user: false,
+          only_guest: false,
+          allow_public: false,
+        });
+      }
+    } else if ('only_user' === formControlName) {
+      if (event.checked) {
+        this.createForm.patchValue({
+          only_admin: false,
+          only_guest: false,
+          allow_public: false,
+        });
+      }
+    } else if ('only_guest' === formControlName) {
+      if (event.checked) {
+        this.createForm.patchValue({
+          only_admin: false,
+          only_user: false,
+          allow_public: false,
+        });
+      }
+    } else if ('allow_public' === formControlName) {
+      if (event.checked) {
+        this.createForm.patchValue({
+          only_admin: false,
+          only_guest: false,
+          only_user: false,
+        });
+      }
     }
   }
 }

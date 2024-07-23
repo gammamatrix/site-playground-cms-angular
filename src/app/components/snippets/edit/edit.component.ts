@@ -1,8 +1,19 @@
 import { Component, Input as RouteParam, OnInit } from '@angular/core';
+import {
+  Breakpoints,
+  BreakpointState,
+  BreakpointObserver,
+} from '@angular/cdk/layout';
 import { FormGroup } from '@angular/forms';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Snippet as iSnippet, SelectOptionString } from '../../../app.types';
+import {
+  Snippet as iSnippet,
+  SelectOptionString,
+  ViewPorts as iViewPorts,
+  ViewPortGrids as iViewPortGrids,
+} from '../../../app.types';
 import { SnippetsService } from '../../../services/snippets.service';
+import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 
 @Component({
   selector: 'app-snippets-edit',
@@ -11,14 +22,85 @@ import { SnippetsService } from '../../../services/snippets.service';
 })
 export class SnippetsEditComponent implements OnInit {
   @RouteParam() id = '';
-  editForm: FormGroup;
-  isReady = false;
-  model: iSnippet | undefined;
+  public editForm: FormGroup;
+  public isAdvanced = true;
+  public isReady = false;
+  public model: iSnippet | undefined;
   public snippetTypes: SelectOptionString[] = [];
+
+  public viewPortGrid: iViewPortGrids = {
+    title: {
+      cols: 2,
+      rowHeight: '6em',
+      class: 'my-title',
+    },
+    content: {
+      cols: 2,
+      rowHeight: '20em',
+      class: 'my-grid',
+    },
+    access: {
+      cols: 4,
+      rowHeight: '3em',
+      class: 'my-grid',
+    },
+    state: {
+      cols: 2,
+      rowHeight: '3em',
+      class: 'my-grid',
+    },
+    planning: {
+      cols: 2,
+      rowHeight: '6em',
+      class: 'my-grid',
+    },
+    publishing: {
+      cols: 2,
+      rowHeight: '6em',
+      class: 'my-grid',
+    },
+  };
+
+  public viewPorts: iViewPorts = {
+    title: {
+      colspan: 2,
+      rowspan: 1,
+      class: 'my-title',
+    },
+    slug: {
+      colspan: 2,
+      rowspan: 1,
+      class: 'my-slug',
+    },
+    content: {
+      colspan: 2,
+      rowspan: 1,
+      class: 'my-content',
+    },
+    access: {
+      colspan: 1,
+      rowspan: 1,
+    },
+    state: {
+      colspan: 2,
+      rowspan: 1,
+    },
+    planning: {
+      colspan: 2,
+      rowspan: 1,
+      class: null,
+    },
+    publishing: {
+      colspan: 2,
+      rowspan: 1,
+      class: 'my-publishing',
+    },
+  };
 
   constructor(
     private formBuilder: FormBuilder,
-    private service: SnippetsService
+    private service: SnippetsService,
+    public breakpointObserver: BreakpointObserver
   ) {
     this.snippetTypes = this.service.snippetTypes;
     this.editForm = this.formBuilder.group({
@@ -82,6 +164,7 @@ export class SnippetsEditComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.breakpoint();
     this.fetch();
     console.debug('SnippetsEditComponent.ngOnInit', {
       id: this.id,
@@ -89,6 +172,32 @@ export class SnippetsEditComponent implements OnInit {
       editForm: this.editForm.value,
       this: this,
     });
+  }
+
+  breakpoint() {
+    this.breakpointObserver
+      .observe(Breakpoints.Handset)
+      .subscribe((state: BreakpointState) => {
+        if (state.matches) {
+          this.viewPorts['title'].colspan = 2;
+          this.viewPorts['slug'].colspan = 2;
+          this.viewPorts['content'].colspan = 2;
+          this.viewPorts['access'].colspan = 4;
+          this.viewPorts['state'].colspan = 2;
+          this.viewPorts['planning'].colspan = 2;
+          this.viewPorts['publishing'].colspan = 2;
+          console.log('Viewport matches Breakpoints.Handset');
+        } else {
+          this.viewPorts['title'].colspan = 2;
+          this.viewPorts['slug'].colspan = 1;
+          this.viewPorts['content'].colspan = 2;
+          this.viewPorts['access'].colspan = 2;
+          this.viewPorts['state'].colspan = 1;
+          this.viewPorts['planning'].colspan = 1;
+          this.viewPorts['publishing'].colspan = 1;
+          console.log('Viewport does not match Breakpoints.Handset');
+        }
+      });
   }
 
   fetch() {
@@ -124,6 +233,47 @@ export class SnippetsEditComponent implements OnInit {
         this: this,
         model: this.model,
       });
+    }
+  }
+
+  toggleAccess(formControlName: string, event: MatSlideToggleChange) {
+    // console.log('SnippetsEditComponent.toggle', {
+    //   formControlName: formControlName,
+    //   event: event,
+    //   value: this.createForm.value[formControlName],
+    // });
+    if ('only_admin' === formControlName) {
+      if (event.checked) {
+        this.editForm.patchValue({
+          only_user: false,
+          only_guest: false,
+          allow_public: false,
+        });
+      }
+    } else if ('only_user' === formControlName) {
+      if (event.checked) {
+        this.editForm.patchValue({
+          only_admin: false,
+          only_guest: false,
+          allow_public: false,
+        });
+      }
+    } else if ('only_guest' === formControlName) {
+      if (event.checked) {
+        this.editForm.patchValue({
+          only_admin: false,
+          only_user: false,
+          allow_public: false,
+        });
+      }
+    } else if ('allow_public' === formControlName) {
+      if (event.checked) {
+        this.editForm.patchValue({
+          only_admin: false,
+          only_guest: false,
+          only_user: false,
+        });
+      }
     }
   }
 }
