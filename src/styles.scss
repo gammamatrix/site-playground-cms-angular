@@ -23,3 +23,44 @@ body {
 mat-spinner.loader {
   margin: 5em auto;
 }
+
+fieldset {
+  border: 1px solid rgba(197, 192, 192, 0.87);
+  border-radius: 0.25em;
+  margin: 1em;
+}
+
+.mb-1 {
+  margin-bottom: 1em;
+}
+
+.mb-2 {
+  margin-bottom: 2em;
+}
+
+.mb-3 {
+  margin-bottom: 3em;
+}
+
+.mb-4 {
+  margin-bottom: 4em;
+}
+
+.mb-5 {
+  margin-bottom: 5em;
+}
+
+.form-model-create {
+  fieldset {
+    mat-grid-list {
+      mat-grid-tile {
+        mat-form-field {
+          margin: .25em;
+          textarea.editor {
+            resize: none;
+          }
+        }
+      }
+    }
+  }
+}

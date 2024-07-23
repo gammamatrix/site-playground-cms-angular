@@ -762,3 +762,23 @@ export interface SelectOptionString {
   value: string;
   label: string;
 }
+
+export interface ViewPort {
+  colspan: number;
+  rowspan: number;
+  class?: string | null | undefined;
+}
+
+export interface ViewPorts {
+  [key: string]: ViewPort;
+}
+
+export interface ViewPortGrid {
+  cols: number;
+  rowHeight: string;
+  class?: string | null | undefined;
+}
+
+export interface ViewPortGrids {
+  [key: string]: ViewPortGrid;
+}
