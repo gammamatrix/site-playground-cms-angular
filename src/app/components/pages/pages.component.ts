@@ -4,6 +4,11 @@ import {
   OnInit,
   Input as RouteParam,
 } from '@angular/core';
+import {
+  Breakpoints,
+  BreakpointState,
+  BreakpointObserver,
+} from '@angular/cdk/layout';
 import { MatTable } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -22,27 +27,30 @@ export class PagesComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatTable) table!: MatTable<Page>;
-  dataSource = new PagesDataSource();
-  isReady = false;
-  pageSizeOptions: number[] = [1, 2, 3, 4, 5, 10, 15, 20, 25, 35, 50];
-  options = {
+  protected dataSource = new PagesDataSource();
+  public isReady = false;
+  public pageSizeOptions: number[] = [1, 2, 3, 4, 5, 10, 15, 20, 25, 35, 50];
+  public options = {
     perPage: 10,
     page: 1,
     offset: 0,
     filter: {},
   } as PagesIndexParams;
 
-  displayedColumns: string[] = [
+  public displayedColumns: string[] = [
     'id',
     'title',
     'page_type',
+    'revision',
     'created_at',
     'updated_at',
-    'edit',
-    'revision',
+    'manage',
   ];
 
-  constructor(private service: PagesService) {}
+  constructor(
+    private service: PagesService,
+    public breakpointObserver: BreakpointObserver
+  ) {}
 
   fetch(options: PagesIndexParams) {
     this.service.index(options).subscribe(response => {
@@ -58,6 +66,65 @@ export class PagesComponent implements OnInit {
     });
   }
 
+  public purge(model: Page) {
+    this.service.delete(model).subscribe(response => {
+      this.isReady = true;
+      console.log('PagesComponent.delete', {
+        this: this,
+        response: response,
+        dataSource: this.dataSource,
+      });
+    });
+  }
+
+  public lock(model: Page) {
+    this.service.lock(model).subscribe(response => {
+      model.locked = response.locked;
+      this.isReady = true;
+      console.log('PagesComponent.lock', {
+        this: this,
+        response: response,
+        dataSource: this.dataSource,
+      });
+    });
+  }
+
+  public delete(model: Page) {
+    this.service.trash(model).subscribe(response => {
+      model.deleted_at = new Date().toString();
+      this.isReady = true;
+      console.log('PagesComponent.delete', {
+        this: this,
+        response: response,
+        dataSource: this.dataSource,
+      });
+    });
+  }
+
+  public restore(model: Page) {
+    this.service.restore(model).subscribe(response => {
+      model.deleted_at = null;
+      this.isReady = true;
+      console.log('PagesComponent.restore', {
+        this: this,
+        response: response,
+        dataSource: this.dataSource,
+      });
+    });
+  }
+
+  public unlock(model: Page) {
+    this.service.unlock(model).subscribe(response => {
+      model.locked = response.locked;
+      this.isReady = true;
+      console.log('PagesComponent.unlock', {
+        this: this,
+        response: response,
+        dataSource: this.dataSource,
+      });
+    });
+  }
+
   initDataTable() {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
@@ -65,6 +132,7 @@ export class PagesComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.breakpoint();
     if (this.trash === 'with' || this.trash === 'only') {
       this.options.filter.trash = this.trash;
     } else {
@@ -79,5 +147,27 @@ export class PagesComponent implements OnInit {
       page_type: this.page_type,
       this: this,
     });
+  }
+
+  breakpoint() {
+    this.breakpointObserver
+      .observe(Breakpoints.Handset)
+      .subscribe((state: BreakpointState) => {
+        if (state.matches) {
+          this.displayedColumns = ['title', 'manage'];
+          console.log('Viewport matches Breakpoints.Handset');
+        } else {
+          this.displayedColumns = [
+            'id',
+            'title',
+            'page_type',
+            'revision',
+            'created_at',
+            'updated_at',
+            'manage',
+          ];
+          console.log('Viewport does not match Breakpoints.Handset');
+        }
+      });
   }
 }

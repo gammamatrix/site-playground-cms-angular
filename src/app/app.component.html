@@ -11,8 +11,10 @@
       <a mat-list-item href="">Dashboard</a>
       <a mat-list-item href="pages">Pages</a>
       <a mat-list-item href="snippets">Snippets</a>
-      <a mat-list-item href="login">Login</a>
-      <a mat-list-item href="logout">Logout</a>
+      <a *ngIf="!isAuthenticated" mat-list-item href="login">Login</a>
+      <a mat-list-item href="logout">
+        {{ isAuthenticated ? 'Logout' : 'Clear Session' }}
+      </a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>

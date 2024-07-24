@@ -23,6 +23,7 @@ import {
   MatSlideToggleModule,
   _MatSlideToggleRequiredValidatorModule,
 } from '@angular/material/slide-toggle';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -88,6 +89,7 @@ import { RevisionsComponent as PageRevisionsComponent } from './components/pages
     RouterModule,
     MatTableModule,
     MatPaginatorModule,
+    MatSnackBarModule,
     MatSortModule,
     MatInputModule,
     MatSelectModule,

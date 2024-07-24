@@ -29,11 +29,11 @@ export class LogoutComponent implements OnInit {
 
   logout() {
     this.service.logout(this.session).subscribe(LogoutToken => {
+      this.service.goToLogin();
       console.debug('LoginComponent.logout', {
         this: this,
         LogoutToken: LogoutToken,
       });
-      this.service.goToLogin();
     });
   }
 }

@@ -2,6 +2,7 @@ import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
@@ -20,6 +21,7 @@ describe('RevisionsComponent', () => {
         NoopAnimationsModule,
         MatPaginatorModule,
         MatProgressSpinnerModule,
+        MatSnackBarModule,
         MatSortModule,
         MatTableModule,
       ],

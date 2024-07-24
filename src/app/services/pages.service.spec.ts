@@ -3,6 +3,7 @@ import {
   HttpClientTestingModule,
   HttpTestingController,
 } from '@angular/common/http/testing';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { PagesService } from './pages.service';
 import {
@@ -21,7 +22,7 @@ describe('PagesService', () => {
   const id: string = mockPageOne.id ?? '';
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
+      imports: [HttpClientTestingModule, MatSnackBarModule],
       providers: [PagesService],
     });
     service = TestBed.inject(PagesService);
@@ -66,20 +67,20 @@ describe('PagesService', () => {
       url: `${url}/pages`,
     });
 
-    req.flush(mockPageOne);
+    req.flush(mockPageOneResponse);
   });
 
-  it('should call delete and return a single page', () => {
+  it('should call delete and return true', () => {
     service.delete(mockPageOne).subscribe(response => {
       expect(response).toEqual(true);
     });
 
     const req = httpController.expectOne({
       method: 'DELETE',
-      url: `${url}/pages/lock/${id}?force=1`,
+      url: `${url}/pages/${id}?force=1`,
     });
 
-    req.flush(mockPageOne);
+    req.flush(true);
   });
 
   it('should call editInfo and return an prefilled page', () => {
@@ -140,7 +141,7 @@ describe('PagesService', () => {
       url: `${url}/pages/lock/${id}`,
     });
 
-    req.flush(mockPageOne);
+    req.flush(mockPageOneResponse);
   });
 
   it('should call revisions and return the full response with data, links and meta', () => {
@@ -165,6 +166,19 @@ describe('PagesService', () => {
     req.flush(mockPageRevisionsOneResponse);
   });
 
+  it('should call trash and return true', () => {
+    service.trash(mockPageOne).subscribe(response => {
+      expect(response).toEqual(true);
+    });
+
+    const req = httpController.expectOne({
+      method: 'DELETE',
+      url: `${url}/pages/${id}`,
+    });
+
+    req.flush(true);
+  });
+
   it('should call unlock and return a single page', () => {
     service.unlock(mockPageOne).subscribe(response => {
       expect(response).toEqual(mockPageOne);
@@ -175,7 +189,7 @@ describe('PagesService', () => {
       url: `${url}/pages/lock/${id}`,
     });
 
-    req.flush(mockPageOne);
+    req.flush(mockPageOneResponse);
   });
 
   it('should call update and return a single page', () => {
@@ -188,6 +202,6 @@ describe('PagesService', () => {
       url: `${url}/pages/${id}`,
     });
 
-    req.flush(mockPageOne);
+    req.flush(mockPageOneResponse);
   });
 });
