@@ -36,6 +36,7 @@ export class SnippetsService {
   public snippetTypes: SelectOptionString[] = [
     { value: 'banner', label: 'Banner' },
     { value: 'slideshow', label: 'Slideshow' },
+    { value: 'widget', label: 'Widget' },
   ];
 
   getApiUrl(): string {

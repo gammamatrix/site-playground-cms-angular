@@ -34,8 +34,16 @@ export class PagesService {
   protected pageMeta$: ResponseShowMeta | undefined;
 
   public pageTypes: SelectOptionString[] = [
-    { value: 'banner', label: 'Banner' },
-    { value: 'slideshow', label: 'Slideshow' },
+    { value: 'article', label: 'Article' },
+    { value: 'book', label: 'Book' },
+    { value: 'notes', label: 'Notes' },
+    { value: 'magazine', label: 'Magazine' },
+    { value: 'newspaper', label: 'Newspaper' },
+    { value: 'periodical', label: 'Periodical' },
+    { value: 'policy', label: 'Policy' },
+    { value: 'plan', label: 'Plan' },
+    { value: 'research', label: 'Research' },
+    { value: 'scratch', label: 'Scratch' },
   ];
 
   getApiUrl(): string {
