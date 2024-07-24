@@ -1,65 +1,110 @@
 <mat-spinner *ngIf="!isReady" class="loader"></mat-spinner>
-<div [hidden]="!isReady" class="mat-elevation-z8">
-  <table mat-table class="full-width-table" matSort aria-label="Elements">
+<div [hidden]="!isReady">
+  <mat-table
+    matSort
+    aria-label="Snippets"
+    class="full-width-table mat-elevation-z8">
     <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Slug</th>
-      <td mat-cell *matCellDef="let row">{{ row.slug }}</td>
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Slug</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{ row.slug }}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="title">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Title</th>
-      <td mat-cell *matCellDef="let row">{{ row.title }}</td>
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Title</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{ row.title }}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="snippet_type">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Type</th>
-      <td mat-cell *matCellDef="let row">{{ row.snippet_type }}</td>
-    </ng-container>
-
-    <ng-container matColumnDef="created_at">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Created</th>
-      <td mat-cell *matCellDef="let row">
-        {{ row.created_at | date: 'medium' }}
-      </td>
-    </ng-container>
-
-    <ng-container matColumnDef="updated_at">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Updated</th>
-      <td mat-cell *matCellDef="let row">
-        {{ row.updated_at | date: 'medium' }}
-      </td>
-    </ng-container>
-
-    <ng-container matColumnDef="edit">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Id</th>
-      <td mat-cell *matCellDef="let row">
-        <a
-          [routerLink]="['/snippets/edit/', row.id]"
-          mat-raised-button
-          color="primary">
-          <mat-icon>edit</mat-icon>
-          Edit
-        </a>
-      </td>
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Type</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{ row.snippet_type }}</mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="revision">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Id</th>
-      <td mat-cell *matCellDef="let row">
-        <a
-          class="text-nowrap"
-          [routerLink]="['/snippets/revisions/', row.id]"
-          mat-raised-button
-          color="primary">
-          <i class="fa-solid fa-code-branch"></i>
-          {{ row.revision }} Revisions
-        </a>
-      </td>
+      <mat-header-cell *matHeaderCellDef>Revision</mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{ row.revision }} </mat-cell>
     </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-  </table>
+    <ng-container matColumnDef="created_at">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        Created
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        {{ row.created_at | date: 'medium' }}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="updated_at">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>
+        Updated
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        {{ row.updated_at | date: 'medium' }}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="manage">
+      <mat-header-cell *matHeaderCellDef>
+        <mat-icon>settings</mat-icon>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <button
+          mat-icon-button
+          [matMenuTriggerFor]="menu"
+          aria-label="Example icon-button with a menu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <a
+            *ngIf="!row.locked && !row.deleted_at"
+            [routerLink]="['/snippets/edit/', row.id]"
+            mat-menu-item>
+            <mat-icon>edit</mat-icon>
+            Edit
+          </a>
+          <a
+            class="text-nowrap"
+            [routerLink]="['/snippets/revisions/', row.id]"
+            mat-menu-item>
+            <i class="fa-solid fa-code-branch"></i>
+            {{ row.revision }} Revisions
+          </a>
+          <button *ngIf="row.deleted_at" (click)="restore(row)" mat-menu-item>
+            <mat-icon>recycling</mat-icon>
+            Restore
+          </button>
+          <button
+            *ngIf="!row.locked && !row.deleted_at"
+            (click)="delete(row)"
+            mat-menu-item>
+            <mat-icon>delete</mat-icon>
+            Delete
+          </button>
+          <button *ngIf="row.deleted_at" (click)="purge(row)" mat-menu-item>
+            <mat-icon>delete_forever</mat-icon>
+            Purge
+          </button>
+          <button
+            *ngIf="!row.locked && !row.deleted_at"
+            (click)="lock(row)"
+            mat-menu-item>
+            <mat-icon>lock</mat-icon>
+            Lock
+          </button>
+          <button *ngIf="row.locked" (click)="unlock(row)" mat-menu-item>
+            <mat-icon>lock_open</mat-icon>
+            Unlock
+          </button>
+        </mat-menu>
+        <span class="icons">
+          <mat-icon *ngIf="row.deleted_at">delete</mat-icon>
+          <mat-icon *ngIf="row.locked">lock</mat-icon>
+        </span>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+  </mat-table>
 
   <mat-paginator
     #paginator

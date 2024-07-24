@@ -16,16 +16,21 @@ import {
   ResponseShowMeta,
   SelectOptionString,
   SnippetsResponse,
+  SnippetRevisionResponse,
   SnippetRevisionsResponse,
   SnippetResponse,
 } from '../app.types';
 import { catchError, map, throwError } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SnippetsService {
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    public _snackBar: MatSnackBar
+  ) {}
 
   private apiUrl: string = environment.apiUrl;
   protected snippetsMeta: ResponseIndexMeta | undefined;
@@ -49,23 +54,18 @@ export class SnippetsService {
     return this.apiUrl.startsWith('//');
   }
 
-  private handleError(error: HttpErrorResponse) {
-    if (error.status === 0) {
-      // A client-side or network error occurred. Handle it accordingly.
-      console.error('An error occurred:', error.error);
-    } else {
-      // The backend returned an unsuccessful response code.
-      // The response body may contain clues as to what went wrong.
-      console.error(
-        `Backend returned code ${error.status}, body was: `,
-        error.error
-      );
+  private handleError = (error: HttpErrorResponse) => {
+    console.error('SnippetsService.handleError', { error: error });
+    let message = 'An error occurred';
+    if (error.error.message) {
+      message = error.error.message;
+    } else if (error.error.error) {
+      message = error.error.error;
     }
-    // Return an observable with a user-facing error message.
-    return throwError(
-      () => new Error('Something bad happened; please try again later.')
-    );
-  }
+    this._snackBar.open(message, 'error');
+    return throwError(() => new Error(message));
+  };
+
   createInfo(options?: SnippetRequestCreateInfo): Observable<Snippet> {
     const params = new HttpParams()
       .set('owned_by_id', options?.owned_by_id ?? '')
@@ -92,16 +92,27 @@ export class SnippetsService {
   }
 
   create(model: Snippet): Observable<Snippet> {
-    return this.http.post<Snippet>(`${this.apiUrl}/snippets`, model);
+    return this.http
+      .post<SnippetResponse>(`${this.apiUrl}/snippets`, model)
+      .pipe(
+        map((response: SnippetResponse) => {
+          console.debug('SnippetService.create()', {
+            response: response,
+          });
+          return response.data;
+        }),
+        catchError(this.handleError)
+      );
   }
 
   delete(model: Snippet): Observable<boolean> {
     return this.http
-      .delete<Snippet>(`${this.apiUrl}/snippets/lock/${model.id}?force=1`)
+      .delete<Snippet>(`${this.apiUrl}/snippets/${model.id}?force=1`)
       .pipe(
         map(() => {
           return true;
-        })
+        }),
+        catchError(this.handleError)
       );
   }
 
@@ -119,7 +130,8 @@ export class SnippetsService {
             response: response,
           });
           return response.data;
-        })
+        }),
+        catchError(this.handleError)
       );
   }
 
@@ -135,57 +147,125 @@ export class SnippetsService {
           response: response,
         });
         return response.data;
-      })
+      }),
+      catchError(this.handleError)
     );
   }
 
   index(params: SnippetsIndexParams): Observable<SnippetsResponse> {
-    return this.http.post<SnippetsResponse>(
-      `${this.apiUrl}/snippets/index`,
-      params
-    );
+    return this.http
+      .post<SnippetsResponse>(`${this.apiUrl}/snippets/index`, params)
+      .pipe(catchError(this.handleError));
   }
 
   lock(model: Snippet): Observable<Snippet> {
-    return this.http.put<Snippet>(
-      `${this.apiUrl}/snippets/lock/${model.id}`,
-      null
-    );
+    return this.http
+      .put<SnippetResponse>(`${this.apiUrl}/snippets/lock/${model.id}`, null)
+      .pipe(
+        map((response: SnippetResponse) => {
+          console.debug('SnippetService.lock()', {
+            response: response,
+          });
+          return response.data;
+        }),
+        catchError(this.handleError)
+      );
   }
 
   revisions(
     snippet_id: string,
     params: SnippetRevisionsIndexParams
   ): Observable<SnippetRevisionsResponse> {
-    return this.http.post<SnippetRevisionsResponse>(
-      `${this.apiUrl}/snippets/${snippet_id}/revisions`,
-      params
-    );
+    return this.http
+      .post<SnippetRevisionsResponse>(
+        `${this.apiUrl}/snippets/${snippet_id}/revisions`,
+        params
+      )
+      .pipe(catchError(this.handleError));
   }
 
   revision(revision_id: string): Observable<SnippetRevision> {
-    return this.http.get<SnippetRevision>(
-      `${this.apiUrl}/snippets/revision${revision_id}`
-    );
+    return this.http
+      .get<SnippetRevisionResponse>(
+        `${this.apiUrl}/snippets/revision${revision_id}`
+      )
+      .pipe(
+        map((response: SnippetRevisionResponse) => {
+          console.debug('SnippetService.revision()', {
+            response: response,
+          });
+          return response.data;
+        })
+      );
+  }
+
+  restore(model: Snippet): Observable<Snippet> {
+    return this.http
+      .put<SnippetResponse>(`${this.apiUrl}/snippets/restore/${model.id}`, null)
+      .pipe(
+        map((response: SnippetResponse) => {
+          console.debug('SnippetService.restore()', {
+            response: response,
+          });
+          return response.data;
+        }),
+        catchError(this.handleError)
+      );
   }
 
   restoreRevision(revision_id: string): Observable<Snippet> {
-    return this.http.put<Snippet>(
-      `${this.apiUrl}/snippets/revision${revision_id}`,
-      null
-    );
+    return this.http
+      .put<SnippetResponse>(
+        `${this.apiUrl}/snippets/revision${revision_id}`,
+        null
+      )
+      .pipe(
+        map((response: SnippetResponse) => {
+          console.debug('SnippetService.update()', {
+            response: response,
+          });
+          return response.data;
+        }),
+        catchError(this.handleError)
+      );
+  }
+
+  trash(model: Snippet): Observable<boolean> {
+    return this.http
+      .delete<Snippet>(`${this.apiUrl}/snippets/${model.id}`)
+      .pipe(
+        map(() => {
+          return true;
+        }),
+        catchError(this.handleError)
+      );
   }
 
   unlock(model: Snippet): Observable<Snippet> {
-    return this.http.delete<Snippet>(
-      `${this.apiUrl}/snippets/lock/${model.id}`
-    );
+    return this.http
+      .delete<SnippetResponse>(`${this.apiUrl}/snippets/lock/${model.id}`)
+      .pipe(
+        map((response: SnippetResponse) => {
+          console.debug('SnippetService.unlock()', {
+            response: response,
+          });
+          return response.data;
+        }),
+        catchError(this.handleError)
+      );
   }
 
   update(model: Snippet): Observable<Snippet> {
-    return this.http.patch<Snippet>(
-      `${this.apiUrl}/snippets/${model.id}`,
-      model
-    );
+    return this.http
+      .patch<SnippetResponse>(`${this.apiUrl}/snippets/${model.id}`, model)
+      .pipe(
+        map((response: SnippetResponse) => {
+          console.debug('SnippetService.update()', {
+            response: response,
+          });
+          return response.data;
+        }),
+        catchError(this.handleError)
+      );
   }
 }

@@ -3,6 +3,7 @@ import {
   HttpClientTestingModule,
   HttpTestingController,
 } from '@angular/common/http/testing';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { SnippetsService } from './snippets.service';
 import {
@@ -21,7 +22,7 @@ describe('SnippetsService', () => {
   const id: string = mockSnippetOne.id ?? '';
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
+      imports: [HttpClientTestingModule, MatSnackBarModule],
       providers: [SnippetsService],
     });
     service = TestBed.inject(SnippetsService);
@@ -66,20 +67,20 @@ describe('SnippetsService', () => {
       url: `${url}/snippets`,
     });
 
-    req.flush(mockSnippetOne);
+    req.flush(mockSnippetOneResponse);
   });
 
-  it('should call delete and return a single snippet', () => {
+  it('should call delete and return true', () => {
     service.delete(mockSnippetOne).subscribe(response => {
       expect(response).toEqual(true);
     });
 
     const req = httpController.expectOne({
       method: 'DELETE',
-      url: `${url}/snippets/lock/${id}?force=1`,
+      url: `${url}/snippets/${id}?force=1`,
     });
 
-    req.flush(mockSnippetOne);
+    req.flush(true);
   });
 
   it('should call editInfo and return an prefilled snippet', () => {
@@ -140,7 +141,7 @@ describe('SnippetsService', () => {
       url: `${url}/snippets/lock/${id}`,
     });
 
-    req.flush(mockSnippetOne);
+    req.flush(mockSnippetOneResponse);
   });
 
   it('should call revisions and return the full response with data, links and meta', () => {
@@ -165,6 +166,19 @@ describe('SnippetsService', () => {
     req.flush(mockSnippetRevisionsOneResponse);
   });
 
+  it('should call trash and return true', () => {
+    service.trash(mockSnippetOne).subscribe(response => {
+      expect(response).toEqual(true);
+    });
+
+    const req = httpController.expectOne({
+      method: 'DELETE',
+      url: `${url}/snippets/${id}`,
+    });
+
+    req.flush(true);
+  });
+
   it('should call unlock and return a single snippet', () => {
     service.unlock(mockSnippetOne).subscribe(response => {
       expect(response).toEqual(mockSnippetOne);
@@ -175,7 +189,7 @@ describe('SnippetsService', () => {
       url: `${url}/snippets/lock/${id}`,
     });
 
-    req.flush(mockSnippetOne);
+    req.flush(mockSnippetOneResponse);
   });
 
   it('should call update and return a single snippet', () => {
@@ -188,6 +202,6 @@ describe('SnippetsService', () => {
       url: `${url}/snippets/${id}`,
     });
 
-    req.flush(mockSnippetOne);
+    req.flush(mockSnippetOneResponse);
   });
 });

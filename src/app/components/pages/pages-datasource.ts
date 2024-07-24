@@ -60,7 +60,7 @@ export class PagesDataSource extends DataSource<Page> {
    * Paginate the data (client-side). If you're using server-side pagination,
    * this would be replaced by requesting the appropriate data from the server.
    */
-  private getPagedData(data: Page[]): Page[] {
+  public getPagedData(data: Page[]): Page[] {
     if (this.paginator) {
       const startIndex = this.paginator.pageIndex * this.paginator.pageSize;
       return data.splice(startIndex, this.paginator.pageSize);

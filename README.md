@@ -10,6 +10,29 @@
 
 ## Package Information
 
+## cloc
+
+```sh
+➜  site-playground-cms-angular-scss git:(feature/GH-10) ✗ cloc --exclude-dir=.angular,dist,node_modules,output,vendor,coverage,playwright-report .
+     104 text files.
+      88 unique files.
+      27 files ignored.
+
+github.com/AlDanial/cloc v 1.98  T=0.14 s (629.6 files/s, 193172.3 lines/s)
+-------------------------------------------------------------------------------
+Language                     files          blank        comment           code
+-------------------------------------------------------------------------------
+JSON                            12              0              0          16975
+TypeScript                      50            489            295           5488
+HTML                            13             73              0           2429
+Markdown                         3            247              0            447
+YAML                             1              3              0            269
+SCSS                             8             44              2            225
+INI                              1              3              0             13
+-------------------------------------------------------------------------------
+SUM:                            88            859            297          25846
+-------------------------------------------------------------------------------
+```
 
 ### Library Versions
 
@@ -209,31 +232,31 @@ npm run prettier
 
 | Interface | Group |
 |---------|---------|
-| [ResponseShowMeta](src/app/types.ts#L1) | Responses |
-| [ResponseIndexMeta](src/app/types.ts#L9) | Responses |
-| [ResponseIndexLinks](src/app/types.ts#L16) | Responses |
-| [PageEditModel](src/app/types.ts#L23) | Pages |
-| [Page](src/app/types.ts#L99) | Pages |
-| [Pages](src/app/types.ts#L199) | Pages |
-| [PagesResponse](src/app/types.ts#L201) | Pages, Responses |
-| [PageResponse](src/app/types.ts#L207) | Pages, Responses |
-| [PageRevision](src/app/types.ts#L213) | Pages, Revisions |
-| [PageRevisions](src/app/types.ts#L315) | Pages, Revisions |
-| [PageRevisionsResponse](src/app/types.ts#L317) | Pages, Responses, Revisions |
-| [PageRevisionResponse](src/app/types.ts#L323) | Pages, Responses, Revisions |
-| [SnippetEditModel](src/app/types.ts#L328) | Snippets |
-| [Snippet](src/app/types.ts#L422) | Snippets |
-| [Snippets](src/app/types.ts#L517) | Snippets |
-| [SnippetsResponse](src/app/types.ts#L519) | Snippets, Responses |
-| [SnippetResponse](src/app/types.ts#L525) | Snippets, Responses |
-| [SnippetRevision](src/app/types.ts#L530) | Snippets, Revisions |
-| [SnippetRevisions](src/app/types.ts#L626) | Snippets, Revisions |
-| [SnippetRevisionsResponse](src/app/types.ts#L628) | Snippets, Responses, Revisions |
-| [SnippetRevisionResponse](src/app/types.ts#L634) | Snippets, Responses, Revisions |
-| [User](src/app/types.ts#L639) | Users |
-| [Users](src/app/types.ts#L649) | Users |
-| [UsersResponse](src/app/types.ts#L651) | Users, Responses |
-| [UserResponse](src/app/types.ts#L657) | Users, Responses |
+| [ResponseShowMeta](src/app/app.types.ts#L1) | Responses |
+| [ResponseIndexMeta](src/app/app.types.ts#L9) | Responses |
+| [ResponseIndexLinks](src/app/app.types.ts#L16) | Responses |
+| [PageEditModel](src/app/app.types.ts#L23) | Pages |
+| [Page](src/app/app.types.ts#L99) | Pages |
+| [Pages](src/app/app.types.ts#L199) | Pages |
+| [PagesResponse](src/app/app.types.ts#L201) | Pages, Responses |
+| [PageResponse](src/app/app.types.ts#L207) | Pages, Responses |
+| [PageRevision](src/app/app.types.ts#L213) | Pages, Revisions |
+| [PageRevisions](src/app/app.types.ts#L315) | Pages, Revisions |
+| [PageRevisionsResponse](src/app/app.types.ts#L317) | Pages, Responses, Revisions |
+| [PageRevisionResponse](src/app/app.types.ts#L323) | Pages, Responses, Revisions |
+| [SnippetEditModel](src/app/app.types.ts#L328) | Snippets |
+| [Snippet](src/app/app.types.ts#L422) | Snippets |
+| [Snippets](src/app/app.types.ts#L517) | Snippets |
+| [SnippetsResponse](src/app/app.types.ts#L519) | Snippets, Responses |
+| [SnippetResponse](src/app/app.types.ts#L525) | Snippets, Responses |
+| [SnippetRevision](src/app/app.types.ts#L530) | Snippets, Revisions |
+| [SnippetRevisions](src/app/app.types.ts#L626) | Snippets, Revisions |
+| [SnippetRevisionsResponse](src/app/app.types.ts#L628) | Snippets, Responses, Revisions |
+| [SnippetRevisionResponse](src/app/app.types.ts#L634) | Snippets, Responses, Revisions |
+| [User](src/app/app.types.ts#L639) | Users |
+| [Users](src/app/app.types.ts#L649) | Users |
+| [UsersResponse](src/app/app.types.ts#L651) | Users, Responses |
+| [UserResponse](src/app/app.types.ts#L657) | Users, Responses |
 
 
 </details>
@@ -338,3 +361,6 @@ ng generate @angular/material:table components/pages
 
 
 
+cloc --exclude-dir=dist,node_modules,output,vendor,coverage,playwright-report .
+cloc --exclude-dir=.angular,dist,node_modules,output,vendor,coverage,playwright-report --by-file .
+cloc --exclude-dir=.angular,dist,node_modules,output,vendor,coverage,playwright-report .
