@@ -54,3 +54,6 @@ NOTES.md
 /playwright/.cache/
 
 output
+
+# Ignore screenshots from tests
+/*.png

@@ -116,8 +116,7 @@ jobs:
         run: ng lint
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
-      - name: Run Playwright tests
-        # run: npx playwright test
+      - name: Run e2e Playwright tests
         run: ng e2e
       - uses: actions/upload-artifact@v4
         if: always()

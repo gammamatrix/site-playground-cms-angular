@@ -1,0 +1,273 @@
+import { Component, OnInit } from '@angular/core';
+import {
+  Breakpoints,
+  BreakpointState,
+  BreakpointObserver,
+} from '@angular/cdk/layout';
+import { FormGroup } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
+import {
+  Page as iPage,
+  SelectOptionString,
+  ViewPorts as iViewPorts,
+  ViewPortGrids as iViewPortGrids,
+} from '../../../app.types';
+import { PagesService } from '../../../services/pages.service';
+import { MatSlideToggleChange } from '@angular/material/slide-toggle';
+
+@Component({
+  selector: 'app-pages-create',
+  templateUrl: './create.component.html',
+  styleUrls: ['./create.component.scss'],
+})
+export class PagesCreateComponent implements OnInit {
+  public autoGenerateSlug = true;
+  public createForm: FormGroup;
+  public isAdvanced = true;
+  public isReady = false;
+  public model: iPage | undefined;
+  public pageTypes: SelectOptionString[] = [];
+
+  public viewPortGrid: iViewPortGrids = {
+    title: {
+      cols: 2,
+      rowHeight: '6em',
+      class: 'my-title',
+    },
+    content: {
+      cols: 2,
+      rowHeight: '20em',
+      class: 'my-grid',
+    },
+    access: {
+      cols: 4,
+      rowHeight: '3em',
+      class: 'my-grid',
+    },
+    state: {
+      cols: 2,
+      rowHeight: '3em',
+      class: 'my-grid',
+    },
+    planning: {
+      cols: 2,
+      rowHeight: '6em',
+      class: 'my-grid',
+    },
+    publishing: {
+      cols: 2,
+      rowHeight: '6em',
+      class: 'my-grid',
+    },
+  };
+
+  public viewPorts: iViewPorts = {
+    title: {
+      colspan: 2,
+      rowspan: 1,
+      class: 'my-title',
+    },
+    slug: {
+      colspan: 2,
+      rowspan: 1,
+      class: 'my-slug',
+    },
+    content: {
+      colspan: 2,
+      rowspan: 1,
+      class: 'my-content',
+    },
+    access: {
+      colspan: 1,
+      rowspan: 1,
+    },
+    state: {
+      colspan: 2,
+      rowspan: 1,
+    },
+    planning: {
+      colspan: 2,
+      rowspan: 1,
+      class: null,
+    },
+    publishing: {
+      colspan: 2,
+      rowspan: 1,
+      class: 'my-publishing',
+    },
+  };
+
+  constructor(
+    private formBuilder: FormBuilder,
+    private service: PagesService,
+    public breakpointObserver: BreakpointObserver
+  ) {
+    this.pageTypes = this.service.pageTypes;
+    this.createForm = this.formBuilder.group({
+      owned_by_id: [''],
+      parent_id: [''],
+      page_type: [''],
+      title: ['', Validators.required],
+      slug: ['', Validators.required],
+      label: [''],
+      byline: [''],
+      url: [''],
+      content: [''],
+      description: [''],
+      introduction: [''],
+      summary: [''],
+      locale: [''],
+      icon: [''],
+      image: [''],
+      avatar: [''],
+      canceled_at: [''],
+      closed_at: [''],
+      published_at: [''],
+      embargo_at: [''],
+      fixed_at: [''],
+      postponed_at: [''],
+      released_at: [''],
+      resumed_at: [''],
+      suspended_at: [''],
+      start_at: [''],
+      planned_start_at: [''],
+      end_at: [''],
+      planned_end_at: [''],
+      active: [true],
+      canceled: [false],
+      closed: [false],
+      completed: [false],
+      duplicate: [false],
+      fixed: [false],
+      flagged: [false],
+      is_external: [false],
+      is_redirect: [false],
+      locked: [false],
+      pending: [false],
+      planned: [false],
+      problem: [false],
+      published: [true],
+      released: [false],
+      retired: [false],
+      resolved: [false],
+      sitemap: [false],
+      suspended: [false],
+      unknown: [false],
+      only_user: [false],
+      only_guest: [false],
+      allow_public: [false],
+      only_admin: [false],
+    });
+  }
+
+  ngOnInit() {
+    this.breakpoint();
+    this.fetch();
+    console.debug('PagesCreateComponent.ngOnInit', {
+      isReady: this.isReady,
+      createForm: this.createForm.value,
+      this: this,
+    });
+  }
+
+  breakpoint() {
+    this.breakpointObserver
+      .observe(Breakpoints.Handset)
+      .subscribe((state: BreakpointState) => {
+        if (state.matches) {
+          this.viewPorts['title'].colspan = 2;
+          this.viewPorts['slug'].colspan = 2;
+          this.viewPorts['content'].colspan = 2;
+          this.viewPorts['access'].colspan = 4;
+          this.viewPorts['state'].colspan = 2;
+          this.viewPorts['planning'].colspan = 2;
+          this.viewPorts['publishing'].colspan = 2;
+          console.log('Viewport matches Breakpoints.Handset');
+        } else {
+          this.viewPorts['title'].colspan = 2;
+          this.viewPorts['slug'].colspan = 1;
+          this.viewPorts['content'].colspan = 2;
+          this.viewPorts['access'].colspan = 2;
+          this.viewPorts['state'].colspan = 1;
+          this.viewPorts['planning'].colspan = 1;
+          this.viewPorts['publishing'].colspan = 1;
+          console.log('Viewport does not match Breakpoints.Handset');
+        }
+      });
+  }
+
+  fetch() {
+    this.service.createInfo().subscribe(response => {
+      this.model = response;
+      this.createForm.patchValue(this.model);
+      this.isReady = true;
+    });
+    console.log('PagesCreateComponent.fetch', {
+      this: this,
+      model: this.model,
+    });
+  }
+
+  onSubmit(): void {
+    console.log('PagesCreateComponent.onSubmit', {
+      this: this,
+      createForm: this.createForm.value,
+      model: this.model,
+    });
+    this.save();
+  }
+
+  save() {
+    if (this.model) {
+      this.service.create(this.createForm.value).subscribe(response => {
+        this.model = response;
+        this.createForm.patchValue(this.model);
+      });
+      console.log('PagesCreateComponent.save', {
+        this: this,
+        model: this.model,
+      });
+    }
+  }
+
+  toggleAccess(formControlName: string, event: MatSlideToggleChange) {
+    // console.log('PagesCreateComponent.toggle', {
+    //   formControlName: formControlName,
+    //   event: event,
+    //   value: this.createForm.value[formControlName],
+    // });
+    if ('only_admin' === formControlName) {
+      if (event.checked) {
+        this.createForm.patchValue({
+          only_user: false,
+          only_guest: false,
+          allow_public: false,
+        });
+      }
+    } else if ('only_user' === formControlName) {
+      if (event.checked) {
+        this.createForm.patchValue({
+          only_admin: false,
+          only_guest: false,
+          allow_public: false,
+        });
+      }
+    } else if ('only_guest' === formControlName) {
+      if (event.checked) {
+        this.createForm.patchValue({
+          only_admin: false,
+          only_user: false,
+          allow_public: false,
+        });
+      }
+    } else if ('allow_public' === formControlName) {
+      if (event.checked) {
+        this.createForm.patchValue({
+          only_admin: false,
+          only_guest: false,
+          only_user: false,
+        });
+      }
+    }
+  }
+}

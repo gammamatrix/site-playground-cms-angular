@@ -1,4 +1,6 @@
 export const environment = {
+  demo: false,
   production: true,
-  apiUrl: 'http://site-playground-integration/mock/api',
+  apiUrl: '//site-api-angular/api/cms',
+  authUrl: '//site-api-angular',
 };

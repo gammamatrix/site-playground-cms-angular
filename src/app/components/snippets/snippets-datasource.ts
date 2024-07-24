@@ -1,15 +1,9 @@
-// import { inject } from '@angular/core';
 import { DataSource } from '@angular/cdk/collections';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { map } from 'rxjs/operators';
 import { Observable, of as observableOf, merge } from 'rxjs';
 import { Snippet, Snippets } from '../../app.types';
-import { mockSnippetsOne } from '../../../mock/snippets';
-// import { SnippetsService } from '../../services/snippets.service';
-
-// TODO: replace this with real data from your application
-const EXAMPLE_DATA: Snippets = mockSnippetsOne;
 
 /**
  * Data source for the Snippets view. This class should
@@ -17,11 +11,9 @@ const EXAMPLE_DATA: Snippets = mockSnippetsOne;
  * (including sorting, pagination, and filtering).
  */
 export class SnippetsDataSource extends DataSource<Snippet> {
-  data: Snippets = EXAMPLE_DATA;
+  data: Snippets = [];
   paginator: MatPaginator | undefined;
   sort: MatSort | undefined;
-
-  // private service = inject(SnippetsService);
 
   constructor() {
     super();
@@ -33,6 +25,9 @@ export class SnippetsDataSource extends DataSource<Snippet> {
    * @returns A stream of the items to be rendered.
    */
   connect(): Observable<Snippets> {
+    console.debug('SnippetsDataSource.connect', {
+      this: this,
+    });
     if (this.paginator && this.sort) {
       // Combine everything that affects the rendered data into one update
       // stream for the data-table to consume.
@@ -88,7 +83,9 @@ export class SnippetsDataSource extends DataSource<Snippet> {
         case 'name':
           return compare(a.title, b.title, isAsc);
         case 'id':
-          return compare(+a.id, +b.id, isAsc);
+          return a.id !== undefined && b.id !== undefined
+            ? compare(+a.id, +b.id, isAsc)
+            : 0;
         default:
           return 0;
       }
