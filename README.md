@@ -112,6 +112,7 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 ```sh
 ng test
 ```
+
 Results of test:
 
 <img src="resources/docs/site-playground-cms-angular-ng-test.png" alt="Screenshot of the test command: ng test with results">
@@ -119,6 +120,14 @@ Results of test:
 Live Karma and Jasmine Test Report:
 
 <img src="resources/docs/site-playground-cms-angular-ng-test-karma.png" alt="Screenshot of the Karma and Jasmine Test Report">
+
+##### Unit test code coverage
+
+```sh
+ng test --code-coverage
+```
+
+<img src="resources/docs/site-playground-cms-angular-code-coverage.png" alt="Screenshot of the Unit Test Code Coverage Report">
 
 ### Running end-to-end tests with Playwright
 
@@ -225,7 +234,7 @@ npm run prettier
 
 ### Dashboard
 
-<img src="resources/docs/site-playground-cms-angular-dashboard.png" alt="Screenshot for the CMS Dashboard">
+<img src="resources/docs/site-playground-cms-angular-dashboard-view.png" alt="Screenshot for the CMS Dashboard">
 
 
 ### Interfaces
@@ -358,9 +367,3 @@ ng generate @angular/material:table components/pages
 </details>
 
 </section>
-
-
-
-cloc --exclude-dir=dist,node_modules,output,vendor,coverage,playwright-report .
-cloc --exclude-dir=.angular,dist,node_modules,output,vendor,coverage,playwright-report --by-file .
-cloc --exclude-dir=.angular,dist,node_modules,output,vendor,coverage,playwright-report .

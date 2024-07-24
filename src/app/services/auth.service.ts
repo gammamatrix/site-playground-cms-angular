@@ -71,6 +71,11 @@ export class AuthService {
     );
   }
 
+  isAuthenticated(): boolean {
+    const app_token = localStorage.getItem('app_token');
+    return app_token ? true : false;
+  }
+
   getCsfrToken(): string {
     const csrf_token = localStorage.getItem('csrf_token');
     return csrf_token ?? '';

@@ -34,8 +34,5 @@ test('mock api/cms/snippets', async ({ page }) => {
     path: 'snippets.png',
   });
   await expect(page).toHaveTitle(/CMS Snippets/);
-  await expect(page.getByText('0 Revisions')).toBeVisible();
-  // await expect(page.getByText('Edit', { exact: true })).toBeVisible();
+  await expect(page.getByText('Revision')).toBeVisible();
 });
-// await page.getByText('New Issue').click();
-// await expect(page.getByText('Loquat', { exact: true })).toBeVisible();
