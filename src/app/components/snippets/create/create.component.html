@@ -1,5 +1,5 @@
+<mat-spinner *ngIf="!isReady" class="loader"></mat-spinner>
 <div class="form-snippets-create">
-  <mat-spinner *ngIf="!isReady"></mat-spinner>
   <form
     class="form-model-create"
     *ngIf="isReady"
@@ -59,6 +59,23 @@
             </mat-select>
           </mat-form-field>
         </mat-grid-tile>
+        <mat-grid-tile
+          *ngIf="!isAdvanced"
+          [class]="viewPorts['slug'].class"
+          [colspan]="viewPorts['slug'].colspan"
+          [rowspan]="viewPorts['slug'].rowspan">
+          <button
+            *ngIf="!isAdvanced"
+            class="full-width autogenerate-slug"
+            mat-raised-button
+            type="button"
+            [color]="autoGenerateSlug ? 'warn' : 'primary'"
+            (click)="autoGenerateSlug = !autoGenerateSlug">
+            <mat-icon *ngIf="autoGenerateSlug">check</mat-icon>
+            <mat-icon *ngIf="!autoGenerateSlug">close</mat-icon>
+            Auto generate slug
+          </button>
+        </mat-grid-tile>
       </mat-grid-list>
 
       <div class="row">
@@ -72,18 +89,6 @@
             <mat-icon *ngIf="isAdvanced">article</mat-icon>
             <mat-icon *ngIf="!isAdvanced">description</mat-icon>
             {{ isAdvanced ? 'Display Advanced Form' : 'Display Basic Form' }}
-          </button>
-          <br />
-          <button
-            *ngIf="!isAdvanced"
-            class="full-width mb-3"
-            mat-raised-button
-            type="button"
-            [color]="autoGenerateSlug ? 'warn' : 'primary'"
-            (click)="autoGenerateSlug = !autoGenerateSlug">
-            <mat-icon *ngIf="autoGenerateSlug">check</mat-icon>
-            <mat-icon *ngIf="!autoGenerateSlug">close</mat-icon>
-            Auto generate slug
           </button>
         </div>
       </div>

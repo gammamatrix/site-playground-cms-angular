@@ -1,56 +1,485 @@
-<form [formGroup]="createForm" novalidate (ngSubmit)="onSubmit()">
-  <mat-card class="shipping-card">
-    <mat-card-header>
-      <mat-card-title>Create a page </mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <div class="row">
-        <div class="col">
+<mat-spinner *ngIf="!isReady" class="loader"></mat-spinner>
+<div class="form-pages-create">
+  <form
+    class="form-model-create"
+    *ngIf="isReady"
+    [formGroup]="createForm"
+    novalidate
+    (ngSubmit)="onSubmit()">
+    <h1 class="mat-h1">Create a page</h1>
+
+    <fieldset>
+      <legend>Page Title, Slug, Label and Type</legend>
+      <mat-grid-list
+        [class]="viewPortGrid['title'].class"
+        [cols]="viewPortGrid['title'].cols"
+        [rowHeight]="viewPortGrid['title'].rowHeight">
+        <mat-grid-tile
+          [class]="viewPorts['title'].class"
+          [colspan]="viewPorts['title'].colspan"
+          [rowspan]="viewPorts['title'].rowspan">
           <mat-form-field class="full-width">
             <input matInput placeholder="Title" formControlName="title" />
           </mat-form-field>
-        </div>
-      </div>
-      <div class="row" *ngIf="!autoGenerateSlug">
-        <div class="col">
+        </mat-grid-tile>
+        <mat-grid-tile
+          *ngIf="!isAdvanced"
+          [class]="viewPorts['slug'].class"
+          [colspan]="viewPorts['slug'].colspan"
+          [rowspan]="viewPorts['slug'].rowspan">
           <mat-form-field class="full-width">
+            <input matInput placeholder="Label" formControlName="label" />
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile
+          *ngIf="!isAdvanced"
+          [class]="viewPorts['slug'].class"
+          [colspan]="viewPorts['slug'].colspan"
+          [rowspan]="viewPorts['slug'].rowspan">
+          <mat-form-field class="full-width" *ngIf="!autoGenerateSlug">
             <input matInput placeholder="Slug" formControlName="slug" />
             <mat-error *ngIf="createForm.controls['slug'].hasError('required')">
               A slug is <strong>required</strong>
             </mat-error>
           </mat-form-field>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
+        </mat-grid-tile>
+        <mat-grid-tile
+          *ngIf="!isAdvanced"
+          [class]="viewPorts['slug'].class"
+          [colspan]="viewPorts['slug'].colspan"
+          [rowspan]="viewPorts['slug'].rowspan">
           <mat-form-field class="full-width">
-            <input matInput placeholder="Label" formControlName="label" />
+            <mat-select formControlName="page_type" placeholder="Type">
+              <mat-option></mat-option>
+              <mat-option
+                *ngFor="let pageType of pageTypes"
+                [value]="pageType.value">
+                {{ pageType.label }}
+              </mat-option>
+            </mat-select>
           </mat-form-field>
-        </div>
-        <div class="col">
+        </mat-grid-tile>
+        <mat-grid-tile
+          *ngIf="!isAdvanced"
+          [class]="viewPorts['slug'].class"
+          [colspan]="viewPorts['slug'].colspan"
+          [rowspan]="viewPorts['slug'].rowspan">
           <button
-            mat-button
+            *ngIf="!isAdvanced"
+            class="full-width autogenerate-slug"
+            mat-raised-button
             type="button"
+            [color]="autoGenerateSlug ? 'warn' : 'primary'"
             (click)="autoGenerateSlug = !autoGenerateSlug">
             <mat-icon *ngIf="autoGenerateSlug">check</mat-icon>
             <mat-icon *ngIf="!autoGenerateSlug">close</mat-icon>
             Auto generate slug
           </button>
-        </div>
-      </div>
+        </mat-grid-tile>
+      </mat-grid-list>
+
       <div class="row">
         <div class="col">
+          <button
+            class="full-width mb-3"
+            mat-raised-button
+            type="button"
+            [color]="isAdvanced ? 'warn' : 'primary'"
+            (click)="isAdvanced = !isAdvanced">
+            <mat-icon *ngIf="isAdvanced">article</mat-icon>
+            <mat-icon *ngIf="!isAdvanced">description</mat-icon>
+            {{ isAdvanced ? 'Display Advanced Form' : 'Display Basic Form' }}
+          </button>
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Page Content and Description</legend>
+      <mat-grid-list
+        [class]="viewPortGrid['content'].class"
+        [cols]="viewPortGrid['content'].cols"
+        [rowHeight]="viewPortGrid['content'].rowHeight">
+        <mat-grid-tile
+          *ngIf="!isAdvanced"
+          [class]="viewPorts['content'].class"
+          [colspan]="viewPorts['content'].colspan"
+          [rowspan]="viewPorts['content'].rowspan">
           <mat-form-field class="full-width">
+            <mat-label>Introduction</mat-label>
             <textarea
+              class="editor"
+              rows="8"
+              matInput
+              placeholder="Introduction"
+              formControlName="introduction"></textarea>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile
+          [class]="viewPorts['content'].class"
+          [colspan]="viewPorts['content'].colspan"
+          [rowspan]="viewPorts['content'].rowspan">
+          <mat-form-field class="full-width">
+            <mat-label>Content</mat-label>
+            <textarea
+              class="editor"
+              rows="8"
               matInput
               placeholder="Content"
               formControlName="content"></textarea>
           </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile
+          *ngIf="!isAdvanced"
+          [class]="viewPorts['content'].class"
+          [colspan]="viewPorts['content'].colspan"
+          [rowspan]="viewPorts['content'].rowspan">
+          <mat-form-field class="full-width">
+            <mat-label>Summary</mat-label>
+            <textarea
+              class="editor"
+              rows="8"
+              matInput
+              placeholder="Summary"
+              formControlName="summary"></textarea>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile
+          *ngIf="!isAdvanced"
+          [class]="viewPorts['content'].class"
+          [colspan]="viewPorts['content'].colspan"
+          [rowspan]="viewPorts['content'].rowspan">
+          <mat-form-field class="full-width">
+            <mat-label>Description</mat-label>
+            <textarea
+              rows="8"
+              class="editor"
+              matInput
+              placeholder="Description"
+              formControlName="description"></textarea>
+          </mat-form-field>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </fieldset>
+
+    <fieldset *ngIf="!isAdvanced">
+      <legend>Page Access</legend>
+      <mat-grid-list
+        [class]="viewPortGrid['access'].class"
+        [cols]="viewPortGrid['access'].cols"
+        [rowHeight]="viewPortGrid['access'].rowHeight">
+        <mat-grid-tile
+          [class]="viewPorts['access'].class"
+          [colspan]="viewPorts['access'].colspan"
+          [rowspan]="viewPorts['access'].rowspan">
+          <mat-slide-toggle
+            formControlName="only_admin"
+            (change)="toggleAccess('only_admin', $event)">
+            Only Admin
+          </mat-slide-toggle>
+        </mat-grid-tile>
+        <mat-grid-tile
+          [class]="viewPorts['access'].class"
+          [colspan]="viewPorts['access'].colspan"
+          [rowspan]="viewPorts['access'].rowspan">
+          <mat-slide-toggle
+            formControlName="only_user"
+            (change)="toggleAccess('only_user', $event)">
+            Only User
+          </mat-slide-toggle>
+        </mat-grid-tile>
+        <mat-grid-tile
+          [class]="viewPorts['access'].class"
+          [colspan]="viewPorts['access'].colspan"
+          [rowspan]="viewPorts['access'].rowspan">
+          <mat-slide-toggle
+            formControlName="only_guest"
+            (change)="toggleAccess('only_guest', $event)">
+            Only Guest
+          </mat-slide-toggle>
+        </mat-grid-tile>
+        <mat-grid-tile
+          [class]="viewPorts['access'].class"
+          [colspan]="viewPorts['access'].colspan"
+          [rowspan]="viewPorts['access'].rowspan">
+          <mat-slide-toggle
+            formControlName="allow_public"
+            (change)="toggleAccess('allow_public', $event)">
+            Allow Public
+          </mat-slide-toggle>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </fieldset>
+
+    <fieldset *ngIf="!isAdvanced">
+      <legend>Page State</legend>
+      <mat-grid-list
+        [class]="viewPortGrid['state'].class"
+        [cols]="viewPortGrid['state'].cols"
+        [rowHeight]="viewPortGrid['state'].rowHeight">
+        <mat-grid-tile
+          [class]="viewPorts['state'].class"
+          [colspan]="viewPorts['state'].colspan"
+          [rowspan]="viewPorts['state'].rowspan">
+          <mat-slide-toggle formControlName="duplicate">
+            Duplicate
+          </mat-slide-toggle>
+        </mat-grid-tile>
+        <mat-grid-tile
+          [class]="viewPorts['state'].class"
+          [colspan]="viewPorts['state'].colspan"
+          [rowspan]="viewPorts['state'].rowspan">
+          <mat-slide-toggle formControlName="locked"> Locked </mat-slide-toggle>
+        </mat-grid-tile>
+        <mat-grid-tile
+          [class]="viewPorts['state'].class"
+          [colspan]="viewPorts['state'].colspan"
+          [rowspan]="viewPorts['state'].rowspan">
+          <mat-slide-toggle formControlName="pending">
+            Pending
+          </mat-slide-toggle>
+        </mat-grid-tile>
+        <mat-grid-tile
+          [class]="viewPorts['state'].class"
+          [colspan]="viewPorts['state'].colspan"
+          [rowspan]="viewPorts['state'].rowspan">
+          <mat-slide-toggle formControlName="planned">
+            Planned
+          </mat-slide-toggle>
+        </mat-grid-tile>
+        <mat-grid-tile
+          [class]="viewPorts['state'].class"
+          [colspan]="viewPorts['state'].colspan"
+          [rowspan]="viewPorts['state'].rowspan">
+          <mat-slide-toggle formControlName="problem">
+            Problem
+          </mat-slide-toggle>
+        </mat-grid-tile>
+        <mat-grid-tile
+          [class]="viewPorts['state'].class"
+          [colspan]="viewPorts['state'].colspan"
+          [rowspan]="viewPorts['state'].rowspan">
+          <mat-slide-toggle formControlName="released">
+            Released
+          </mat-slide-toggle>
+        </mat-grid-tile>
+        <mat-grid-tile
+          [class]="viewPorts['state'].class"
+          [colspan]="viewPorts['state'].colspan"
+          [rowspan]="viewPorts['state'].rowspan">
+          <mat-slide-toggle formControlName="retired">
+            Retired
+          </mat-slide-toggle>
+        </mat-grid-tile>
+        <mat-grid-tile
+          [class]="viewPorts['state'].class"
+          [colspan]="viewPorts['state'].colspan"
+          [rowspan]="viewPorts['state'].rowspan">
+          <mat-slide-toggle formControlName="resolved">
+            Resolved
+          </mat-slide-toggle>
+        </mat-grid-tile>
+        <mat-grid-tile
+          [class]="viewPorts['state'].class"
+          [colspan]="viewPorts['state'].colspan"
+          [rowspan]="viewPorts['state'].rowspan">
+          <mat-slide-toggle formControlName="suspended">
+            Suspended
+          </mat-slide-toggle>
+        </mat-grid-tile>
+        <mat-grid-tile
+          [class]="viewPorts['state'].class"
+          [colspan]="viewPorts['state'].colspan"
+          [rowspan]="viewPorts['state'].rowspan">
+          <mat-slide-toggle formControlName="unknown">
+            Unknown
+          </mat-slide-toggle>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </fieldset>
+
+    <fieldset *ngIf="!isAdvanced">
+      <legend>Page Status</legend>
+      <mat-grid-list
+        [class]="viewPortGrid['state'].class"
+        [cols]="viewPortGrid['state'].cols"
+        [rowHeight]="viewPortGrid['state'].rowHeight">
+        <mat-grid-tile
+          [class]="viewPorts['state'].class"
+          [colspan]="viewPorts['state'].colspan"
+          [rowspan]="viewPorts['state'].rowspan">
+          <mat-slide-toggle formControlName="active"> Active </mat-slide-toggle>
+        </mat-grid-tile>
+        <mat-grid-tile
+          [class]="viewPorts['state'].class"
+          [colspan]="viewPorts['state'].colspan"
+          [rowspan]="viewPorts['state'].rowspan">
+          <mat-slide-toggle formControlName="canceled">
+            Canceled
+          </mat-slide-toggle>
+        </mat-grid-tile>
+        <mat-grid-tile
+          [class]="viewPorts['state'].class"
+          [colspan]="viewPorts['state'].colspan"
+          [rowspan]="viewPorts['state'].rowspan">
+          <mat-slide-toggle formControlName="closed"> Closed </mat-slide-toggle>
+        </mat-grid-tile>
+        <mat-grid-tile
+          [class]="viewPorts['state'].class"
+          [colspan]="viewPorts['state'].colspan"
+          [rowspan]="viewPorts['state'].rowspan">
+          <mat-slide-toggle formControlName="completed">
+            Completed
+          </mat-slide-toggle>
+        </mat-grid-tile>
+        <mat-grid-tile
+          [class]="viewPorts['state'].class"
+          [colspan]="viewPorts['state'].colspan"
+          [rowspan]="viewPorts['state'].rowspan">
+          <mat-slide-toggle formControlName="flagged">
+            Flagged
+          </mat-slide-toggle>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </fieldset>
+
+    <fieldset *ngIf="!isAdvanced">
+      <legend>Page Planning</legend>
+      <mat-grid-list
+        [class]="viewPortGrid['planning'].class"
+        [cols]="viewPortGrid['planning'].cols"
+        [rowHeight]="viewPortGrid['planning'].rowHeight">
+        <mat-grid-tile
+          [class]="viewPorts['planning'].class"
+          [colspan]="viewPorts['planning'].colspan"
+          [rowspan]="viewPorts['planning'].rowspan">
+          <mat-form-field class="full-width">
+            <mat-label>Start</mat-label>
+            <input
+              matInput
+              type="datetime"
+              [matDatepicker]="picker_start_at"
+              formControlName="start_at" />
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle
+              matIconSuffix
+              [for]="picker_start_at"></mat-datepicker-toggle>
+            <mat-datepicker #picker_start_at></mat-datepicker>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile
+          [class]="viewPorts['planning'].class"
+          [colspan]="viewPorts['planning'].colspan"
+          [rowspan]="viewPorts['planning'].rowspan">
+          <mat-form-field class="full-width">
+            <mat-label>Planned Start</mat-label>
+            <input
+              matInput
+              [matDatepicker]="picker_planned_start_at"
+              formControlName="planned_start_at" />
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle
+              matIconSuffix
+              [for]="picker_planned_start_at"></mat-datepicker-toggle>
+            <mat-datepicker #picker_planned_start_at></mat-datepicker>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile
+          [class]="viewPorts['planning'].class"
+          [colspan]="viewPorts['planning'].colspan"
+          [rowspan]="viewPorts['planning'].rowspan">
+          <mat-form-field class="full-width">
+            <mat-label>End</mat-label>
+            <input
+              matInput
+              [matDatepicker]="picker_end_at"
+              formControlName="end_at" />
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle
+              matIconSuffix
+              [for]="picker_end_at"></mat-datepicker-toggle>
+            <mat-datepicker #picker_end_at></mat-datepicker>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile
+          [class]="viewPorts['planning'].class"
+          [colspan]="viewPorts['planning'].colspan"
+          [rowspan]="viewPorts['planning'].rowspan">
+          <mat-form-field class="full-width">
+            <mat-label>Planned End</mat-label>
+            <input
+              matInput
+              [matDatepicker]="picker_planned_end_at"
+              formControlName="planned_end_at" />
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle
+              matIconSuffix
+              [for]="picker_planned_end_at"></mat-datepicker-toggle>
+            <mat-datepicker #picker_planned_end_at></mat-datepicker>
+          </mat-form-field>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </fieldset>
+
+    <fieldset *ngIf="!isAdvanced">
+      <legend>Page Publishing</legend>
+      <mat-grid-list
+        [class]="viewPortGrid['publishing'].class"
+        [cols]="viewPortGrid['publishing'].cols"
+        [rowHeight]="viewPortGrid['publishing'].rowHeight">
+        <mat-grid-tile
+          [class]="viewPorts['publishing'].class"
+          [colspan]="viewPorts['publishing'].colspan"
+          [rowspan]="viewPorts['publishing'].rowspan">
+          <mat-form-field class="full-width">
+            <mat-label>Published</mat-label>
+            <input
+              matInput
+              [matDatepicker]="picker_published_at"
+              formControlName="published_at" />
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle
+              matIconSuffix
+              [for]="picker_published_at"></mat-datepicker-toggle>
+            <mat-datepicker #picker_published_at></mat-datepicker>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile
+          [class]="viewPorts['publishing'].class"
+          [colspan]="viewPorts['publishing'].colspan"
+          [rowspan]="viewPorts['publishing'].rowspan">
+          <mat-slide-toggle formControlName="published">
+            Published
+          </mat-slide-toggle>
+        </mat-grid-tile>
+        <mat-grid-tile
+          [class]="viewPorts['publishing'].class"
+          [colspan]="viewPorts['publishing'].colspan"
+          [rowspan]="viewPorts['publishing'].rowspan">
+          <mat-form-field class="full-width">
+            <mat-label>Closed</mat-label>
+            <input
+              matInput
+              [matDatepicker]="picker_closed_at"
+              formControlName="closed_at" />
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle
+              matIconSuffix
+              [for]="picker_closed_at"></mat-datepicker-toggle>
+            <mat-datepicker #picker_closed_at></mat-datepicker>
+          </mat-form-field>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </fieldset>
+
+    <fieldset>
+      <div class="row">
+        <div class="col">
+          <button mat-raised-button color="primary" type="submit">
+            Submit
+          </button>
         </div>
       </div>
-    </mat-card-content>
-    <mat-card-actions>
-      <button mat-raised-button color="primary" type="submit">Submit</button>
-    </mat-card-actions>
-  </mat-card>
-</form>
+    </fieldset>
+  </form>
+</div>

@@ -6,15 +6,15 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
-import { PagesComponent } from './pages.component';
+import { RevisionsComponent } from './revisions.component';
 
-describe('PagesComponent', () => {
-  let component: PagesComponent;
-  let fixture: ComponentFixture<PagesComponent>;
+describe('RevisionsComponent', () => {
+  let component: RevisionsComponent;
+  let fixture: ComponentFixture<RevisionsComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [PagesComponent],
+      declarations: [RevisionsComponent],
       imports: [
         HttpClientTestingModule,
         NoopAnimationsModule,
@@ -27,7 +27,7 @@ describe('PagesComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PagesComponent);
+    fixture = TestBed.createComponent(RevisionsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

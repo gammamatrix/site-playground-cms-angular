@@ -241,9 +241,15 @@ export interface PagesResponse {
 }
 
 export interface PageResponse {
-  errors: null | Array<string[]>;
+  // errors: null | Array<string[]>;
   data: Page;
   meta: ResponseShowMeta;
+}
+
+export interface PageRequestCreateInfo {
+  owned_by_id: string | null;
+  parent_id: string | null;
+  page_type: string | null;
 }
 
 export interface PageRevision {
@@ -340,12 +346,12 @@ export interface PageRevision {
   options?: string[];
   sources?: string[];
   // relations
-  parent: Page;
-  page: Page;
-  children: PageRevisions;
-  creator: User;
-  modifier: User;
-  owner: User;
+  // parent: Page;
+  // page: Page;
+  // children: PageRevisions;
+  // creator: User;
+  // modifier: User;
+  // owner: User;
 }
 
 export type PageRevisions = PageRevision[];
@@ -728,6 +734,22 @@ export interface SnippetRevisionsIndexParamsFilter extends IndexParamsFilter {
 
 export interface SnippetRevisionsIndexParams extends IndexParams {
   filter: SnippetRevisionsIndexParamsFilter;
+}
+
+export interface PagesIndexParamsFilter extends IndexParamsFilter {
+  page_type?: string | null | undefined;
+}
+
+export interface PagesIndexParams extends IndexParams {
+  filter: PagesIndexParamsFilter;
+}
+
+export interface PageRevisionsIndexParamsFilter extends IndexParamsFilter {
+  page_id?: string | null | undefined;
+}
+
+export interface PageRevisionsIndexParams extends IndexParams {
+  filter: PageRevisionsIndexParamsFilter;
 }
 
 export interface Login {

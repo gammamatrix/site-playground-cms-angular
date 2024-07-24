@@ -3,12 +3,14 @@ import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { PagesComponent } from './components/pages/pages.component';
 import { PagesCreateComponent } from './components/pages/create/create.component';
+import { PagesEditComponent } from './components/pages/edit/edit.component';
 import { SnippetsComponent } from './components/snippets/snippets.component';
 import { SnippetsCreateComponent } from './components/snippets/create/create.component';
 import { SnippetsEditComponent } from './components/snippets/edit/edit.component';
 import { LoginComponent } from './components/auth/login/login.component';
 import { LogoutComponent } from './components/auth/logout/logout.component';
 import { RevisionsComponent as SnippetRevisionsComponent } from './components/snippets/revisions/revisions.component';
+import { RevisionsComponent as PageRevisionsComponent } from './components/pages/revisions/revisions.component';
 
 const routes: Routes = [
   {
@@ -30,6 +32,31 @@ const routes: Routes = [
     path: 'pages/create',
     component: PagesCreateComponent,
     title: 'CMS Create a Page',
+  },
+  {
+    path: 'pages/revisions/:page_id',
+    component: PageRevisionsComponent,
+    title: 'CMS Page Revisions',
+  },
+  {
+    path: 'pages/revisions/:page_id/trash/:trash',
+    component: PageRevisionsComponent,
+    title: 'CMS Page Revisions Trash',
+  },
+  {
+    path: 'pages/trash/:trash',
+    component: PagesComponent,
+    title: 'CMS Pages Trash',
+  },
+  {
+    path: 'pages/:page_type',
+    component: PagesComponent,
+    title: 'CMS Pages',
+  },
+  {
+    path: 'pages/edit/:id',
+    component: PagesEditComponent,
+    title: 'CMS Edit a Page',
   },
   {
     path: 'snippets',
