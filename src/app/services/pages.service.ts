@@ -189,7 +189,7 @@ export class PagesService {
 
   revision(revision_id: string): Observable<PageRevision> {
     return this.http
-      .get<PageRevisionResponse>(`${this.apiUrl}/pages/revision${revision_id}`)
+      .get<PageRevisionResponse>(`${this.apiUrl}/pages/revision/${revision_id}`)
       .pipe(
         map((response: PageRevisionResponse) => {
           console.debug('PagesService.revision()', {
@@ -217,7 +217,7 @@ export class PagesService {
 
   restoreRevision(revision_id: string): Observable<Page> {
     return this.http.put<Page>(
-      `${this.apiUrl}/pages/revision${revision_id}`,
+      `${this.apiUrl}/pages/revision/${revision_id}`,
       null
     );
   }

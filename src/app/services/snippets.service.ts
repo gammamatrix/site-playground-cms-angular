@@ -187,7 +187,7 @@ export class SnippetsService {
   revision(revision_id: string): Observable<SnippetRevision> {
     return this.http
       .get<SnippetRevisionResponse>(
-        `${this.apiUrl}/snippets/revision${revision_id}`
+        `${this.apiUrl}/snippets/revision/${revision_id}`
       )
       .pipe(
         map((response: SnippetRevisionResponse) => {
@@ -216,7 +216,7 @@ export class SnippetsService {
   restoreRevision(revision_id: string): Observable<Snippet> {
     return this.http
       .put<SnippetResponse>(
-        `${this.apiUrl}/snippets/revision${revision_id}`,
+        `${this.apiUrl}/snippets/revision/${revision_id}`,
         null
       )
       .pipe(

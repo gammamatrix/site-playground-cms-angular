@@ -12,7 +12,7 @@ import { PageRevisionsIndexParams, PageRevision } from '../../../app.types';
 import { PagesService } from '../../../services/pages.service';
 
 @Component({
-  selector: 'app-revisions',
+  selector: 'app-snippets-revisions',
   templateUrl: './revisions.component.html',
   styleUrls: ['./revisions.component.scss'],
 })

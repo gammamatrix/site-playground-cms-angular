@@ -4,6 +4,8 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { FormsModule } from '@angular/forms'; // Adding FormsModule
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -11,7 +13,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
-import { MatMenuModule } from '@angular/material/menu';
 import { RouterModule } from '@angular/router';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -51,6 +52,7 @@ import { LoginComponent } from './components/auth/login/login.component';
 import { LogoutComponent } from './components/auth/logout/logout.component';
 import { RevisionsComponent as SnippetRevisionsComponent } from './components/snippets/revisions/revisions.component';
 import { RevisionsComponent as PageRevisionsComponent } from './components/pages/revisions/revisions.component';
+import { PreviewComponent as SnippetRevisionPreviewComponent } from './components/snippets/revisions/preview.component';
 // import { CsfrInterceptorService } from './services/csrf-interceptor.service';
 
 @NgModule({
@@ -65,6 +67,7 @@ import { RevisionsComponent as PageRevisionsComponent } from './components/pages
     SnippetsEditComponent,
     LoginComponent,
     LogoutComponent,
+    SnippetRevisionPreviewComponent,
     SnippetRevisionsComponent,
     PageRevisionsComponent,
   ],
@@ -76,6 +79,7 @@ import { RevisionsComponent as PageRevisionsComponent } from './components/pages
     HttpClientXsrfModule,
     LayoutModule,
     MatDatepickerModule,
+    MatDialogModule,
     MatNativeDateModule,
     MatFormFieldModule,
     MatToolbarModule,
