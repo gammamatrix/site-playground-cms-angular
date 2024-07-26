@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, ReplaySubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
@@ -18,6 +18,9 @@ import {
 export class AuthService {
   private authUrl: string = environment.authUrl;
 
+  private auth = new ReplaySubject<boolean>(1);
+  isAuthenticated: Observable<boolean> = this.auth.asObservable();
+
   constructor(
     private http: HttpClient,
     public router: Router
@@ -32,6 +35,7 @@ export class AuthService {
         map(result => {
           localStorage.setItem('app_token', result.token);
           localStorage.setItem('csrf_token', result.csrf_token);
+          this.auth.next(true);
           return true;
         })
       );
@@ -71,8 +75,23 @@ export class AuthService {
     );
   }
 
-  isAuthenticated(): boolean {
+  checkStatus() {
+    console.log('AuthService.checkStatus', {
+      this: this,
+    });
+    if (this.hasAppToken()) {
+      this.auth.next(true);
+    } else {
+      this.auth.next(false);
+    }
+  }
+
+  hasAppToken(): boolean {
     const app_token = localStorage.getItem('app_token');
+    console.log('AuthService.hasAppToken', {
+      app_token: app_token,
+      this: this,
+    });
     return app_token ? true : false;
   }
 
@@ -95,6 +114,7 @@ export class AuthService {
       .pipe(
         map(result => {
           localStorage.setItem('csrf_token', result.csrf_token);
+          this.auth.next(false);
           return result;
         })
       );
