@@ -1,6 +1,7 @@
+<h1>Snippet Revisions</h1>
 <mat-spinner *ngIf="!isReady" class="loader"></mat-spinner>
 <div [hidden]="!isReady" class="mat-elevation-z8">
-  <mat-table matSort aria-label="Elements">
+  <mat-table matSort aria-label="Snippet Revisions">
     <ng-container matColumnDef="revision">
       <mat-header-cell *matHeaderCellDef mat-sort-header>#</mat-header-cell>
       <mat-cell mat-cell *matCellDef="let row">{{ row.revision }}</mat-cell>
@@ -55,7 +56,7 @@
             <mat-icon>recycling</mat-icon>
             Restore
           </button>
-          <button (click)="openDialog(row.id)" mat-menu-item>
+          <button (click)="preview(row.id)" mat-menu-item>
             <mat-icon>preview</mat-icon>
             Preview
           </button>
@@ -69,10 +70,11 @@
 
   <mat-paginator
     #paginator
-    [length]="dataSource.data.length"
+    [length]="recordCount"
     [pageIndex]="0"
     [pageSize]="options.perPage"
     [pageSizeOptions]="pageSizeOptions"
+    (page)="changePage($event)"
     aria-label="Select page">
   </mat-paginator>
 </div>

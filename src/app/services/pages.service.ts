@@ -216,10 +216,22 @@ export class PagesService {
   }
 
   restoreRevision(revision_id: string): Observable<Page> {
-    return this.http.put<Page>(
-      `${this.apiUrl}/pages/revision/${revision_id}`,
-      null
-    );
+    return this.http
+      .put<PageResponse>(`${this.apiUrl}/pages/revision/${revision_id}`, null)
+      .pipe(
+        map((response: PageResponse) => {
+          console.debug('PagesService.restoreRevision()', {
+            response: response,
+          });
+          this._snackBar.open(
+            'Active revision: ' + response.data.revision,
+            'Revision Restored'
+          );
+
+          return response.data;
+        }),
+        catchError(this.handleError)
+      );
   }
 
   trash(model: Page): Observable<boolean> {

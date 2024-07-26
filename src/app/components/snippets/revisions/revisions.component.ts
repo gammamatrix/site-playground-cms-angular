@@ -6,8 +6,7 @@ import {
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTable } from '@angular/material/table';
-// import { MatMenuTrigger } from '@angular/material/menu';
-import { MatPaginator } from '@angular/material/paginator';
+import { PageEvent, MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { RevisionsDataSource } from './revisions-datasource';
 import {
@@ -25,7 +24,6 @@ import { PreviewComponent } from './preview.component';
 export class RevisionsComponent implements OnInit {
   @RouteParam() snippet_id = '';
   @RouteParam() trash = '';
-  // @ViewChild('menuTrigger') menuTrigger: MatMenuTrigger;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatTable) table!: MatTable<SnippetRevision>;
@@ -40,7 +38,10 @@ export class RevisionsComponent implements OnInit {
     filter: {
       trash: '',
     },
+    sort: '-revision',
   };
+
+  recordCount = 0;
 
   displayedColumns: string[] = [
     'revision',
@@ -57,10 +58,19 @@ export class RevisionsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.source();
     if (this.trash === 'with' || this.trash === 'only') {
       this.options.filter.trash = this.trash;
     } else {
       this.options.filter.trash = '';
+    }
+
+    if (this.dataSource?.sort?.active) {
+      if (this.dataSource?.sort?.direction === 'desc') {
+        this.options.sort = '-' + this.dataSource.sort.active;
+      } else {
+        this.options.sort = this.dataSource.sort.active;
+      }
     }
     this.fetch(this.options);
     console.log('SnippetRevision - RevisionsComponent.ngOnInit', {
@@ -70,27 +80,55 @@ export class RevisionsComponent implements OnInit {
     });
   }
 
-  initDataTable() {
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
-    this.table.dataSource = this.dataSource;
-  }
+  // initDataTable() {
+  //   this.dataSource.sort = this.sort;
+  //   this.dataSource.paginator = this.paginator;
+  //   this.table.dataSource = this.dataSource;
+  // }
 
   fetch(options: SnippetRevisionsIndexParams) {
     this.service.revisions(this.snippet_id, options).subscribe(response => {
+      this.dataSource = new RevisionsDataSource();
       this.dataSource.data = response.data;
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
+
+      const sorted = response.meta.validated?.sort ?? null;
+
+      if (Array.isArray(sorted) && sorted.length) {
+        if (sorted[0].charAt(0) === '-') {
+          this.dataSource.sort.active = sorted[0].slice(1);
+        } else {
+          this.dataSource.sort.active = sorted[0];
+        }
+      }
+      this.recordCount = response.meta.total;
+
+      this.dataSource.paginator.pageIndex = 0;
+      // this.dataSource.paginator.pageIndex = response.meta.current_page - 1;
       this.options.perPage = response.meta.per_page;
-      this.initDataTable();
+
+      this.table.dataSource = this.dataSource;
+
       this.isReady = true;
       console.log('SnippetRevision - RevisionsComponent.fetch', {
         this: this,
+        sorted: sorted,
         response: response,
         dataSource: this.dataSource,
       });
     });
   }
 
-  openDialog(id: string) {
+  source() {
+    this.dataSource = new RevisionsDataSource();
+    console.log('RevisionsComponent.source', {
+      this: this,
+      dataSource: this.dataSource,
+    });
+  }
+
+  preview(id: string) {
     const dialogRef = this.dialog.open(PreviewComponent, {
       width: '80%',
       restoreFocus: false,
@@ -99,10 +137,6 @@ export class RevisionsComponent implements OnInit {
       },
     });
     dialogRef.componentInstance.id = id;
-
-    // Manually restore focus to the menu trigger since the element that
-    // opens the dialog won't be in the DOM any more when the dialog closes.
-    // dialogRef.afterClosed().subscribe(() => this.menuTrigger.focus());
   }
 
   public restore(model: SnippetRevision) {
@@ -112,6 +146,20 @@ export class RevisionsComponent implements OnInit {
         this: this,
         response: response,
       });
+    });
+  }
+
+  changePage(event: PageEvent) {
+    this.isReady = false;
+
+    this.options.page = event.pageIndex + 1;
+    this.options.perPage = event.pageSize;
+    this.fetch(this.options);
+    console.log('RevisionsComponent.changePage', {
+      isReady: this.isReady,
+      options: this.options,
+      event: event,
+      this: this,
     });
   }
 }

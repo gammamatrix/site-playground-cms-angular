@@ -73,6 +73,11 @@ export class RevisionsDataSource extends DataSource<SnippetRevision> {
    * this would be replaced by requesting the appropriate data from the server.
    */
   private getSortedData(data: SnippetRevisions): SnippetRevisions {
+    console.debug('RevisionsDataSource.getSortedData', {
+      data: data,
+      sort: this.sort,
+      this: this,
+    });
     if (!this.sort || !this.sort.active || this.sort.direction === '') {
       return data;
     }

@@ -224,6 +224,11 @@ export class SnippetsService {
           console.debug('SnippetService.update()', {
             response: response,
           });
+          this._snackBar.open(
+            'Active revision: ' + response.data.revision,
+            'Revision Restored'
+          );
+
           return response.data;
         }),
         catchError(this.handleError)
