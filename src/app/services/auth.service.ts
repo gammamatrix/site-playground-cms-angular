@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable, ReplaySubject } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Observable, of, ReplaySubject } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
 import {
@@ -116,7 +116,8 @@ export class AuthService {
           localStorage.setItem('csrf_token', result.csrf_token);
           this.auth.next(false);
           return result;
-        })
+        }),
+        catchError(this.handleLogoutError)
       );
   }
 
@@ -126,5 +127,25 @@ export class AuthService {
 
   goToDashboard() {
     this.router.navigate(['dashboard']);
+  }
+
+  private handleLogoutError(
+    error: HttpErrorResponse
+  ): Observable<iLogoutToken> {
+    let message = 'An error occurred';
+    if (error.error.message) {
+      message = error.error.message;
+    } else if (error.error.error) {
+      message = error.error.error;
+    }
+    console.error('AuthService.handleLogoutError', {
+      message: message,
+      error: error.error,
+    });
+    return of({
+      everywhere: false,
+      message: 'The session has expired',
+      csrf_token: '',
+    });
   }
 }

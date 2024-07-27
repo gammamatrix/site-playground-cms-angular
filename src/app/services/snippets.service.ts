@@ -22,6 +22,7 @@ import {
 } from '../app.types';
 import { catchError, map, throwError } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -29,6 +30,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class SnippetsService {
   constructor(
     private http: HttpClient,
+    public router: Router,
     public _snackBar: MatSnackBar
   ) {}
 
@@ -63,6 +65,13 @@ export class SnippetsService {
       message = error.error.error;
     }
     this._snackBar.open(message, 'error');
+    if (error.status === 400) {
+      this.router.navigate(['login']);
+    } else if (error.status === 401) {
+      this.router.navigate(['login']);
+    } else if (error.status === 419) {
+      this.router.navigate(['login']);
+    }
     return throwError(() => new Error(message));
   };
 

@@ -1,4 +1,17 @@
-<h1>Snippet Revisions</h1>
+<nav class="content">
+  <h1 class="mat-h1">Snippet Revisions</h1>
+  <ul class="breadcrumbs">
+    <li>
+      <a href="/">Home</a>
+    </li>
+    <li>
+      <a href="/snippets">Snippets</a>
+    </li>
+    <li>
+      <a href="/snippets/revisions">Revisions</a>
+    </li>
+  </ul>
+</nav>
 <mat-spinner *ngIf="!isReady" class="loader"></mat-spinner>
 <div [hidden]="!isReady" class="mat-elevation-z8">
   <mat-table matSort aria-label="Snippet Revisions">

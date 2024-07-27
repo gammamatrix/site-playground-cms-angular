@@ -1,3 +1,26 @@
+<nav class="content">
+  <h1 class="mat-h1">Snippets</h1>
+  <ul class="breadcrumbs">
+    <li>
+      <a href="/">Home</a>
+    </li>
+    <li>
+      <a href="/snippets">Snippets</a>
+    </li>
+  </ul>
+  <div class="index-trash">
+    <mat-form-field>
+      <mat-label>Trash Visibility</mat-label>
+      <mat-select
+        [value]="trash"
+        (selectionChange)="changeTrashVisibilty($event)">
+        <mat-option value="">trash is hidden</mat-option>
+        <mat-option value="with">shown with trash</mat-option>
+        <mat-option value="only">show only trash</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</nav>
 <mat-spinner *ngIf="!isReady" class="loader"></mat-spinner>
 <div [hidden]="!isReady">
   <mat-table
@@ -6,7 +29,9 @@
     class="full-width-table mat-elevation-z8">
     <ng-container matColumnDef="id">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Slug</mat-header-cell>
-      <mat-cell *matCellDef="let row">{{ row.slug }}</mat-cell>
+      <mat-cell *matCellDef="let row">
+        <a href="/">{{ row.slug }}</a>
+      </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="title">
