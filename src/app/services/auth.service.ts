@@ -42,9 +42,9 @@ export class AuthService {
   }
 
   /**
-   * Request a CSFR token for forms.
+   * Request a CSRF token for forms.
    *
-   * @returns Observable<string> Returns the csfr token to submit in forms.
+   * @returns Observable<string> Returns the csrf token to submit in forms.
    */
   requestToken(): Observable<string> {
     return this.http.get<iCreateToken>(this.authUrl + '/api/token').pipe(
@@ -95,7 +95,7 @@ export class AuthService {
     return app_token ? true : false;
   }
 
-  getCsfrToken(): string {
+  getCsrfToken(): string {
     const csrf_token = localStorage.getItem('csrf_token');
     return csrf_token ?? '';
   }

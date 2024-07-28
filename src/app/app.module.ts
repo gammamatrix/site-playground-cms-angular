@@ -54,7 +54,7 @@ import { RevisionsComponent as SnippetRevisionsComponent } from './components/sn
 import { RevisionsComponent as PageRevisionsComponent } from './components/pages/revisions/revisions.component';
 import { PreviewComponent as PageRevisionPreviewComponent } from './components/pages/revisions/preview.component';
 import { PreviewComponent as SnippetRevisionPreviewComponent } from './components/snippets/revisions/preview.component';
-// import { CsfrInterceptorService } from './services/csrf-interceptor.service';
+// import { CsrfInterceptorService } from './services/csrf-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -110,7 +110,7 @@ import { PreviewComponent as SnippetRevisionPreviewComponent } from './component
     SnippetsService,
     // {
     //   provide: HTTP_INTERCEPTORS,
-    //   useClass: CsfrInterceptorService,
+    //   useClass: CsrfInterceptorService,
     //   multi: true,
     // },
   ],
