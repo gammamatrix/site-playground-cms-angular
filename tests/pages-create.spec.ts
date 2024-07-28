@@ -4,7 +4,7 @@ import { mockPageOneResponse } from '../src/mock/pages';
 
 import { PageResponse } from '../src/app/app.types';
 
-test('mock api/cms/pages/create and verify title', async ({ page }) => {
+test('call api/cms/pages/create and verify title', async ({ page }) => {
   // Mock the api call before navigating
   await page.route(
     'http://site-api-angular/api/cms/pages/create?owned_by_id=&parent_id=&page_type=',

@@ -83,12 +83,10 @@ describe('PagesService', () => {
   });
 
   it('should have getApiUrl function that returns an API URL', () => {
-    const service: PagesService = TestBed.get(PagesService);
     expect(service.getApiUrl()).toContain('//site-api-angular/api/cms');
   });
 
   it('should have isReady function', () => {
-    const service: PagesService = TestBed.get(PagesService);
     expect(service.isReady()).toBeTrue();
   });
 

@@ -26,6 +26,16 @@ export class AuthService {
     public router: Router
   ) {}
 
+  getAuthUrl(): string {
+    console.debug('AuthService.getAuthUrl', { authUrl: this.authUrl });
+    return this.authUrl;
+  }
+
+  isReady(): boolean {
+    console.debug('AuthService.isReady', { authUrl: this.authUrl });
+    return this.authUrl.startsWith('//');
+  }
+
   login(auth: iLogin): Observable<boolean> {
     return this.http
       .post<iAuthToken>(this.authUrl + '/api/login', auth, {

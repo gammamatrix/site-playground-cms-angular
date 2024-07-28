@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 import { AuthToken as iAuthToken } from '../src/app/app.types';
 
-test('mock api/login and verify title', async ({ page }) => {
+test('call api/login and verify title', async ({ page }) => {
   // Mock the api call before navigating
   await page.route('http://site-api-angular/api/login', async route => {
     // console.debug('tests/login.spec.ts', {
