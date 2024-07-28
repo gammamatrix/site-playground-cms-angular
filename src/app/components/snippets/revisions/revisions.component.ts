@@ -4,8 +4,9 @@ import {
   OnInit,
   Input as RouteParam,
 } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatTable } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
+import { PageEvent, MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { RevisionsDataSource } from './revisions-datasource';
 import {
@@ -13,9 +14,10 @@ import {
   SnippetRevision,
 } from '../../../app.types';
 import { SnippetsService } from '../../../services/snippets.service';
+import { PreviewComponent } from './preview.component';
 
 @Component({
-  selector: 'app-revisions',
+  selector: 'app-snippets-revisions',
   templateUrl: './revisions.component.html',
   styleUrls: ['./revisions.component.scss'],
 })
@@ -35,6 +37,7 @@ export class RevisionsComponent implements OnInit {
     filter: {
       trash: '',
     },
+    sort: '-revision',
   };
 
   displayedColumns: string[] = [
@@ -43,42 +46,101 @@ export class RevisionsComponent implements OnInit {
     'title',
     'created_at',
     'updated_at',
-    'restore',
-    'preview',
+    'manage',
   ];
 
-  constructor(private service: SnippetsService) {}
+  constructor(
+    public dialog: MatDialog,
+    private service: SnippetsService
+  ) {}
+
+  ngOnInit() {
+    this.dataSource = new RevisionsDataSource();
+
+    if (this.trash === 'with' || this.trash === 'only') {
+      this.options.filter.trash = this.trash;
+    } else {
+      this.options.filter.trash = '';
+    }
+
+    if (this.dataSource?.sort?.active) {
+      if (this.dataSource?.sort?.direction === 'desc') {
+        this.options.sort = '-' + this.dataSource.sort.active;
+      } else {
+        this.options.sort = this.dataSource.sort.active;
+      }
+    }
+    this.fetch(this.options);
+    console.log('SnippetRevision - RevisionsComponent.ngOnInit', {
+      isReady: this.isReady,
+      snippet_id: this.snippet_id,
+      this: this,
+    });
+  }
 
   fetch(options: SnippetRevisionsIndexParams) {
     this.service.revisions(this.snippet_id, options).subscribe(response => {
+      this.dataSource = new RevisionsDataSource();
       this.dataSource.data = response.data;
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
+
+      const sorted = response.meta.validated?.sort ?? null;
+
+      if (Array.isArray(sorted) && sorted.length) {
+        if (sorted[0].charAt(0) === '-') {
+          this.dataSource.sort.active = sorted[0].slice(1);
+        } else {
+          this.dataSource.sort.active = sorted[0];
+        }
+      }
+
+      this.dataSource.paginator.pageIndex = 0;
       this.options.perPage = response.meta.per_page;
-      this.initDataTable();
+
+      this.table.dataSource = this.dataSource;
+
       this.isReady = true;
-      console.log('RevisionsComponent.fetch', {
+      console.log('SnippetRevision - RevisionsComponent.fetch', {
         this: this,
+        sorted: sorted,
         response: response,
         dataSource: this.dataSource,
       });
     });
   }
 
-  initDataTable() {
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
-    this.table.dataSource = this.dataSource;
+  preview(id: string) {
+    const dialogRef = this.dialog.open(PreviewComponent, {
+      width: '80%',
+      restoreFocus: false,
+      data: {
+        id: id,
+      },
+    });
+    dialogRef.componentInstance.id = id;
   }
 
-  ngOnInit() {
-    if (this.trash === 'with' || this.trash === 'only') {
-      this.options.filter.trash = this.trash;
-    } else {
-      this.options.filter.trash = '';
-    }
+  public restore(model: SnippetRevision) {
+    this.service.restoreRevision(model.id).subscribe(response => {
+      this.isReady = true;
+      console.log('SnippetRevision - RevisionsComponent.restoreRevision', {
+        this: this,
+        response: response,
+      });
+    });
+  }
+
+  changePage(event: PageEvent) {
+    this.isReady = false;
+
+    this.options.page = event.pageIndex + 1;
+    this.options.perPage = event.pageSize;
     this.fetch(this.options);
-    console.log('RevisionsComponent.ngOnInit', {
+    console.log('RevisionsComponent.changePage', {
       isReady: this.isReady,
-      snippet_id: this.snippet_id,
+      options: this.options,
+      event: event,
       this: this,
     });
   }

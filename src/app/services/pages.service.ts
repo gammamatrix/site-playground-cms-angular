@@ -22,6 +22,7 @@ import {
 } from '../app.types';
 import { catchError, map, throwError } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -29,6 +30,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class PagesService {
   constructor(
     private http: HttpClient,
+    public router: Router,
     public _snackBar: MatSnackBar
   ) {}
 
@@ -70,6 +72,13 @@ export class PagesService {
       message = error.error.error;
     }
     this._snackBar.open(message, 'error');
+    if (error.status === 400) {
+      this.router.navigate(['login']);
+    } else if (error.status === 401) {
+      this.router.navigate(['login']);
+    } else if (error.status === 419) {
+      this.router.navigate(['login']);
+    }
     return throwError(() => new Error(message));
   };
 
@@ -189,7 +198,7 @@ export class PagesService {
 
   revision(revision_id: string): Observable<PageRevision> {
     return this.http
-      .get<PageRevisionResponse>(`${this.apiUrl}/pages/revision${revision_id}`)
+      .get<PageRevisionResponse>(`${this.apiUrl}/pages/revision/${revision_id}`)
       .pipe(
         map((response: PageRevisionResponse) => {
           console.debug('PagesService.revision()', {
@@ -216,10 +225,22 @@ export class PagesService {
   }
 
   restoreRevision(revision_id: string): Observable<Page> {
-    return this.http.put<Page>(
-      `${this.apiUrl}/pages/revision${revision_id}`,
-      null
-    );
+    return this.http
+      .put<PageResponse>(`${this.apiUrl}/pages/revision/${revision_id}`, null)
+      .pipe(
+        map((response: PageResponse) => {
+          console.debug('PagesService.restoreRevision()', {
+            response: response,
+          });
+          this._snackBar.open(
+            'Active revision: ' + response.data.revision,
+            'Revision Restored'
+          );
+
+          return response.data;
+        }),
+        catchError(this.handleError)
+      );
   }
 
   trash(model: Page): Observable<boolean> {

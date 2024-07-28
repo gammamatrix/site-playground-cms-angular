@@ -1,3 +1,58 @@
+<nav class="content">
+  <h1 class="mat-h1">Pages</h1>
+  <ul class="breadcrumbs">
+    <li>
+      <a href="/">Home</a>
+    </li>
+    <li>
+      <a href="/pages">Pages</a>
+    </li>
+  </ul>
+  <div class="index-trash">
+    <button
+      mat-icon-button
+      [matMenuTriggerFor]="menu_index"
+      aria-label="Expand page manage options">
+      <mat-icon>settings</mat-icon>
+    </button>
+    <mat-menu #menu_index="matMenu">
+      <a mat-menu-item href="/pages/create">
+        <mat-icon>create</mat-icon>
+        Create a page
+      </a>
+      <a mat-menu-item href="/pages/trash/with">
+        <mat-icon>delete</mat-icon>
+        Include trash
+      </a>
+      <a mat-menu-item href="/pages/trash/only">
+        <mat-icon>delete</mat-icon>
+        Only trash
+      </a>
+      <a mat-menu-item href="/pages">
+        <mat-icon>delete</mat-icon>
+        Hide trash
+      </a>
+      <a mat-menu-item href="/pages/books/">
+        <mat-icon>library_books</mat-icon>
+        View books
+      </a>
+      <a mat-menu-item href="/pages/periodicals">
+        <mat-icon>newspaper</mat-icon>
+        View periodicals
+      </a>
+    </mat-menu>
+    <mat-form-field>
+      <mat-label>Trash Visibility</mat-label>
+      <mat-select
+        [value]="trash"
+        (selectionChange)="changeTrashVisibilty($event)">
+        <mat-option value="">trash is hidden</mat-option>
+        <mat-option value="with">shown with trash</mat-option>
+        <mat-option value="only">show only trash</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</nav>
 <mat-spinner *ngIf="!isReady" class="loader"></mat-spinner>
 <div [hidden]="!isReady">
   <mat-table
@@ -50,7 +105,7 @@
         <button
           mat-icon-button
           [matMenuTriggerFor]="menu"
-          aria-label="Example icon-button with a menu">
+          aria-label="Expand record manage options">
           <mat-icon>more_vert</mat-icon>
         </button>
         <mat-menu #menu="matMenu">

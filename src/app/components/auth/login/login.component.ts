@@ -49,7 +49,7 @@ export class LoginComponent implements OnInit {
   login() {
     this.model.email = this.loginForm.value.email;
     this.model.password = this.loginForm.value.password;
-    // NOTE: verify csfr works with junk token
+    // NOTE: verify csrf works with junk token
     // junk value: 419 CSRF token mismatch.
     // this.model._token = 'junk';
     // Empty returns 422 error

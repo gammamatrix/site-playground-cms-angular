@@ -234,7 +234,7 @@ npm run prettier
 
 ### Dashboard
 
-<img src="resources/docs/site-playground-cms-angular-dashboard-view.png" alt="Screenshot for the CMS Dashboard">
+<img src="resources/docs/site-playground-cms-angular-dashboard.png" alt="Screenshot for the CMS Dashboard">
 
 
 ### Interfaces

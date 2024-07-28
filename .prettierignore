@@ -56,3 +56,5 @@ NOTES.md
 build
 e2e
 output
+
+tmp-*

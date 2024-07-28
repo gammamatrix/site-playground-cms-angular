@@ -22,6 +22,22 @@ export interface ResponseShowMeta {
   info: ResponseMetaPackageInfo;
 }
 
+export interface MetaSortable {
+  [key: string]: MetaSortableItem;
+}
+
+export interface MetaSortableItem {
+  column: string;
+  label: string;
+  type: string;
+}
+export interface ResponseIndexMetaValidated {
+  filter: IndexParamsFilter;
+  page: number;
+  perPage: number;
+  sort?: string[];
+}
+
 export interface ResponseIndexMeta {
   current_page: number;
   from: number;
@@ -35,7 +51,8 @@ export interface ResponseIndexMeta {
   ids: object;
   rules: object;
   sortable: object;
-  validated: object;
+  // validated: object;
+  validated: ResponseIndexMetaValidated | [];
   path: string;
   to: number;
   per_page: number;
@@ -715,6 +732,7 @@ export interface IndexParams {
   // filter: {
   //   trash: 'with' | 'only' | '';
   // };
+  sort?: string | undefined;
 }
 export interface IndexParamsFilter {
   trash?: 'with' | 'only' | '' | undefined;

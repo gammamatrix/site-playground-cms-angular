@@ -1,3 +1,17 @@
+<nav class="content">
+  <h1 class="mat-h1">Create a snippet</h1>
+  <ul class="breadcrumbs">
+    <li>
+      <a href="/">Home</a>
+    </li>
+    <li>
+      <a href="/snippets">Snippets</a>
+    </li>
+    <li>
+      <a href="/snippets/create">Create</a>
+    </li>
+  </ul>
+</nav>
 <mat-spinner *ngIf="!isReady" class="loader"></mat-spinner>
 <div class="form-snippets-create">
   <form
@@ -6,8 +20,6 @@
     [formGroup]="createForm"
     novalidate
     (ngSubmit)="onSubmit()">
-    <h1 class="mat-h1">Create a snippet</h1>
-
     <fieldset>
       <legend>Snippet Title, Slug, Label and Type</legend>
       <mat-grid-list
@@ -475,9 +487,7 @@
     <fieldset>
       <div class="row">
         <div class="col">
-          <button mat-raised-button color="primary" type="submit">
-            Submit
-          </button>
+          <button mat-raised-button color="primary" type="submit">Save</button>
         </div>
       </div>
     </fieldset>

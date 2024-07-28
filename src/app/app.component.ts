@@ -12,17 +12,31 @@ import { AuthService } from './services/auth.service';
 export class AppComponent implements OnInit {
   title = 'CMS Dashboard';
 
-  constructor(
-    public breakpointObserver: BreakpointObserver,
-    private service: AuthService
-  ) {}
-
   public isReady = false;
   public isAuthenticated = false;
 
+  constructor(
+    public breakpointObserver: BreakpointObserver,
+    private service: AuthService
+  ) {
+    this.service.isAuthenticated.subscribe(isAuthenticated => {
+      this.isAuthenticated = isAuthenticated;
+      console.log('AppComponent.constructor', {
+        isAuthenticated: isAuthenticated,
+        service: this.service,
+        this: this,
+      });
+    });
+  }
+
   ngOnInit() {
-    this.isAuthenticated = this.service.isAuthenticated();
     this.isReady = true;
+    console.log('AppComponent.ngOnInit', {
+      isReady: this.isReady,
+      isAuthenticated: this.isAuthenticated,
+      this: this,
+    });
+    this.service.checkStatus();
   }
 
   isHandset$: Observable<boolean> = this.breakpointObserver

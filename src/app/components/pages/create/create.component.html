@@ -1,3 +1,17 @@
+<nav class="content">
+  <h1 class="mat-h1">Create a page</h1>
+  <ul class="breadcrumbs">
+    <li>
+      <a href="/">Home</a>
+    </li>
+    <li>
+      <a href="/pages">Pages</a>
+    </li>
+    <li>
+      <a href="/pages/create">Create</a>
+    </li>
+  </ul>
+</nav>
 <mat-spinner *ngIf="!isReady" class="loader"></mat-spinner>
 <div class="form-pages-create">
   <form
@@ -6,8 +20,6 @@
     [formGroup]="createForm"
     novalidate
     (ngSubmit)="onSubmit()">
-    <h1 class="mat-h1">Create a page</h1>
-
     <fieldset>
       <legend>Page Title, Slug, Label and Type</legend>
       <mat-grid-list
