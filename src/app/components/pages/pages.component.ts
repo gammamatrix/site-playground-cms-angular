@@ -15,6 +15,7 @@ import { MatSort } from '@angular/material/sort';
 import { PagesDataSource } from './pages-datasource';
 import { PagesIndexParams, Page } from '../../app.types';
 import { PagesService } from '../../services/pages.service';
+import { MatSelectChange } from '@angular/material/select';
 
 @Component({
   selector: 'app-pages',
@@ -169,5 +170,16 @@ export class PagesComponent implements OnInit {
           console.log('Viewport does not match Breakpoints.Handset');
         }
       });
+  }
+
+  changeTrashVisibilty(event: MatSelectChange) {
+    console.log('SnippetsComponent.changeTrashVisibilty', {
+      isReady: this.isReady,
+      event: event,
+      this: this,
+    });
+    this.isReady = false;
+    this.options.filter.trash = event.value ?? '';
+    this.fetch(this.options);
   }
 }

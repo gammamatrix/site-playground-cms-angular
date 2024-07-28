@@ -27,7 +27,6 @@ export class RevisionsComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatTable) table!: MatTable<SnippetRevision>;
-
   dataSource = new RevisionsDataSource();
   isReady = false;
   pageSizeOptions: number[] = [1, 2, 3, 4, 5, 10, 15, 20, 25, 35, 50];
@@ -40,8 +39,6 @@ export class RevisionsComponent implements OnInit {
     },
     sort: '-revision',
   };
-
-  recordCount = 0;
 
   displayedColumns: string[] = [
     'revision',
@@ -58,7 +55,8 @@ export class RevisionsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.source();
+    this.dataSource = new RevisionsDataSource();
+
     if (this.trash === 'with' || this.trash === 'only') {
       this.options.filter.trash = this.trash;
     } else {
@@ -80,12 +78,6 @@ export class RevisionsComponent implements OnInit {
     });
   }
 
-  // initDataTable() {
-  //   this.dataSource.sort = this.sort;
-  //   this.dataSource.paginator = this.paginator;
-  //   this.table.dataSource = this.dataSource;
-  // }
-
   fetch(options: SnippetRevisionsIndexParams) {
     this.service.revisions(this.snippet_id, options).subscribe(response => {
       this.dataSource = new RevisionsDataSource();
@@ -102,10 +94,8 @@ export class RevisionsComponent implements OnInit {
           this.dataSource.sort.active = sorted[0];
         }
       }
-      this.recordCount = response.meta.total;
 
       this.dataSource.paginator.pageIndex = 0;
-      // this.dataSource.paginator.pageIndex = response.meta.current_page - 1;
       this.options.perPage = response.meta.per_page;
 
       this.table.dataSource = this.dataSource;
@@ -117,14 +107,6 @@ export class RevisionsComponent implements OnInit {
         response: response,
         dataSource: this.dataSource,
       });
-    });
-  }
-
-  source() {
-    this.dataSource = new RevisionsDataSource();
-    console.log('RevisionsComponent.source', {
-      this: this,
-      dataSource: this.dataSource,
     });
   }
 

@@ -2,6 +2,7 @@ import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
@@ -24,6 +25,7 @@ describe('SnippetsComponent', () => {
         NoopAnimationsModule,
         MatFormFieldModule,
         MatIconModule,
+        MatMenuModule,
         MatPaginatorModule,
         MatProgressSpinnerModule,
         MatSelectModule,

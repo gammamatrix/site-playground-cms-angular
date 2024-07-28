@@ -52,6 +52,7 @@ import { LoginComponent } from './components/auth/login/login.component';
 import { LogoutComponent } from './components/auth/logout/logout.component';
 import { RevisionsComponent as SnippetRevisionsComponent } from './components/snippets/revisions/revisions.component';
 import { RevisionsComponent as PageRevisionsComponent } from './components/pages/revisions/revisions.component';
+import { PreviewComponent as PageRevisionPreviewComponent } from './components/pages/revisions/preview.component';
 import { PreviewComponent as SnippetRevisionPreviewComponent } from './components/snippets/revisions/preview.component';
 // import { CsfrInterceptorService } from './services/csrf-interceptor.service';
 
@@ -69,6 +70,7 @@ import { PreviewComponent as SnippetRevisionPreviewComponent } from './component
     LogoutComponent,
     SnippetRevisionPreviewComponent,
     SnippetRevisionsComponent,
+    PageRevisionPreviewComponent,
     PageRevisionsComponent,
   ],
   imports: [

@@ -1,6 +1,20 @@
+<nav class="content">
+  <h1 class="mat-h1">Page Revisions</h1>
+  <ul class="breadcrumbs">
+    <li>
+      <a href="/">Home</a>
+    </li>
+    <li>
+      <a href="/pages">Pages</a>
+    </li>
+    <li>
+      <a href="/pages/revisions">Revisions</a>
+    </li>
+  </ul>
+</nav>
 <mat-spinner *ngIf="!isReady" class="loader"></mat-spinner>
 <div [hidden]="!isReady" class="mat-elevation-z8">
-  <table mat-table class="full-width-table" matSort aria-label="Elements">
+  <table mat-table class="full-width-table" matSort aria-label="Page Revisions">
     <ng-container matColumnDef="revision">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>#</th>
       <td mat-cell *matCellDef="let row">{{ row.revision }}</td>
@@ -35,30 +49,28 @@
       </td>
     </ng-container>
 
-    <ng-container matColumnDef="restore">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Id</th>
-      <td mat-cell *matCellDef="let row">
-        <a
-          [routerLink]="['/pages/edit/', row.id]"
-          mat-raised-button
-          color="primary">
-          <mat-icon>edit</mat-icon>
-          restore
-        </a>
-      </td>
-    </ng-container>
-
-    <ng-container matColumnDef="preview">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Id</th>
-      <td mat-cell *matCellDef="let row">
-        <a
-          [routerLink]="['/pages/edit/', row.id]"
-          mat-raised-button
-          color="primary">
-          <mat-icon>edit</mat-icon>
-          preview
-        </a>
-      </td>
+    <ng-container matColumnDef="manage">
+      <mat-header-cell *matHeaderCellDef>
+        <mat-icon>settings</mat-icon>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <button
+          mat-icon-button
+          [matMenuTriggerFor]="menu"
+          aria-label="Expand record manage options">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button (click)="restore(row)" mat-menu-item>
+            <mat-icon>recycling</mat-icon>
+            Restore
+          </button>
+          <button (click)="preview(row.id)" mat-menu-item>
+            <mat-icon>preview</mat-icon>
+            Preview
+          </button>
+        </mat-menu>
+      </mat-cell>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -71,6 +83,7 @@
     [pageIndex]="0"
     [pageSize]="options.perPage"
     [pageSizeOptions]="pageSizeOptions"
+    (page)="changePage($event)"
     aria-label="Select page">
   </mat-paginator>
 </div>

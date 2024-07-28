@@ -56,30 +56,6 @@ export class SnippetsComponent implements OnInit {
     public breakpointObserver: BreakpointObserver
   ) {}
 
-  // fetch(options: SnippetsIndexParams) {
-  //   this.service.index(options).subscribe(
-  //     response => {
-  //       this.dataSource.data = response.data;
-  //       this.options.perPage = response.meta.per_page;
-  //       this.initDataTable();
-  //       this.isReady = true;
-  //       console.log('SnippetsComponent.fetch', {
-  //         this: this,
-  //         response: response,
-  //         dataSource: this.dataSource,
-  //       });
-  //     },
-  //     error => {
-  //       this.isReady = true;
-  //       console.error('SnippetsComponent.fetch', {
-  //         this: this,
-  //         error: error,
-  //         dataSource: this.dataSource,
-  //       });
-  //     }
-  //   );
-  // }
-
   fetch(options: SnippetsIndexParams) {
     this.service.index(options).subscribe(response => {
       this.dataSource = new SnippetsDataSource();
@@ -96,10 +72,8 @@ export class SnippetsComponent implements OnInit {
           this.dataSource.sort.active = sorted[0];
         }
       }
-      // this.recordCount = response.meta.total;
 
       this.dataSource.paginator.pageIndex = 0;
-      // this.dataSource.paginator.pageIndex = response.meta.current_page - 1;
       this.options.perPage = response.meta.per_page;
 
       this.table.dataSource = this.dataSource;

@@ -4,14 +4,7 @@ import { mockPagesOneResponse } from '../src/mock/pages';
 
 import { PagesResponse } from '../src/app/app.types';
 
-test('has title', async ({ page }) => {
-  await page.goto('http://localhost:4200/pages');
-
-  // Expect a title "to contain" a substring.
-  await expect(page).toHaveTitle(/CMS Pages/);
-});
-
-test('mock api/cms/pages', async ({ page }) => {
+test('mock api/cms/pages and verify title', async ({ page }) => {
   // Mock the api call before navigating
   await page.route(
     'http://site-api-angular/api/cms/pages/index',

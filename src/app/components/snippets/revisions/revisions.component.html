@@ -83,7 +83,7 @@
 
   <mat-paginator
     #paginator
-    [length]="recordCount"
+    [length]="dataSource.data.length"
     [pageIndex]="0"
     [pageSize]="options.perPage"
     [pageSizeOptions]="pageSizeOptions"
