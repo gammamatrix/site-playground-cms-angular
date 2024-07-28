@@ -7,7 +7,6 @@ import {
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-
 import { SnippetsService } from './snippets.service';
 import {
   mockSnippetOne,
@@ -27,6 +26,7 @@ describe('SnippetsService', () => {
   let httpController: HttpTestingController;
   const url: string = environment.apiUrl;
   const id: string = mockSnippetOne.id ?? '';
+  const id_revision: string = mockSnippetRevisionOne.id ?? '';
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
@@ -232,7 +232,7 @@ describe('SnippetsService', () => {
 
     const req = httpController.expectOne({
       method: 'GET',
-      url: `${url}/snippets/revision/${id}`,
+      url: `${url}/snippets/revision/${id_revision}`,
     });
 
     req.flush(mockSnippetRevisionOneResponse);
@@ -245,7 +245,7 @@ describe('SnippetsService', () => {
 
     const req = httpController.expectOne({
       method: 'PUT',
-      url: `${url}/snippets/revision/${id}`,
+      url: `${url}/snippets/revision/${id_revision}`,
     });
 
     req.flush(mockSnippetOneResponse);

@@ -205,7 +205,8 @@ export class SnippetsService {
             response: response,
           });
           return response.data;
-        })
+        }),
+        catchError(this.handleError)
       );
   }
 
@@ -231,7 +232,7 @@ export class SnippetsService {
       )
       .pipe(
         map((response: SnippetResponse) => {
-          console.debug('SnippetService.update()', {
+          console.debug('SnippetService.restoreRevision()', {
             response: response,
           });
           this._snackBar.open(

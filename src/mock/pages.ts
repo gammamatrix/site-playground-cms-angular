@@ -107,7 +107,7 @@ const mockPagesOne: Pages = [mockPageOne];
 const mockPageOneResponse: PageResponse = {
   data: mockPageOne,
   meta: {
-    id: '9c85a579-87a7-4b1e-bc4d-a6746179e009',
+    id: '9c85a53e-7ecf-4f6c-bed5-bc006b8c7fa4',
     rules: [],
     session_user_id: '9baa6092-a30f-461a-a5fc-5132b3264b91',
     timestamp: '2024-07-14T17:37:13.520331Z',
@@ -287,7 +287,7 @@ const mockPageRevisionsOne: PageRevisions = [mockPageRevisionOne];
 const mockPageRevisionOneResponse: PageRevisionResponse = {
   data: mockPageRevisionOne,
   meta: {
-    id: '9c85a579-87a7-4b1e-bc4d-a6746179e009',
+    id: '9c85a53e-7ecf-4f6c-bed5-bc006b8c7fa4',
     rules: [],
     session_user_id: '9baa6092-a30f-461a-a5fc-5132b3264b91',
     timestamp: '2024-07-14T17:37:13.520331Z',
@@ -313,8 +313,8 @@ const mockPageRevisionsOneResponse: PageRevisionsResponse = {
   data: [mockPageRevisionOne],
   links: {
     first:
-      'http://site-playground-integration/api/cms/pages/9c85a579-87a7-4b1e-bc4d-a6746179e009/revisions?perPage=15&page=1',
-    last: 'http://site-playground-integration/api/cms/pages/9c85a579-87a7-4b1e-bc4d-a6746179e009/revisions?perPage=15&page=1',
+      'http://site-playground-integration/api/cms/pages/9c85a53e-7ecf-4f6c-bed5-bc006b8c7fa4/revisions?perPage=15&page=1',
+    last: 'http://site-playground-integration/api/cms/pages/9c85a53e-7ecf-4f6c-bed5-bc006b8c7fa4/revisions?perPage=15&page=1',
     prev: null,
     next: null,
   },
@@ -329,7 +329,7 @@ const mockPageRevisionsOneResponse: PageRevisionsResponse = {
         active: false,
       },
       {
-        url: 'http://site-playground-integration/api/cms/pages/9c85a579-87a7-4b1e-bc4d-a6746179e009/revisions?perPage=15&page=1',
+        url: 'http://site-playground-integration/api/cms/pages/9c85a53e-7ecf-4f6c-bed5-bc006b8c7fa4/revisions?perPage=15&page=1',
         label: '1',
         active: true,
       },
@@ -348,7 +348,7 @@ const mockPageRevisionsOneResponse: PageRevisionsResponse = {
     session_user_id: '9baa6092-a30f-461a-a5fc-5132b3264b91',
     timestamp: '2024-07-14T17:37:13.520331Z',
     validated: [],
-    path: 'http://site-playground-integration/api/cms/pages/9c85a579-87a7-4b1e-bc4d-a6746179e009/revisions',
+    path: 'http://site-playground-integration/api/cms/pages/9c85a53e-7ecf-4f6c-bed5-bc006b8c7fa4/revisions',
     per_page: 15,
     to: 1,
     total: 1,

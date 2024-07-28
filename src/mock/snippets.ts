@@ -184,12 +184,12 @@ const mockSnippetsOneResponse: SnippetsResponse = {
 };
 
 const mockSnippetRevisionOne: SnippetRevision = {
-  id: '9c85a579-87a7-4b1e-bc4d-a6746179e009',
+  id: '9c9659d5-7ccc-437c-a3cc-01fa01625d73',
   created_by_id: '9baa6092-a30f-461a-a5fc-5132b3264b91',
   modified_by_id: null,
   owned_by_id: null,
   parent_id: null,
-  snippet_id: null,
+  snippet_id: '9c85a579-87a7-4b1e-bc4d-a6746179e009',
   snippet_type: 'banner',
   created_at: '2024-07-14T17:30:07.000000Z',
   updated_at: '2024-07-14T17:30:07.000000Z',

@@ -1,32 +1,80 @@
 import { TestBed } from '@angular/core/testing';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   HttpClientTestingModule,
   HttpTestingController,
 } from '@angular/common/http/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-
 import { PagesService } from './pages.service';
 import {
   mockPageOne,
   mockPageOneResponse,
   mockPagesOneResponse,
+  mockPageRevisionOne,
+  mockPageRevisionOneResponse,
   mockPageRevisionsOneResponse,
 } from '../../mock/pages';
 import { environment } from '../../environments/environment';
 import { PagesIndexParams, PageRevisionsIndexParams } from '../app.types';
+import { take } from 'rxjs';
+import { LoginComponent } from '../components/auth/login/login.component';
 
 describe('PagesService', () => {
   let service: PagesService;
   let httpController: HttpTestingController;
   const url: string = environment.apiUrl;
   const id: string = mockPageOne.id ?? '';
+  const id_revision: string = mockPageRevisionOne.id ?? '';
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, MatSnackBarModule],
+      imports: [
+        BrowserAnimationsModule,
+        HttpClientTestingModule,
+        MatSnackBarModule,
+        RouterTestingModule.withRoutes([
+          { path: 'login', component: LoginComponent },
+        ]),
+      ],
       providers: [PagesService],
     });
     service = TestBed.inject(PagesService);
     httpController = TestBed.inject(HttpTestingController);
+  });
+
+  it('handleError should handle authentication errors', () => {
+    const error = new HttpErrorResponse({
+      status: 401,
+      error: { error: 'Unauthorized' },
+    });
+
+    service
+      .handleError(error)
+      .pipe(take(1))
+      .subscribe({
+        error: error => {
+          expect(error).toBeTruthy();
+          true;
+        },
+      });
+  });
+
+  it('handleError should handle errors', () => {
+    const error = new HttpErrorResponse({
+      status: 423,
+      error: { message: 'Locked', error: 'Locked' },
+    });
+
+    service
+      .handleError(error)
+      .pipe(take(1))
+      .subscribe({
+        error: error => {
+          expect(error).toBeTruthy();
+          true;
+        },
+      });
   });
 
   it('should be created', () => {
@@ -164,6 +212,45 @@ describe('PagesService', () => {
     });
 
     req.flush(mockPageRevisionsOneResponse);
+  });
+
+  it('should call restore and return one item from the trash', () => {
+    service.restore(mockPageOne).subscribe(response => {
+      expect(response).toEqual(mockPageOne);
+    });
+
+    const req = httpController.expectOne({
+      method: 'PUT',
+      url: `${url}/pages/restore/${id}`,
+    });
+
+    req.flush(mockPageOneResponse);
+  });
+
+  it('should call revision and return a page revision', () => {
+    service.revision(mockPageRevisionOne.id).subscribe(response => {
+      expect(response).toEqual(mockPageRevisionOne);
+    });
+
+    const req = httpController.expectOne({
+      method: 'GET',
+      url: `${url}/pages/revision/${id_revision}`,
+    });
+
+    req.flush(mockPageRevisionOneResponse);
+  });
+
+  it('should call restoreRevision and return the restored page', () => {
+    service.restoreRevision(mockPageRevisionOne.id).subscribe(response => {
+      expect(response).toEqual(mockPageOne);
+    });
+
+    const req = httpController.expectOne({
+      method: 'PUT',
+      url: `${url}/pages/revision/${id_revision}`,
+    });
+
+    req.flush(mockPageOneResponse);
   });
 
   it('should call trash and return true', () => {

@@ -63,7 +63,7 @@ export class PagesService {
     return this.apiUrl.startsWith('//');
   }
 
-  private handleError = (error: HttpErrorResponse) => {
+  public handleError = (error: HttpErrorResponse) => {
     console.error('PagesService.handleError', { error: error });
     let message = 'An error occurred';
     let redirectToLogin = false;
