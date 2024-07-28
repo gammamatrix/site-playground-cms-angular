@@ -1,8 +1,11 @@
 import { TestBed } from '@angular/core/testing';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   HttpClientTestingModule,
   HttpTestingController,
 } from '@angular/common/http/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { SnippetsService } from './snippets.service';
@@ -10,10 +13,14 @@ import {
   mockSnippetOne,
   mockSnippetOneResponse,
   mockSnippetsOneResponse,
+  mockSnippetRevisionOne,
+  mockSnippetRevisionOneResponse,
   mockSnippetRevisionsOneResponse,
 } from '../../mock/snippets';
 import { environment } from '../../environments/environment';
 import { SnippetsIndexParams, SnippetRevisionsIndexParams } from '../app.types';
+import { take } from 'rxjs';
+import { LoginComponent } from '../components/auth/login/login.component';
 
 describe('SnippetsService', () => {
   let service: SnippetsService;
@@ -22,7 +29,14 @@ describe('SnippetsService', () => {
   const id: string = mockSnippetOne.id ?? '';
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, MatSnackBarModule],
+      imports: [
+        BrowserAnimationsModule,
+        HttpClientTestingModule,
+        MatSnackBarModule,
+        RouterTestingModule.withRoutes([
+          { path: 'login', component: LoginComponent },
+        ]),
+      ],
       providers: [SnippetsService],
     });
     service = TestBed.inject(SnippetsService);
@@ -35,16 +49,48 @@ describe('SnippetsService', () => {
   });
 
   it('should have getApiUrl function that returns an API URL', () => {
-    const service: SnippetsService = TestBed.get(SnippetsService);
     expect(service.getApiUrl()).toContain('//site-api-angular/api/cms');
   });
 
   it('should have isReady function', () => {
-    const service: SnippetsService = TestBed.get(SnippetsService);
     expect(service.isReady()).toBeTrue();
   });
 
-  it('should call createInfo and return an prefilled snippet', () => {
+  it('handleError should handle authentication errors', () => {
+    const error = new HttpErrorResponse({
+      status: 401,
+      error: { error: 'Unauthorized' },
+    });
+
+    service
+      .handleError(error)
+      .pipe(take(1))
+      .subscribe({
+        error: error => {
+          expect(error).toBeTruthy();
+          true;
+        },
+      });
+  });
+
+  it('handleError should handle errors', () => {
+    const error = new HttpErrorResponse({
+      status: 423,
+      error: { message: 'Locked', error: 'Locked' },
+    });
+
+    service
+      .handleError(error)
+      .pipe(take(1))
+      .subscribe({
+        error: error => {
+          expect(error).toBeTruthy();
+          true;
+        },
+      });
+  });
+
+  it('should call createInfo and return a prefilled snippet', () => {
     service.createInfo().subscribe(response => {
       expect(response).toEqual(mockSnippetOne);
     });
@@ -57,7 +103,7 @@ describe('SnippetsService', () => {
     req.flush(mockSnippetOneResponse);
   });
 
-  it('should call create and return a single snippet', () => {
+  it('should call create and return a base snippet', () => {
     service.create(mockSnippetOne).subscribe(response => {
       expect(response).toEqual(mockSnippetOne);
     });
@@ -164,6 +210,45 @@ describe('SnippetsService', () => {
     });
 
     req.flush(mockSnippetRevisionsOneResponse);
+  });
+
+  it('should call restore and return one item from the trash', () => {
+    service.restore(mockSnippetOne).subscribe(response => {
+      expect(response).toEqual(mockSnippetOne);
+    });
+
+    const req = httpController.expectOne({
+      method: 'PUT',
+      url: `${url}/snippets/restore/${id}`,
+    });
+
+    req.flush(mockSnippetOneResponse);
+  });
+
+  it('should call revision and return a snippet revision', () => {
+    service.revision(mockSnippetRevisionOne.id).subscribe(response => {
+      expect(response).toEqual(mockSnippetRevisionOne);
+    });
+
+    const req = httpController.expectOne({
+      method: 'GET',
+      url: `${url}/snippets/revision/${id}`,
+    });
+
+    req.flush(mockSnippetRevisionOneResponse);
+  });
+
+  it('should call restoreRevision and return the restored snippet', () => {
+    service.restoreRevision(mockSnippetRevisionOne.id).subscribe(response => {
+      expect(response).toEqual(mockSnippetOne);
+    });
+
+    const req = httpController.expectOne({
+      method: 'PUT',
+      url: `${url}/snippets/revision/${id}`,
+    });
+
+    req.flush(mockSnippetOneResponse);
   });
 
   it('should call trash and return true', () => {

@@ -3,6 +3,7 @@ import {
   HttpClientTestingModule,
   // HttpTestingController,
 } from '@angular/common/http/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { AuthService } from './auth.service';
 // import { environment } from '../../environments/environment';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
@@ -14,7 +15,11 @@ describe('AuthService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, MatSnackBarModule],
+      imports: [
+        HttpClientTestingModule,
+        MatSnackBarModule,
+        RouterTestingModule,
+      ],
       providers: [AuthService],
     });
     service = TestBed.inject(AuthService);
