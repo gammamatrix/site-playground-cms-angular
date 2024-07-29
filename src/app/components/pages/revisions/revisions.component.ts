@@ -101,9 +101,6 @@ export class RevisionsComponent implements OnInit {
     const dialogRef = this.dialog.open(PreviewComponent, {
       width: '80%',
       restoreFocus: false,
-      data: {
-        id: id,
-      },
     });
     dialogRef.componentInstance.id = id;
   }

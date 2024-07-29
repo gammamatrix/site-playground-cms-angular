@@ -56,5 +56,4 @@ NOTES.md
 output
 
 # Ignore screenshots from tests
-/*.png
 tmp-*

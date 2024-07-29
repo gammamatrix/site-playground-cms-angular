@@ -24,7 +24,7 @@ test('call api/cms/pages/create and verify title', async ({ page }) => {
   // });
   await page.screenshot({
     fullPage: true,
-    path: 'test-pages-create.png',
+    path: 'output/test-pages-create.png',
   });
   await expect(page).toHaveTitle(/CMS Create a Page/);
   await expect(page.getByText('Display Advanced Form')).toBeVisible();

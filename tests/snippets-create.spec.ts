@@ -24,7 +24,7 @@ test('call api/cms/snippets/create and verify title', async ({ page }) => {
   // });
   await page.screenshot({
     fullPage: true,
-    path: 'test-snippets-create.png',
+    path: 'output/test-snippets-create.png',
   });
   await expect(page).toHaveTitle(/CMS Create a Snippet/);
   await expect(page.getByText('Display Advanced Form')).toBeVisible();

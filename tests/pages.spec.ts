@@ -24,7 +24,7 @@ test('call api/cms/pages and verify title', async ({ page }) => {
   // });
   await page.screenshot({
     fullPage: true,
-    path: 'test-pages.png',
+    path: 'output/test-pages.png',
   });
   await expect(page).toHaveTitle(/CMS Pages/);
   await expect(page.getByText('Revision')).toBeVisible();

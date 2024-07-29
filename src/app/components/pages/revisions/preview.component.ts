@@ -1,4 +1,4 @@
-import { Component, OnInit, Input as RouteParam } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { PageRevision } from '../../../app.types';
 import { PagesService } from '../../../services/pages.service';
@@ -8,7 +8,6 @@ import { PagesService } from '../../../services/pages.service';
   templateUrl: './preview.component.html',
 })
 export class PreviewComponent implements OnInit {
-  @RouteParam() page_id = '';
   isReady = false;
   public id = '';
 
@@ -20,22 +19,15 @@ export class PreviewComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.fetch();
-    console.log('PageRevision - RevisionsComponent.ngOnInit', {
-      isReady: this.isReady,
-      page_id: this.page_id,
-      this: this,
-    });
+    if (this.id) {
+      this.fetch(this.id);
+    }
   }
 
-  fetch() {
-    this.service.revision(this.id).subscribe(response => {
+  fetch(id: string) {
+    return this.service.revision(id).subscribe(response => {
       this.model = response;
       this.isReady = true;
-      console.log('PageRevision - RevisionsComponent.preview', {
-        this: this,
-        model: this.model,
-      });
     });
   }
 }

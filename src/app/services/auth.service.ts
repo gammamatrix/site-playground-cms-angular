@@ -27,13 +27,33 @@ export class AuthService {
   ) {}
 
   getAuthUrl(): string {
-    console.debug('AuthService.getAuthUrl', { authUrl: this.authUrl });
     return this.authUrl;
   }
 
   isReady(): boolean {
-    console.debug('AuthService.isReady', { authUrl: this.authUrl });
     return this.authUrl.startsWith('//');
+  }
+
+  goToLogin() {
+    this.router.navigate(['login']);
+  }
+
+  goToDashboard() {
+    this.router.navigate(['dashboard']);
+  }
+
+  checkStatus() {
+    this.auth.next(this.hasAppToken());
+  }
+
+  // getCsrfToken(): string {
+  //   const csrf_token = localStorage.getItem('csrf_token');
+  //   return csrf_token ?? '';
+  // }
+
+  hasAppToken(): boolean {
+    const app_token = localStorage.getItem('app_token');
+    return app_token ? true : false;
   }
 
   login(auth: iLogin): Observable<boolean> {
@@ -85,31 +105,6 @@ export class AuthService {
     );
   }
 
-  checkStatus() {
-    console.log('AuthService.checkStatus', {
-      this: this,
-    });
-    if (this.hasAppToken()) {
-      this.auth.next(true);
-    } else {
-      this.auth.next(false);
-    }
-  }
-
-  hasAppToken(): boolean {
-    const app_token = localStorage.getItem('app_token');
-    console.log('AuthService.hasAppToken', {
-      app_token: app_token,
-      this: this,
-    });
-    return app_token ? true : false;
-  }
-
-  getCsrfToken(): string {
-    const csrf_token = localStorage.getItem('csrf_token');
-    return csrf_token ?? '';
-  }
-
   logout(logout: iLogout): Observable<iLogoutToken> {
     if (logout.session) {
       sessionStorage.clear();
@@ -131,30 +126,15 @@ export class AuthService {
       );
   }
 
-  goToLogin() {
-    this.router.navigate(['login']);
-  }
-
-  goToDashboard() {
-    this.router.navigate(['dashboard']);
-  }
-
   private handleLogoutError(
     error: HttpErrorResponse
   ): Observable<iLogoutToken> {
-    let message = 'An error occurred';
-    if (error.error.message) {
-      message = error.error.message;
-    } else if (error.error.error) {
-      message = error.error.error;
-    }
     console.error('AuthService.handleLogoutError', {
-      message: message,
       error: error.error,
     });
     return of({
       everywhere: false,
-      message: 'The session has expired',
+      message: 'The session has expired.',
       csrf_token: '',
     });
   }

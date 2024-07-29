@@ -10,27 +10,32 @@
 
 ## Package Information
 
-## cloc
+### API
+
+This application uses a base application to load the CMS API for this UI.
+- https://github.com/gammamatrix/site-api-angular
+
+### cloc
 
 ```sh
-➜  site-playground-cms-angular-scss git:(feature/GH-10) ✗ cloc --exclude-dir=.angular,dist,node_modules,output,vendor,coverage,playwright-report .
-     104 text files.
-      88 unique files.
-      27 files ignored.
+➜  site-playground-cms-angular-scss git:(feature/GH-14) ✗ cloc --exclude-dir=.angular,dist,node_modules,output,vendor,coverage,playwright-report .
+      98 text files.
+      92 unique files.
+      18 files ignored.
 
-github.com/AlDanial/cloc v 1.98  T=0.14 s (629.6 files/s, 193172.3 lines/s)
+github.com/AlDanial/cloc v 1.98  T=0.16 s (565.4 files/s, 173190.0 lines/s)
 -------------------------------------------------------------------------------
 Language                     files          blank        comment           code
 -------------------------------------------------------------------------------
 JSON                            12              0              0          16975
-TypeScript                      50            489            295           5488
-HTML                            13             73              0           2429
-Markdown                         3            247              0            447
+TypeScript                      54            592            329           6069
+HTML                            14             67              0           2805
+Markdown                         3            252              0            475
+SCSS                             7             49             10            271
 YAML                             1              3              0            269
-SCSS                             8             44              2            225
 INI                              1              3              0             13
 -------------------------------------------------------------------------------
-SUM:                            88            859            297          25846
+SUM:                            92            966            339          26877
 -------------------------------------------------------------------------------
 ```
 
