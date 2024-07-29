@@ -4,7 +4,7 @@ import { mockPageOneResponse } from '../src/mock/pages';
 
 import { PageResponse } from '../src/app/app.types';
 
-test('mock api/cms/pages/create and verify title', async ({ page }) => {
+test('call api/cms/pages/create and verify title', async ({ page }) => {
   // Mock the api call before navigating
   await page.route(
     'http://site-api-angular/api/cms/pages/create?owned_by_id=&parent_id=&page_type=',
@@ -24,7 +24,7 @@ test('mock api/cms/pages/create and verify title', async ({ page }) => {
   // });
   await page.screenshot({
     fullPage: true,
-    path: 'test-pages-create.png',
+    path: 'output/test-pages-create.png',
   });
   await expect(page).toHaveTitle(/CMS Create a Page/);
   await expect(page.getByText('Display Advanced Form')).toBeVisible();

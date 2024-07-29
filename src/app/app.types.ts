@@ -822,3 +822,8 @@ export interface ViewPortGrid {
 export interface ViewPortGrids {
   [key: string]: ViewPortGrid;
 }
+
+export interface ApiErrorResponse {
+  error?: string | undefined;
+  message?: string | undefined;
+}

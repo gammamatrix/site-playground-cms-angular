@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 import { LogoutToken as iLogoutToken } from '../src/app/app.types';
 
-test('mock api/logout and verify title', async ({ page }) => {
+test('call api/logout and verify title', async ({ page }) => {
   // Mock the api call before navigating
   await page.route('http://site-api-angular/api/logout', async route => {
     // console.debug('tests/logout.spec.ts', {
@@ -23,7 +23,7 @@ test('mock api/logout and verify title', async ({ page }) => {
   // });
   await page.screenshot({
     fullPage: true,
-    path: 'test-logout.png',
+    path: 'output/test-logout.png',
   });
   // Should get redirect to login.
   await expect(page).toHaveTitle(/Login/);

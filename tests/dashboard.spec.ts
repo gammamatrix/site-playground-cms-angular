@@ -12,7 +12,7 @@ test('get started link', async ({ page }) => {
 
   await page.screenshot({
     fullPage: true,
-    path: 'test-dashboard.png',
+    path: 'output/test-dashboard.png',
   });
 
   // Click the get started link.

@@ -63,20 +63,21 @@ export class PagesService {
     return this.apiUrl.startsWith('//');
   }
 
-  private handleError = (error: HttpErrorResponse) => {
+  public handleError = (error: HttpErrorResponse) => {
     console.error('PagesService.handleError', { error: error });
     let message = 'An error occurred';
+    let redirectToLogin = false;
+    const unauthenticated = [400, 401, 419];
     if (error.error.message) {
       message = error.error.message;
     } else if (error.error.error) {
       message = error.error.error;
     }
     this._snackBar.open(message, 'error');
-    if (error.status === 400) {
-      this.router.navigate(['login']);
-    } else if (error.status === 401) {
-      this.router.navigate(['login']);
-    } else if (error.status === 419) {
+    if (unauthenticated.includes(error.status)) {
+      redirectToLogin = true;
+    }
+    if (redirectToLogin) {
       this.router.navigate(['login']);
     }
     return throwError(() => new Error(message));

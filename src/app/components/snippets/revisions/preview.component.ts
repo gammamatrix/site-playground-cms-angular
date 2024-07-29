@@ -1,4 +1,4 @@
-import { Component, OnInit, Input as RouteParam } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { SnippetRevision } from '../../../app.types';
 import { SnippetsService } from '../../../services/snippets.service';
@@ -8,7 +8,6 @@ import { SnippetsService } from '../../../services/snippets.service';
   templateUrl: './preview.component.html',
 })
 export class PreviewComponent implements OnInit {
-  @RouteParam() snippet_id = '';
   isReady = false;
   public id = '';
 
@@ -20,22 +19,15 @@ export class PreviewComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.fetch();
-    console.log('SnippetRevision - RevisionsComponent.ngOnInit', {
-      isReady: this.isReady,
-      snippet_id: this.snippet_id,
-      this: this,
-    });
+    if (this.id) {
+      this.fetch(this.id);
+    }
   }
 
-  fetch() {
-    this.service.revision(this.id).subscribe(response => {
+  fetch(id: string) {
+    return this.service.revision(id).subscribe(response => {
       this.model = response;
       this.isReady = true;
-      console.log('SnippetRevision - RevisionsComponent.preview', {
-        this: this,
-        model: this.model,
-      });
     });
   }
 }

@@ -4,7 +4,7 @@ import { mockSnippetsOneResponse } from '../src/mock/snippets';
 
 import { SnippetsResponse } from '../src/app/app.types';
 
-test('mock api/cms/snippets and verify title', async ({ page }) => {
+test('call api/cms/snippets and verify title', async ({ page }) => {
   // Mock the api call before navigating
   await page.route(
     'http://site-api-angular/api/cms/snippets/index',
@@ -24,7 +24,7 @@ test('mock api/cms/snippets and verify title', async ({ page }) => {
   // });
   await page.screenshot({
     fullPage: true,
-    path: 'test-snippets.png',
+    path: 'output/test-snippets.png',
   });
   await expect(page).toHaveTitle(/CMS Snippets/);
   await expect(page.getByText('Revision')).toBeVisible();
